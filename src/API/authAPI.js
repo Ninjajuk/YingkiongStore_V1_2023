@@ -1,32 +1,67 @@
 
-export function createUser1(userData) {
-    return new Promise(async (resolve) => {
-      const response = await fetch('/auth/signup', {
-        method: 'POST',
+// export function createUser1(userData) {
+//     return new Promise(async (resolve) => {
+//       const response = await fetch('/auth/signup', {
+//         method: 'POST',
+//         body: JSON.stringify(userData),
+//         headers: { 'content-type': 'application/json' },
+//       });
+//       const data = await response.json();
+//       resolve({ data });
+//     });
+//   }
+  
+  export async function createUser(userData) {
+    try {
+      const resp = await fetch("http://localhost:8000/auth/signup", {
+        method: "POST",
         body: JSON.stringify(userData),
-        headers: { 'content-type': 'application/json' },
+        headers: { "content-type": "application/json" },
       });
-      const data = await response.json();
-      resolve({ data });
-    });
+  
+      if (!resp.ok) {
+
+        // handle the error
+        const errorData = await resp.json();
+        console.error("Error creating user:", errorData);
+        throw new Error(errorData.error);
+      }
+  
+      const data = await resp.json();
+      return { data };
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error;
+    }
   }
   
-export async function createUser(userData) {
-  try {
-    const resp = await fetch("http://localhost:8000/auth/signup", {
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: { "content-type": "application/json" },
-    });
-    const data = await resp.json();
-    return { data };
-  } catch (error) {
-    console.log("Error creating user:", error);
-    throw error;
-  }
-}
 
-  export function loginUser(loginInfo) {
+  export async function loginUser(userData) {
+    try {
+      const resp = await fetch("http://localhost:8000/auth/login", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: { "content-type": "application/json" },
+      });
+  
+      if (!resp.ok) {
+        const errorData = await resp.json();
+        console.error("Login error:", errorData);
+        throw new Error("Invalid credentials"); //  an error message based on  API response
+      }
+  
+      const data = await resp.json();
+      return { data };
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw error;
+    }
+  }
+  
+
+
+
+  export function loginUser1(loginInfo) {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch('/auth/login', {

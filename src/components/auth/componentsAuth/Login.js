@@ -1,26 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
+import {loginUser} from '../../../API/authAPI'
 
+import { useForm, SubmitHandler } from "react-hook-form"
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Add your login logic here
-    console.log("Logging in with email:", email, "and password:", password);
-    console.log("Remember Me:", rememberMe);
-    navigate("/dashboard");
-  };
 
-  const handleRegister = () => {
-    // Add your registration logic here
-    console.log("Redirecting to the registration page...");
-    navigate("/signup");
+  const [error,setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      const response = await loginUser(data);
+  
+      if (response.status === 200) {
+        console.log("User logged in successfully:", response.data);
+        enqueueSnackbar("Login successful", { variant: "success" });
+        navigate("/"); 
+      }
+       else {
+        // Handle other status codes and display error messages
+        console.error("Error during login:", response.data.error);
+        setError("Invalid credentials. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error.message);
+      setError("Internal Server Error");
+    }
+    finally {
+      setLoading(false);
+    }
   };
+  
+  
 
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
@@ -38,12 +63,12 @@ const LoginForm = () => {
             src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
             alt="Your Image"
             className="w-full h-full object-cover rounded-md "
-            // style={{ maxWidth: "100%", height: "auto" }}
           />
         </div>
         <form
           className="bg-white p-6 rounded-lg shadow-md w-full md:w-1/2 "
-          onSubmit={handleLogin}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
         >
           <h2 className="text-2xl font-bold mb-6 text-purple-700">
             Sign in to your account
@@ -55,13 +80,23 @@ const LoginForm = () => {
             <input
               type="email"
               id="email"
+              name="email"
+              {...register("email", {
+                required: "email is required",
+                pattern: {
+                  value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                  message: "email not valid",
+                },
+              })}
               className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
               placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
             />
+     
           </div>
+                 {errors.email && (
+              <p className="text-red-500">{errors.email.message}</p>
+            )}
           <div className="mb-4 relative">
             <label htmlFor="password" className="block text-gray-600">
               Password
@@ -70,12 +105,15 @@ const LoginForm = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
+                name="password"
+                {...register("password", {
+                  required: "password is required",
+                })}
                 className="w-full outline-none"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 required
               />
+         
               <button
                 type="button"
                 className="absolute right-5 top-9 focus:outline-none"
@@ -84,6 +122,9 @@ const LoginForm = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
           </div>
           <div className="mb-4 flex items-center justify-between">
             <div>
@@ -102,7 +143,7 @@ const LoginForm = () => {
               type="button"
               className="text-blue-500 hover:underline"
               onClick={() => {
-                navigate('/forgot-password');
+                navigate("/forgot-password");
               }}
             >
               Forgot Password
@@ -117,19 +158,13 @@ const LoginForm = () => {
           <div className="flex justify-between mt-4">
             <p>Don't have an account</p>
             <button
-              onClick={handleRegister}
+              onClick={() => navigate("/signup")}
               className="text-sky-600 underline"
             >
               Register
             </button>
           </div>
-
-          {/* <div className="mt-4 flex justify-between items-center">
-            <div className="border-t border-gray-400 flex-grow"></div>
-            <p className="mx-2 text-gray-500">Or continue with</p>
-            <div className="border-t border-gray-400 flex-grow"></div>
-          </div> */}
-    
+          {error && <p className="text-red-500">{error || error.message}</p>}
         </form>
       </div>
     </div>
