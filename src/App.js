@@ -16,15 +16,14 @@ import Footer1 from "./components/footer/Footer1";
 function App() {
   return (
     <>
-<Navbar1/>
+      <Navbar1 />
 
- <Product/>
- <ShoppingCart/>
- {/* <OrderSuccessPage/> */}
- {/* <Incentive/> */}
- <Footer1/>
- {/* <Footer/> */}
-
+      <Product />
+      <ShoppingCart />
+      {/* <OrderSuccessPage/> */}
+      {/* <Incentive/> */}
+      <Footer1 />
+      {/* <Footer/> */}
     </>
   );
 }

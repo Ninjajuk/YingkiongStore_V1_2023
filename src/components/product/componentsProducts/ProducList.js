@@ -6,7 +6,7 @@ import FeaturedCategoryPro from './FeatureCategory';
 import PromotionBanner from './PromotionProduct';
 import FruitsVegetables from './FruitsVegetables';
 
-
+import { Link } from 'react-router-dom';
 
 const ProducList = () => {
     
@@ -65,10 +65,12 @@ useEffect(()=>{
           </h2>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {data.slice(0,20).map((product) => (
+              
               <div
                 key={product._id}
                 className="group relative px-2 py-2 shadow-md rounded-md"
               >
+                {/* <Link to={`/shop/${product._id}`}> */}
              
                   <div className="w-64 h-64 aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <img
@@ -78,7 +80,6 @@ useEffect(()=>{
                     />
                   </div>
             
-
                 <div className="mt-4 flex flex-col">
                
                     <p className="text-sm font-medium text-gray-900">
@@ -108,6 +109,7 @@ useEffect(()=>{
                     </span>
                   </button>
                 </div>
+                {/* </Link> */}
               </div>
             ))}
           </div>

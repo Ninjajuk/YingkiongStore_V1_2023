@@ -21,6 +21,7 @@ import Protected from "./Protected";
 import ProtectedAdmin from "./ProtectedAdmin";
 import ForgotPassword from "../components/auth/componentsAuth/ForgotPassword";
 import ResetPassword from "../components/auth/componentsAuth/ResetPassword";
+import ProductDetails from "../components/product/Productdetails";
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     path: "/shop",
     element: <Shop />,
   },
+  // {
+  //   path: "/shop/:productId",
+  //   element: <ProductDetails/>,
+  // },
   {
     path: "/login",
     element: <LoginForm />,

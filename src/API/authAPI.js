@@ -1,5 +1,5 @@
 
-export function createUser(userData) {
+export function createUser1(userData) {
     return new Promise(async (resolve) => {
       const response = await fetch('/auth/signup', {
         method: 'POST',
@@ -11,6 +11,21 @@ export function createUser(userData) {
     });
   }
   
+export async function createUser(userData) {
+  try {
+    const resp = await fetch("http://localhost:8000/auth/signup", {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await resp.json();
+    return { data };
+  } catch (error) {
+    console.log("Error creating user:", error);
+    throw error;
+  }
+}
+
   export function loginUser(loginInfo) {
     return new Promise(async (resolve, reject) => {
       try {

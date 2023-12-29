@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import {getallProducts} from '../API/productAPI'
 import Navbar1 from '../components/Navbar.js/NavbarDark';
 
@@ -37,9 +38,10 @@ useEffect(()=>{
       <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
             {data.slice(0,32).map((product) => (
               <div
-                key={product._id}
+                key={product.id}
                 className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"
               >
+                {/* <Link to={`/shop/${product.id}`}> */}
                 <a href={`/shop/${product.id}`}>
                   <div className="h-40 w-40 aspect-h-1 aspect-w-1  overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-48">
                     <img
@@ -79,6 +81,7 @@ useEffect(()=>{
                     </span>
                   </button>
                 </div>
+                {/* </Link> */}
               </div>
             ))}
           </div>
