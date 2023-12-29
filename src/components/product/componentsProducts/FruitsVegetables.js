@@ -3,7 +3,7 @@
 import { FaAngleLeft,FaAngleRight } from "react-icons/fa";
 import React, { useEffect, useState } from 'react';
 
-import {fetchDataFromAPI} from '../productAPI'
+import {fetchDataFromAPI} from '../../../API/productAPI'
 import CategoryCard from "./CardVeg";
 
  const categories = [

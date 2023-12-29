@@ -11,8 +11,6 @@ const CategoryCard = ({ title, description, image }) => (
   </div>
 );
 
-
-
 const ShopByCategory = () => {
   const categories = [
     {

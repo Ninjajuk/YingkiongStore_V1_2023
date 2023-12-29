@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import Navbar from "./components/Navbar.js/Navbar";
+
 import ProducList from "./components/product/componentsProducts/ProducList";
 import Product from "./components/product";
 import Footer from "./components/footer/Footer";
@@ -17,7 +17,7 @@ function App() {
   return (
     <>
 <Navbar1/>
- {/* <Navbar/> */}
+
  <Product/>
  <ShoppingCart/>
  {/* <OrderSuccessPage/> */}

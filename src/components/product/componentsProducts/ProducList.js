@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {getallProducts} from '../productAPI'
+import {getallProducts} from '../../../API/productAPI'
 
 import ShopByCategory from './ShopCateogory';
 import FeaturedCategoryPro from './FeatureCategory';
@@ -47,6 +47,7 @@ useEffect(()=>{
     <FeaturedCategoryPro/>
     <ShopByCategory/>
     <FruitsVegetables/>
+
           <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
           <div className="overflow-x-auto bg-gray-100">
             <ul className="flex items-center justify-center">

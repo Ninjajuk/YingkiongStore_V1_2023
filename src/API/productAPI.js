@@ -25,7 +25,6 @@ async function fetchDataFromAPI(category) {
   }
 
 //addProduct
-
 async function addProduct(product) {
   try {
     const resp=await fetch('https://yingkiongstore.onrender.com/products/addproduct',{

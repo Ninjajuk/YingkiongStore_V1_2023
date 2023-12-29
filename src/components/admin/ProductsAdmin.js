@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from 'react';
-import {getallProducts,} from '../product/productAPI'
+import {getallProducts,} from '../../API/productAPI'
 
 import Lightsidebarwithheader from './componentsAdmin/AdminDashLayout';
 

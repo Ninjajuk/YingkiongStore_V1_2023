@@ -183,13 +183,14 @@ const Footer1 = () => {
         </div>
 
         <div className="mt-4 flex items-center justify-center md:mt-0">
-          <div className="flex space-x-8">
+          {/* <div className="flex space-x-8">
             {footerNavigation.bottomLinks.map((item) => (
               <a key={item.name} href={item.href} className="text-sm text-gray-500 hover:text-gray-600">
                 {item.name}
               </a>
             ))}
-          </div>
+          </div> */}
+          <p className="text-sm text-gray-500 font-bold">Designed and Coded by Samsu & Yogi</p>
 
         </div>
       </div>
