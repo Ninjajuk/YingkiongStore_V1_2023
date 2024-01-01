@@ -1,7 +1,10 @@
 import React from 'react'
 import { CheckIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 const EmailSuccessUserCreated = () => {
+
+    const navigate=useNavigate()
   return (
     <div className="fixed inset-0 ">
     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -27,6 +30,7 @@ const EmailSuccessUserCreated = () => {
         <div className="mt-5 sm:mt-6">
           <button
             type="button"
+            onClick={()=>navigate('/login')}
             className="inline-flex w-full justify-center rounded-md border border-transparent bg-purple-700 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
           >
             Login

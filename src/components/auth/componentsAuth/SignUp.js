@@ -38,6 +38,7 @@ const navigate = useNavigate();
         
       // }
       setIsUSer(!isUser)
+      navigate('/signup/user')
   
     } catch (error) {
       console.error("Error:", error);
@@ -146,7 +147,7 @@ const navigate = useNavigate();
           </form>
         </div>
       </div>
-      {isUser && <UserCreatedSuccessfully/>}
+      {/* {isUser && <UserCreatedSuccessfully/>} */}
     </>
   );
 };

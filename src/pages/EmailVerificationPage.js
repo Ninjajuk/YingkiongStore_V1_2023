@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import VerifyEmail from '../components/auth/componentsAuth/VerifyEmail';
 import EmailSuccessUserCreated from '../components/auth/componentsAuth/EmailSuccessUserCreated';
-import EmailFailedveri from './EmailFailedveri';
+import EmailFailedveri from '../components/auth/componentsAuth/EmailFailedveri';
+
 
 const EmailVerificationPage = () => {
 

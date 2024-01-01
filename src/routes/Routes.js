@@ -22,9 +22,11 @@ import ProtectedAdmin from "./ProtectedAdmin";
 import ForgotPassword from "../components/auth/componentsAuth/ForgotPassword";
 import ResetPassword from "../components/auth/componentsAuth/ResetPassword";
 import ProductDetails from "../components/product/Productdetails";
-import UserCreatedSuccessfully from "../components/modal/UserCreatedAuccessful";
+
 import VerifyEmail from "../components/auth/componentsAuth/VerifyEmail";
 import EmailVerificationPage from "../pages/EmailVerificationPage";
+import SkeletonCard from "../components/skeleton/Skeleton1";
+
 
 
 const router = createBrowserRouter([
@@ -155,6 +157,10 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <ErrorPage />,
+  },
+  {
+    path: "/skeleton",
+    element: <SkeletonCard />,
   },
 ]);
 
