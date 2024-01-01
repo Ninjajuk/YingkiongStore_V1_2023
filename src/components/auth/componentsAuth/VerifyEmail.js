@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const VerifyEmail = ({isverified}) => {
+const VerifyEmail = () => {
   return (
     <>
       <div className="fixed inset-0 ">
