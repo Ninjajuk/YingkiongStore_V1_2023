@@ -1,19 +1,6 @@
 import React from 'react';
 
 
-<<<<<<< HEAD
-const Skeleton = () => {
-  return (
-    <div className="p-4 max-w-2xl mx-auto bg-white shadow-lg rounded-md animate-pulse">
-      <div className="bg-gray-300 h-4 mb-2 rounded w-3/4"></div>
-      <div className="bg-gray-300 h-4 mb-2 rounded w-1/2"></div>
-      <div className="bg-gray-300 h-4 mb-2 rounded w-2/3"></div>
-    </div>
-  );
-};
-
-export default Skeleton;
-=======
 const SkeletonCard = () => {
   return (
 
@@ -44,4 +31,3 @@ const SkeletonCard = () => {
 };
 
 export default SkeletonCard;
->>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
