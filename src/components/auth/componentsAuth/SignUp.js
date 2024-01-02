@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 // import { SnackbarProvider, useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+=======
+
+import { useNavigate } from "react-router-dom";
+import UserCreatedSuccessfully from "../../modal/UserCreatedAuccessful";
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
 const initailUserState = {
   name: "",
   email: "",
@@ -9,7 +15,12 @@ const initailUserState = {
 };
 const RegistrationForm = () => {
   const [user, setUser] = useState(initailUserState);
+<<<<<<< HEAD
 //   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+=======
+  const [isUser,setIsUSer]=useState(false)
+
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
 const navigate = useNavigate();
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -17,6 +28,7 @@ const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     try {
       const response = await fetch("http://localhost:3030/register", {
         method: "POST",
@@ -34,6 +46,29 @@ const navigate = useNavigate();
         console.error("Error:", response.status);
         // Handle errors (e.g., display an error message)
       }
+=======
+
+    try {
+      // const response = await fetch("http://localhost:3030/register", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify(user)
+      // });
+
+      // if (response.ok) {
+      //   const data = await response.json();
+      //   console.log("User data submitted:", data);
+    
+      // } else {
+      //   console.error("Error:", response.status);
+        
+      // }
+      setIsUSer(!isUser)
+      navigate('/signup/user')
+  
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
     } catch (error) {
       console.error("Error:", error);
     }
@@ -42,12 +77,18 @@ const navigate = useNavigate();
     setTimeout(() => {
 
       setUser(initailUserState);
+<<<<<<< HEAD
     }, 0); // You can adjust the delay as needed
   };
   const handleLogin = () => {
     // Add your login redirection logic here
     console.log("Redirecting to login page...");
   };
+=======
+    }, 0); 
+  };
+
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -140,6 +181,7 @@ const navigate = useNavigate();
               Login
             </button>
           </div>
+<<<<<<< HEAD
             {/* <div className="mt-4 flex justify-between items-center">
               <div className="border-t border-gray-400 flex-grow"></div>
               <p className="mx-2 text-gray-500">Or continue with</p>
@@ -163,6 +205,13 @@ const navigate = useNavigate();
           </form>
         </div>
       </div>
+=======
+
+          </form>
+        </div>
+      </div>
+      {/* {isUser && <UserCreatedSuccessfully/>} */}
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
     </>
   );
 };

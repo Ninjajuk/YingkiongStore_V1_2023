@@ -24,7 +24,11 @@ export default function ForgotPassword() {
             src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
             alt="Your Company"
           /> */}
+<<<<<<< HEAD
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+=======
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-purple-700">
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
             Enter email to reset password
           </h2>
         </div>
@@ -82,7 +86,11 @@ export default function ForgotPassword() {
             Send me back to{' '}
             <Link
               to="/login"
+<<<<<<< HEAD
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+=======
+              className="font-semibold leading-6 text-purple-600 hover:text-purple-500"
+>>>>>>> ae3b0a65073e2277d1515551ff57304e9747e773
             >
               Login
             </Link>
