@@ -128,7 +128,7 @@ const handlePrev = () => {
   }
 };
 
-  const visibleCards = categories.slice(currentindex, currentindex + itemsPerpage);
+  const visibleCards = data.slice(currentindex, currentindex + itemsPerpage);
 
 
 

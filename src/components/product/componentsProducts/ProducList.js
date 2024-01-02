@@ -36,6 +36,7 @@ const ProducList = () => {
 
     const handleAddToCart = (product) => {
       addOrRemoveFromCart(dispatch, product, cartItems);
+      console.log(product._id)
     };
 
   return (

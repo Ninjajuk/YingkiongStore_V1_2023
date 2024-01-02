@@ -8,12 +8,12 @@ export const isItemInCart = (itemId, cartItems) => {
 export const addOrRemoveFromCart = (dispatch, product, cartItems) => {
   const isAlreadyInCart = isItemInCart(product._id, cartItems);
   
-  isAlreadyInCart?dispatch(removeItem(product._id)):dispatch(addItem(product))
-  // if (isAlreadyInCart) {
-  //   dispatch(removeItem(product.id));
-  // } else {
-  //   dispatch(addItem(product));
-  // }
+  isAlreadyInCart?dispatch(removeItem(product.id)):dispatch(addItem(product))
+  if (isAlreadyInCart) {
+    dispatch(removeItem(product._id));
+  } else {
+    dispatch(addItem(product));
+  }
 };
 
 
