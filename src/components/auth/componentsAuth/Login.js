@@ -46,7 +46,6 @@ const dispatch=useDispatch()
   
   
   
-
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
@@ -154,7 +153,7 @@ const dispatch=useDispatch()
             className="w-full bg-purple-700 text-white rounded-lg py-2 hover:bg-purple-900 transition duration-300"
           >
             {/* Login */}
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Loading..." : "Login"}
           </button>
           <div className="flex justify-between mt-4">
             <p>Don't have an account</p>

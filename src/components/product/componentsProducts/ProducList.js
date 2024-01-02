@@ -9,6 +9,7 @@ import FruitsVegetables from './FruitsVegetables';
 import { Link } from 'react-router-dom';
 import {addOrRemoveFromCart,isItemInCart} from '../../../utility/cartUtils'
 import { useDispatch, useSelector } from 'react-redux';
+import HeroSection from './HeroSection';
 
 const ProducList = () => {
   const [data, setData] = useState([]);
@@ -41,7 +42,8 @@ const ProducList = () => {
 
   return (
     <>
-      <PromotionBanner />
+    <HeroSection/>
+      {/* <PromotionBanner /> */}
       <FeaturedCategoryPro />
       <ShopByCategory />
       <FruitsVegetables />
