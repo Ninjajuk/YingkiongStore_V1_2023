@@ -6,22 +6,18 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { FaCartPlus,FaUser,FaAngleDown } from "react-icons/fa";
 import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
+import { useSelector } from 'react-redux';
+
 // import ShopHover from './HoverShopNavbar';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-// const navigationLeft = [
-//   { name: "Home", href: "/", current: false },
-//   { name: "Shop", href: "/shop", current: false },
-//   { name: "About us", href: "/about-us", current: false },
-//   { name: "Contact Us", href: "/contact-us", current: false },
-
-// ];
 
  function Navbar1() {
 
   const[isCartOpen,setIsCartOpen]=useState(false)
+  const cartItems=useSelector((state)=>state.cart)
 
 const navigate=useNavigate()
   const handlecartOpen = () => {
@@ -207,7 +203,8 @@ const navigate=useNavigate()
                 </button>
 
                 <span className="absolute top-0 right-0 mt-1  bg-red-500 text-white rounded-full text-xxs px-1 py-0.5">
-                  {/* {cartItems.length} */}1
+                  {cartItems.length}
+                  {/* 1 */}
                 </span>
               </div>
             </div>

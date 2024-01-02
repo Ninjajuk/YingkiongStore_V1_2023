@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import {loginUser} from '../../../API/authAPI'
 
 import { useForm, SubmitHandler } from "react-hook-form"
+import {login} from '../../../redux/authSlice'
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -14,6 +16,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+const dispatch=useDispatch()
 
   const {
     register,
@@ -29,6 +32,7 @@ const LoginForm = () => {
       if(!response){
         setError(error.message);
       }else{
+        dispatch(login(data))
         navigate('/')
       }
     } catch (error) {
@@ -149,7 +153,8 @@ const LoginForm = () => {
             type="submit"
             className="w-full bg-purple-700 text-white rounded-lg py-2 hover:bg-purple-900 transition duration-300"
           >
-            Login
+            {/* Login */}
+            {loading ? "Logging in..." : "Login"}
           </button>
           <div className="flex justify-between mt-4">
             <p>Don't have an account</p>
