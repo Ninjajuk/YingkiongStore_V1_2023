@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "notistack";
+
 import {loginUser} from '../../../API/authAPI'
 
 import { useForm, SubmitHandler } from "react-hook-form"
+
 const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -12,7 +13,7 @@ const LoginForm = () => {
   const [error,setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar();
+
 
   const {
     register,
@@ -25,25 +26,20 @@ const LoginForm = () => {
     try {
       setLoading(true);
       const response = await loginUser(data);
-  
-      if (response.status === 200) {
-        console.log("User logged in successfully:", response.data);
-        enqueueSnackbar("Login successful", { variant: "success" });
-        navigate("/"); 
-      }
-       else {
-        // Handle other status codes and display error messages
-        console.error("Error during login:", response.data.error);
-        setError("Invalid credentials. Please try again.");
+      if(!response){
+        setError(error.message);
+      }else{
+        navigate('/')
       }
     } catch (error) {
+      setError(error.message);
       console.error("Error during login:", error.message);
-      setError("Internal Server Error");
-    }
-    finally {
+ 
+    } finally {
       setLoading(false);
     }
   };
+  
   
   
 

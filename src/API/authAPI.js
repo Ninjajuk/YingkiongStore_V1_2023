@@ -20,7 +20,6 @@
       });
   
       if (!resp.ok) {
-
         // handle the error
         const errorData = await resp.json();
         console.error("Error creating user:", errorData);
@@ -36,6 +35,27 @@
   }
   
 
+  // export async function loginUser(userData) {
+  //   try {
+  //     const resp = await fetch("http://localhost:8000/auth/login", {
+  //       method: "POST",
+  //       body: JSON.stringify(userData),
+  //       headers: { "content-type": "application/json" },
+  //     });
+  
+  //     if (!resp.ok) {
+  //       const errorData = await resp.json();
+  //       console.error("Login error:", errorData);
+  //       throw new Error("Invalid credentials"); 
+  //     }
+  
+  //     const data = await resp.json();
+  //     return { data };
+  //   } catch (error) {
+  //     console.error("Error during login:", error);
+  //     throw error;
+  //   }
+  // }
   export async function loginUser(userData) {
     try {
       const resp = await fetch("http://localhost:8000/auth/login", {
@@ -44,16 +64,16 @@
         headers: { "content-type": "application/json" },
       });
   
+      const data = await resp.json();
+  
       if (!resp.ok) {
-        const errorData = await resp.json();
-        console.error("Login error:", errorData);
-        throw new Error("Invalid credentials"); //  an error message based on  API response
+        const errorMessage = data.error || "Invalid credentials";
+        throw new Error(errorMessage);
       }
   
-      const data = await resp.json();
       return { data };
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during login:", error.message);
       throw error;
     }
   }
