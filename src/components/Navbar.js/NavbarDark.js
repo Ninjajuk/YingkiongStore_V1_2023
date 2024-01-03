@@ -6,8 +6,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { FaCartPlus,FaUser,FaAngleDown } from "react-icons/fa";
 import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import{logout} from '../../redux/authSlice'
 
 const navigationLinks = [
   { to: "/", text: "Home" },
@@ -23,13 +23,16 @@ function classNames(...classes) {
  function Navbar1() {
 
   const[isCartOpen,setIsCartOpen]=useState(false)
-  const cartItems=useSelector((state)=>state.cart)
+  const cartItems = useSelector((state) => state.cart);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
 
 const navigate=useNavigate()
   const handlecartOpen = () => {
     setIsCartOpen((prevIsCartOpen) => !prevIsCartOpen);
   };
 
+  const dispatch=useDispatch()
   return (
     <>
       <Disclosure as="nav" className="bg-purple-700 sticky top-0 z-10">
@@ -66,7 +69,7 @@ const navigate=useNavigate()
                     </div>
                   </div>
 
-            {/* Mobile menu button */}
+                  {/* Mobile menu button */}
                   <div className="flex lg:hidden">
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="sr-only">Open main menu</span>
@@ -83,7 +86,6 @@ const navigate=useNavigate()
                       )}
                     </Disclosure.Button>
                   </div>
-                  
                 </div>
                 <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                   <div className="w-full max-w-lg lg:max-w-xs">
@@ -108,17 +110,19 @@ const navigate=useNavigate()
                   </div>
                 </div>
                 <div className="hidden lg:block">
-                  {/* {isAuthenticated  &&user? (
-                    <h1>{user.email.slice(0, 6)}</h1>
-                  ) : ( */}
-                  <button
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:bg-gray-700 hover:text-white"
-                    type="button"
-                    onClick={() => navigate("/login")}
-                  >
-                    Login
-                  </button>
-                  {/* )} */}
+                  {isAuthenticated && user ? (
+                    <h1 className="font-medium text-gray-300 ">
+                      {user.email.slice(0, 6)}
+                    </h1>
+                  ) : (
+                    <button
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:bg-gray-700 hover:text-white"
+                      type="button"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </button>
+                  )}
                 </div>
 
                 <div className="hidden lg:ml-4 lg:block">
@@ -157,13 +161,26 @@ const navigate=useNavigate()
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/"
+                                href="/my-order"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Settings
+                                My Orders
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/cart"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Cart
                               </a>
                             )}
                           </Menu.Item>
@@ -171,7 +188,7 @@ const navigate=useNavigate()
                             {({ active }) => (
                               <a
                                 href="/"
-                                // onClick={() => dispatch(logout())}
+                                onClick={() => dispatch(logout())}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -248,23 +265,23 @@ const navigate=useNavigate()
                 </div> */}
                   <div className="ml-3">
                     <div className="text-base font-medium text-white">
-                      {/* {isAuthenticated &&user ? (
-                        <h1> {user.email}</h1>
-                      ) : ( */}
-                      <h1>Hi User</h1>
-                      {/* )} */}
+                      {isAuthenticated && user ? (
+                        <h1>{user.email}</h1>
+                      ) : (
+                        <h1>Hi Guest</h1>
+                      )}
                     </div>
                     <div className="text-sm font-medium text-gray-400">
                       {/* {user.email} */}
                     </div>
                   </div>
-                  <button
+                  {/* <button
                     type="button"
                     className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  </button> */}
                 </div>
                 <div className="mt-3 space-y-1 px-2">
                   <Disclosure.Button
@@ -279,15 +296,22 @@ const navigate=useNavigate()
                     href="/"
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
-                    Settings
+                    Orders
                   </Disclosure.Button>
                   <Disclosure.Button
                     as="a"
                     href="/"
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
-                    Sign out
+                    Cart
                   </Disclosure.Button>
+                  {isAuthenticated ? (
+                    <button onClick={() => dispatch(logout())} className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                      Sign out
+                    </button>
+                  ) : (
+                    <button className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</button>
+                  )}
                 </div>
               </div>
             </Disclosure.Panel>
