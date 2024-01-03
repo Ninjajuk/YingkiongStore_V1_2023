@@ -4,7 +4,7 @@
 import {addOrRemoveFromCart,isItemInCart} from '../../../utility/cartUtils'
 import { useDispatch, useSelector } from "react-redux";
 
-const weightOptions = [1, 2, 3, 5]; // You can modify the weight options as needed
+const weightOptions = [1, 2, 3, 5]; //  modify the weight options as needed
 
 function CategoryCard({visibleCards}) {
 const cartItems=useSelector((state=>state.cart))

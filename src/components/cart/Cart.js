@@ -7,7 +7,7 @@ import EmptyCart from './EmptyCart';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {calculateSubtotal,} from '../../utility/cartUtils'
-
+import {removeItem} from '../../redux/cartSlice'
 
 // const products = [
 //   {
@@ -153,9 +153,9 @@ export default function ShoppingCart({isCartOpen}) {
                                         <div className="flex">
                                           <button
                                             type="button"
-                                            // onClick={() =>
-                                            //   removeFromCArt(product.id)
-                                            // }
+                                            onClick={() =>
+                                              dispatch(removeItem(product._id))
+                                            }
                                             className="font-medium text-red-500 hover:text-red-700"
                                           >
                                             Remove
@@ -173,7 +173,7 @@ export default function ShoppingCart({isCartOpen}) {
                         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <p>Subtotal</p>
-                            {/* <p>₹{subtotal}</p> */}
+                            <p>₹{subtotal}</p>
                           </div>
                           <p className="mt-0.5 text-sm text-gray-500">
                             Shipping and taxes calculated at checkout.
