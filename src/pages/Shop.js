@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import {getallProducts} from '../API/productAPI'
 import Navbar1 from '../components/Navbar.js/NavbarDark';
-
+import { Circles } from "react-loader-spinner";
+import useLoading from '../customhooks/Loading';
 import Footer1 from '../components/footer/Footer1';
 import ProductWithFilterCateogrySidebar from '../components/product/componentsProducts/FilterProductsSidebar';
 
 const Shop = () => {
-    
+  const loading = useLoading();
     const [data, setData] = useState([]);
    
 useEffect(()=>{
@@ -34,6 +35,18 @@ useEffect(()=>{
   return (
     <>
       <Navbar1 />
+      {loading ? (
+       <div className="flex items-center justify-center h-screen">    <Circles
+       height="80"
+       width="80"
+       color="#7b09e7"
+       ariaLabel="circles-loading"
+       wrapperStyle={{}}
+       wrapperClass=""
+       visible={true}
+       /></div>
+
+    ):(
       <ProductWithFilterCateogrySidebar>
       <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
             {data.slice(0,32).map((product) => (
@@ -86,6 +99,7 @@ useEffect(()=>{
             ))}
           </div>
       </ProductWithFilterCateogrySidebar>
+    )}
       <Footer1 />
     </>
   );

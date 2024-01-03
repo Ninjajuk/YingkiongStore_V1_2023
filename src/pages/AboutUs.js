@@ -2,6 +2,8 @@
 import React from 'react';
 import Navbar1 from '../components/Navbar.js/NavbarDark';
 import Footer1 from '../components/footer/Footer1';
+import { Circles } from "react-loader-spinner";
+import useLoading from '../customhooks/Loading';
 
 const Card = ({ title, content,listItems,bgcolor }) => (
   <div className={` ${bgcolor} p-6 rounded-lg shadow-md mb-6`}>
@@ -19,9 +21,22 @@ const Card = ({ title, content,listItems,bgcolor }) => (
 );
 
 const AboutUs = () => {
+  const loading = useLoading();
   return (
     <>
     <Navbar1/>
+    {loading ? (
+       <div className="flex items-center justify-center h-screen">    <Circles
+       height="80"
+       width="80"
+       color="#7b09e7"
+       ariaLabel="circles-loading"
+       wrapperStyle={{}}
+       wrapperClass=""
+       visible={true}
+       /></div>
+
+    ):(
     <section className=''>
           <div className="container mx-auto  p-8  rounded-md">
       <h1 className="text-4xl font-bold mb-8 text-center text-blue-800">About Us</h1>
@@ -41,6 +56,7 @@ const AboutUs = () => {
       </div>
     </div>
     </section>
+    )}
     <Footer1/>
     </>
     
