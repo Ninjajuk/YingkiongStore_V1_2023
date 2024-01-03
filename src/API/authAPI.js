@@ -10,14 +10,35 @@
 //       resolve({ data });
 //     });
 //   }
+
+import { AUTH_URLS, BASE_URL } from "../constants";
+
+const postBody = (body) => {
+  return {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { 
+      "content-type": "application/json",
+      "x-auth-token": ""
+    },
+  }
+}
+
+const getBody = () => {
+  return {
+    method: "GET",
+    // body: JSON.stringify(body),
+    headers: { 
+      "content-type": "application/json",
+      "x-auth-token": ""
+  },
+  }
+}
+
   
   export async function createUser(userData) {
     try {
-      const resp = await fetch("http://localhost:8000/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(userData),
-        headers: { "content-type": "application/json" },
-      });
+      const resp = await fetch(`${BASE_URL}/${AUTH_URLS.SIGN_UP}`, postBody(userData));
   
       if (!resp.ok) {
 

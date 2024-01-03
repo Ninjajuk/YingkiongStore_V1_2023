@@ -26,7 +26,7 @@ const LoginForm = () => {
       setLoading(true);
       const response = await loginUser(data);
   
-      if (response.status === 200) {
+      if (response.ok) {
         console.log("User logged in successfully:", response.data);
         enqueueSnackbar("Login successful", { variant: "success" });
         navigate("/"); 
