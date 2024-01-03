@@ -8,7 +8,13 @@ import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
 import { useSelector } from 'react-redux';
 
-// import ShopHover from './HoverShopNavbar';
+
+const navigationLinks = [
+  { to: "/", text: "Home" },
+  { to: "/shop", text: "Shop" },
+  { to: "/about-us", text: "About us" },
+  { to: "/contact-us", text: "Contact us" },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -33,47 +39,35 @@ const navigate=useNavigate()
               <div className="relative flex h-16 items-center justify-between">
                 <div className="flex items-center px-2 lg:px-0">
                   {/* <div className="flex-shrink-0"> */}
-                    <h1 className="hidden lg:flex rounded-md px-3 py-2 text-lg font-bold text-gray-300  ">
-                      YingKiong Store
-                    </h1>
+                  <h1 className="hidden lg:flex rounded-md px-3 py-2 text-lg font-bold text-gray-300  ">
+                    YingKiong Store
+                  </h1>
                   {/* </div> */}
+                  {/* Left navigation */}
                   <div className="hidden lg:ml-6 lg:block">
                     <div className="flex space-x-4 relative">
-       
-
-                      <NavLink
-                        to="/"
-                        className={`rounded-md  px-3 py-2 text-sm hover:bg-gray-700 hover:text-white font-medium text-white  `}
-                      >
-                        Home
-                      </NavLink>
-                      <NavLink
-                        to="/shop"
-
-                        className={`flex rounded-md px-3 py-2 text-sm font-medium  text-gray-300 hover:bg-gray-700 hover:text-white`}
-                      >
-                        <span>Shop</span>
-                        {/* <span>
-                          <FaAngleDown className="w-6 h-6" />
-                        </span> */}
-                      </NavLink>
-                      {/* {isShopHovered && <ShopHover/>} */}
-                      <NavLink
-                        to="/about-us"
-                        className={`rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white`}
-                      >
-                        About us
-                      </NavLink>
-                      <NavLink
-                        to="/contact-us"
-                        className={`rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white `}
-                      >
-                        Contact us
-                      </NavLink>
+                      {navigationLinks.map((link, index) => (
+                        <NavLink
+                          key={index}
+                          to={link.to}
+                          className={({ isActive, isPending }) =>
+                            `rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 text-white ${
+                              isPending
+                                ? "pending"
+                                : isActive
+                                ? "bg-gray-700 text-white"
+                                : ""
+                            }`
+                          }
+                        >
+                          {link.text}
+                        </NavLink>
+                      ))}
                     </div>
                   </div>
+
+            {/* Mobile menu button */}
                   <div className="flex lg:hidden">
-                    {/* Mobile menu button */}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
@@ -89,6 +83,7 @@ const navigate=useNavigate()
                       )}
                     </Disclosure.Button>
                   </div>
+                  
                 </div>
                 <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                   <div className="w-full max-w-lg lg:max-w-xs">
@@ -116,13 +111,13 @@ const navigate=useNavigate()
                   {/* {isAuthenticated  &&user? (
                     <h1>{user.email.slice(0, 6)}</h1>
                   ) : ( */}
-                    <button
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:bg-gray-700 hover:text-white"
-                      type="button"
-                      onClick={() => navigate("/login")}
-                    >
-                      Login
-                    </button>
+                  <button
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:bg-gray-700 hover:text-white"
+                    type="button"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </button>
                   {/* )} */}
                 </div>
 
@@ -132,8 +127,8 @@ const navigate=useNavigate()
                     <Menu as="div" className="relative ml-4 flex-shrink-0">
                       <div>
                         <Menu.Button className="flex rounded-full  text-white px-2 ">
-                                            <span className="sr-only">Login</span>
-                          <FaUser/>
+                          <span className="sr-only">Login</span>
+                          <FaUser />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -256,7 +251,7 @@ const navigate=useNavigate()
                       {/* {isAuthenticated &&user ? (
                         <h1> {user.email}</h1>
                       ) : ( */}
-                        <h1>Hi User</h1>
+                      <h1>Hi User</h1>
                       {/* )} */}
                     </div>
                     <div className="text-sm font-medium text-gray-400">

@@ -6,7 +6,7 @@ import FeaturedCategoryPro from './FeatureCategory';
 import PromotionBanner from './PromotionProduct';
 import FruitsVegetables from './FruitsVegetables';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {addOrRemoveFromCart,isItemInCart} from '../../../utility/cartUtils'
 import { useDispatch, useSelector } from 'react-redux';
 import HeroSection from './HeroSection';
@@ -16,6 +16,20 @@ const ProducList = () => {
   const [uniqueCategories, setUniqueCategories] = useState([]);
   const dispatch=useDispatch()
   const cartItems=useSelector((state)=>state.cart)
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+
+
+  const handleFilter = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterSelect = (e) => {
+    setSortBy(e.target.value);
+  };
 
   useEffect(() => {
     async function getData() {
@@ -35,31 +49,41 @@ const ProducList = () => {
     getData();
   }, []);
 
-    const handleAddToCart = (product) => {
-      addOrRemoveFromCart(dispatch, product, cartItems);
-      console.log(product._id)
-    };
+    // Filter products based on the selected category and search term
+    const filteredProducts = data.filter((product) =>
+    (selectedCategory ? product.category === selectedCategory : true) 
+    // &&
+    // (searchTerm ? product.title.toLowerCase().includes(searchTerm.toLowerCase()) : true)
+  );
+  
+
+    // const handleAddToCart = (product) => {
+    //   addOrRemoveFromCart(dispatch, product, cartItems);
+    //   console.log(product._id)
+    // };
 
   return (
     <>
-    <HeroSection/>
+      <HeroSection />
       {/* <PromotionBanner /> */}
       <FeaturedCategoryPro />
       <ShopByCategory />
       <FruitsVegetables />
 
       <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
-        <div className="overflow-x-auto bg-gray-100">
+        <div className="overflow-x-auto bg-black rounded-lg shadow-lg">
           <ul className="flex items-center justify-center">
-            <li className=" px-4 py-2  hover:bg-gray-600 cursor-pointer rounded-md ">
+            <li className={` px-4 py-2  hover:bg-gray-600 cursor-pointer rounded-md text-gray-300 font-medium font-sans ${!selectedCategory ? 'bg-gray-600' : ''}`}onClick={() => setSelectedCategory('')}>
               All
             </li>
             {uniqueCategories.map((item, index) => (
               <li
                 key={index}
-                className=" px-4 py-2  hover:bg-gray-600 cursor-pointer rounded-md "
+                value={sortBy}
+                onClick={() => setSelectedCategory(item)}
+                className={` px-4 py-2  hover:bg-gray-600 cursor-pointer rounded-md text-gray-300 font-medium font-sans ${selectedCategory === item ? 'bg-gray-600' : ''}`}
               >
-                {item}
+                  {item}
               </li>
             ))}
           </ul>
@@ -69,7 +93,7 @@ const ProducList = () => {
           Customers also purchased
         </h2>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {data.slice(0, 20).map((product) => (
+          {filteredProducts.slice(0, 20).map((product) => (
             <div
               key={product._id}
               className="group relative px-2 py-2 shadow-md rounded-md"
@@ -101,13 +125,13 @@ const ProducList = () => {
 
               <div className="text-center py-3 mb-3">
                 <button
-                  onClick={() => handleAddToCart(product)}
+                  onClick={() =>addOrRemoveFromCart(dispatch, product, cartItems)}
                   className={`w-full text-white bg-purple-700 hover:bg-purple-900  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
                 >
                   <span className={`inline-block w-18 `}>
                     {isItemInCart(product._id, cartItems)
-                        ? "Remove"
-                        : "Add to Cart"}
+                      ? "Remove"
+                      : "Add to Cart"}
                     {/* Add to Cart */}
                   </span>
                 </button>
