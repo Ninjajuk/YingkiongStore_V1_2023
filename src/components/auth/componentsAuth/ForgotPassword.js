@@ -1,19 +1,50 @@
-import { Link } from 'react-router-dom';
-// import { useForm } from 'react-hook-form';
+import { Link,useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 // import {useDispatch, useSelector} from 'react-redux';
 // import { resetPasswordRequestAsync, selectMailSent } from '../authSlice';
+import { resetPasswordRequest } from '../../../API/authAPI';
 
 export default function ForgotPassword() {
+  const [error,setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [mailsent, setmailsent] = useState(false);
 
+  const navigate = useNavigate()
 //  const mailSent = useSelector(selectMailSent);
 //   const dispatch = useDispatch()
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-//   console.log(errors);
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      console.log(data)
+      const response=await resetPasswordRequest(data)
+      
+      if(!response){
+        setError(error.message);
+      }else{
+        setmailsent(true)
+
+     const timeoutId = setTimeout(() => {
+      navigate('/reset-password');
+    }, 2000);
+
+    // Cleanup function to clear the timeout when the component unmounts
+    return () => clearTimeout(timeoutId);
+      }
+    } catch (error) {
+      setError(error.message);
+   
+ 
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -31,12 +62,8 @@ export default function ForgotPassword() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            // noValidate
-            // onSubmit={handleSubmit((data) => {
-            //   console.log(data);
-            //   dispatch(resetPasswordRequestAsync(data.email))
-              
-            // })}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
             className="space-y-6"
           >
             <div>
@@ -49,22 +76,22 @@ export default function ForgotPassword() {
               <div className="mt-2">
                 <input
                   id="email"
-                //   {...register('email', {
-                //     required: 'email is required',
-                //     pattern: {
-                //       value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-                //       message: 'email not valid',
-                //     },
-                //   })}
+                  {...register('email', {
+                    required: 'email is required',
+                    pattern: {
+                      value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                      message: 'email not valid',
+                    },
+                  })}
                   type="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-                {/* {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
-                {mailSent && ( */}
+              {error && (
+                <p className="text-red-500">{error || error.message}</p>
+              )}
+                {mailsent && ( 
                   <p className="text-green-500">Mail Sent</p>
-                {/* )} */}
+                 )} 
               </div>
             </div>
 

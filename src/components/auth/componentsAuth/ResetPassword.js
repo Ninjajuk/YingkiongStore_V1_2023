@@ -1,7 +1,7 @@
 
 
 import { Link } from 'react-router-dom';
-// import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // import {useDispatch, useSelector} from 'react-redux';
 // import { resetPasswordAsync, selectError, selectPasswordReset } from '../authSlice';
 
@@ -28,11 +28,11 @@ export default function ResetPassword() {
       {/* {(email && token) ?  */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+          {/* <img
             className="mx-auto h-10 w-auto"
             src="/ecommerce.png"
             alt="Your Company"
-          />
+          /> */}
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Enter New Password
           </h2>
@@ -115,7 +115,7 @@ export default function ResetPassword() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-purple-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
               >
                 Reset Password
               </button>
@@ -132,9 +132,7 @@ export default function ResetPassword() {
             </Link>
           </p>
         </div>
-      </div>: <p>Incorrect Link</p>
-      {/* } */}
-
+      </div>
     </>
   );
 }

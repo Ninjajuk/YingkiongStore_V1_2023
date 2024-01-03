@@ -140,26 +140,25 @@
   }
   
   
-  export function resetPasswordRequest(email) {
-    return new Promise(async (resolve, reject) => {
+  export async function resetPasswordRequest(email) {
       try {
-        const response = await fetch('/auth/reset-password-request', {
+        const response = await fetch('http://localhost:8000/auth/send-otp', {
           method: 'POST',
-          body: JSON.stringify({email}),
+          body: JSON.stringify(email),
           headers: { 'content-type': 'application/json' },
         });
-        if (response.ok) {
-          const data = await response.json();
-          resolve({ data });
-        } else {
-          const error = await response.text();
-          reject(error);
-        }
+        const data = await response.json();
+        if (!response.ok) {
+          const errorMessage = data.error || "Invalid Email.";
+          throw new Error(errorMessage);
+        } 
+        return { data };
       } catch (error) {
-        reject( error );
+        console.error("Error during login:", error.message);
+        throw error;
       }
   
-    });
+  
   }
   
   export function resetPassword(data) {
