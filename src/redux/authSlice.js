@@ -65,10 +65,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   loginUser,
   createUser,
-  // signOut,
-  // checkAuth,
-  // resetPasswordRequest,
-  // resetPassword,
   waitForVerificationOrTokenExpiration
 } from '../API/authAPI';
 
@@ -96,19 +92,36 @@ export const createUserAsync = createAsyncThunk(
 //   }
 // );
 
+// export const loginUserAsync = createAsyncThunk(
+//   'user/loginUser',
+//   async (loginInfo, thunkAPI) => {
+//     try {
+//       const response = await loginUser(loginInfo);
+//       return response;
+//     } catch (error) {
+//       // Make sure the rejected value is an object
+//       const rejectedValue = error.response ? error.response.data : { message: error.message };
+//       return thunkAPI.rejectWithValue(rejectedValue);
+//     }
+//   }
+// );
+
+
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
-  async (loginInfo, { rejectWithValue }) => {
+  async (loginInfo, thunkAPI) => {
     try {
       const response = await loginUser(loginInfo);
-      console.log(response.data.message)
       return response.data;
     } catch (error) {
-      console.log(error);
-      return rejectWithValue(error);
+      console.error('Unexpected error during login:', error);
+      console.log('Rejected value:', error.data); // Log the rejected value
+      return thunkAPI.rejectWithValue(error.data);
     }
   }
 );
+
+
 
 
 
@@ -117,7 +130,7 @@ const initialState = {
   user: null,
   userToken: null, // for storing the JWT
   status: 'idle',
-  error: '',
+  error: null,
   userChecked: false,
   mailSent: false,
   passwordReset:false,
@@ -131,44 +144,19 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(createUserAsync.pending, async (state, action) => {
-      state.status = 'loading';
-      state.mailSent = true;
-      state.loading = true;
 
-      try {
-        // wait for verification or token expiration
-        await waitForVerificationOrTokenExpiration();
-
-        await new Promise(resolve => setTimeout(resolve, 300000));
-        // Continue with the API call
-        const response = await createUser(action.payload);
-        state.status = 'idle';
-        state.loggedInUserToken = response.data;
-      } catch (error) {
-        state.status = 'idle';
-        state.error = error.message;
-      } finally {
-        // Reset mailSent after verification or token expiration
-        state.mailSent = false;
-        state.loading = false;
-      }
-    })
-      .addCase(createUserAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.loggedInUserToken = action.payload;
-      })
-      .addCase(loginUserAsync.pending, (state) => {
-        state.status = 'loading';
-      })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.user = action.payload;
+        state.user = action.payload?.message || null;
+        console.log('Login successful:', action.payload.message);
+        state.loading = false;
+
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.status = 'idle';
-        state.error = action.payload;
-      })
+        console.error('Login failed:', action.payload);
+        state.loading = false;
+        console.log('Rejected value:', action.payload); // Log the rejected value
+        state.error = action.payload.message || "Login failed. Please try again.";
+      });
 
   },
 });

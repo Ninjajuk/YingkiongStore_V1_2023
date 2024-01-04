@@ -13,11 +13,13 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const error= useSelector(selectError);
-  const loading=useSelector(setLoading);
+
+  const error = useSelector(selectError);
+
+  const loading = useSelector(setLoading);
   const navigate = useNavigate();
   const loadingspinner = useLoading();
-const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -25,9 +27,16 @@ const dispatch=useDispatch()
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async(data) => {
-      dispatch(loginUserAsync(data))
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(loginUserAsync(data));
+    } catch (error) {
+      console.error('Login error:',);
+    }
   };
+
+
+  
   
   
   const toggleRememberMe = () => {
@@ -37,6 +46,9 @@ const dispatch=useDispatch()
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+
+
 
   return (
     <>
@@ -91,6 +103,7 @@ const dispatch=useDispatch()
                   required
                 />
               </div>
+              
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
               )}
@@ -165,6 +178,7 @@ const dispatch=useDispatch()
               {error && (
                 <p className="text-red-500">{error || error.message}</p>
               )}
+              
             </form>
           </div>
         </div>
