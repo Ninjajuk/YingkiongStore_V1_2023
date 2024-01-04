@@ -24,6 +24,7 @@ const RegistrationForm = () => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      console.log(data)
       const response = await createUser(data);
       if(!response){
         setError(error.message);
