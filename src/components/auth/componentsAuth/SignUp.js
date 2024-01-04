@@ -3,17 +3,14 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import {createUser} from '../../../API/authAPI'
 import { useNavigate } from "react-router-dom";
 import UserCreatedSuccessfully from "../../modal/UserCreatedAuccessful";
-// const initailUserState = {
-//   name: "",
-//   email: "",
-//   phone: "",
-//   password: ""
-// };
+import { useDispatch } from "react-redux";
+
 const RegistrationForm = () => {
 
   const [error,setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch=useDispatch()
 
   const {
     register,
@@ -24,14 +21,9 @@ const RegistrationForm = () => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      console.log(data)
-      const response = await createUser(data);
-      if(!response){
-        setError(error.message);
-      }else{
-        // dispatch(register(data))
-        navigate('/signup/user')
-      }
+      // dispatch(createUser(data))
+      navigate('/signup/user')
+  
     } catch (error) {
       setError(error.message);
       console.error("Error during Register:", error.message);
@@ -41,42 +33,7 @@ const RegistrationForm = () => {
     }
   };
 
-  // const [user, setUser] = useState(initailUserState);
-  // const [isUser,setIsUSer]=useState(false)
 
-
-  // const handleChange = (e) => {
-  //   setUser({ ...user, [e.target.name]: e.target.value });
-  // };
-
-  // const handleRegister = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     // const response = await fetch("http://localhost:3030/register", {
-  //     //   method: "POST",
-  //     //   headers: {
-  //     //     "Content-Type": "application/json"
-  //     //   },
-  //     //   body: JSON.stringify(user)
-  //     // });
-
-  //     // if (response.ok) {
-  //     //   const data = await response.json();
-  //     //   console.log("User data submitted:", data);
-    
-  //     // } else {
-  //     //   console.error("Error:", response.status);
-        
-  //     // }
-  //     setIsUSer(!isUser)
-  //     navigate('/signup/user')
-  
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-
-  //   console.log(user);
   //   setTimeout(() => {
 
   //     setUser(initailUserState);

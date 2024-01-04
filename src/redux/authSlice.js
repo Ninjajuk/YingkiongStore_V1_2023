@@ -12,6 +12,10 @@ if (typeof window !== 'undefined') {
 const initialState = {
   isAuthenticated: storedIsAuthenticated,
   user: storedUser,
+  error: null,
+  mailSent: false,
+  passwordReset:false,
+  isTokenVerified:false
 };
 
 const authSlice = createSlice({
@@ -34,11 +38,24 @@ const authSlice = createSlice({
       localStorage.removeItem("user");
       localStorage.setItem("isAuthenticated", "false");
     },
+    createUser(state,action){
+      state.mailSent=true
+      // state.user = action.payload;
+    }
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout,createUser } = authSlice.actions;
+export const selectMailSent = (state) => state.auth.mailSent;
 export default authSlice.reducer;
+
+
+
+
+
+
+
+
 
 // Redux/authSlice.js
 // import { createSlice } from "@reduxjs/toolkit";

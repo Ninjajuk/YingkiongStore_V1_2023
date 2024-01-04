@@ -1,15 +1,4 @@
 
-// export function createUser1(userData) {
-//     return new Promise(async (resolve) => {
-//       const response = await fetch('/auth/signup', {
-//         method: 'POST',
-//         body: JSON.stringify(userData),
-//         headers: { 'content-type': 'application/json' },
-//       });
-//       const data = await response.json();
-//       resolve({ data });
-//     });
-//   }
 
 import { AUTH_URLS, BASE_URL } from "../constants";
 
@@ -44,7 +33,7 @@ const getBody = () => {
         // handle the error
         const errorData = await resp.json();
         console.error("Error creating user:", errorData);
-        throw new Error(errorData.error);
+       throw new Error(errorData.message || "Failed to create user");
       }
   
       const data = await resp.json();
