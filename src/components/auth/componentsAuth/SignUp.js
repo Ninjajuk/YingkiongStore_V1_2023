@@ -42,9 +42,11 @@ const RegistrationForm = () => {
           <form
             className="bg-white p-6 rounded-lg shadow-md w-full md:w-1/2"
             noValidate
-          onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}
           >
-            <h2 className="text-2xl font-bold mb-6 text-purple-700">Register to YingKing Store</h2>
+            <h2 className="text-2xl font-bold mb-6 text-purple-700">
+              Register to YingKing Store
+            </h2>
             <div className="mb-4">
               {/* <label htmlFor="name" className="block text-gray-600">Name</label> */}
               <input
@@ -56,7 +58,6 @@ const RegistrationForm = () => {
                 })}
                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
                 placeholder="Enter your name"
-
               />
             </div>
             <div className="mb-4">
@@ -114,8 +115,8 @@ const RegistrationForm = () => {
               />
             </div>
             {errors.password && (
-                  <p className="text-red-500">{errors.password.message}</p>
-                )}
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
             <button
               type="submit"
               className="w-full bg-purple-600 text-white rounded-lg py-2 hover:bg-purple-700 transition duration-300"
@@ -124,15 +125,15 @@ const RegistrationForm = () => {
               {loading ? "Loading..." : "Register"}
             </button>
             <div className="flex justify-between mt-4">
-            <p>Already  have an account</p>
-            <button
-              onClick={()=>navigate('/login')}
-              className="text-sky-700 underline"
-            >
-              Login
-            </button>
-          </div>
-          {error && <p className="text-red-500">{error || error.message}</p>}
+              <p>Already have an account</p>
+              <button
+                onClick={() => navigate("/login")}
+                className="text-sky-700 underline"
+              >
+                Login
+              </button>
+            </div>
+            {error && <p className="text-red-500">{error || error.message}</p>}
           </form>
         </div>
       </div>

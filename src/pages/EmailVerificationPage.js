@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import VerifyEmail from '../components/auth/componentsAuth/VerifyEmail';
 import EmailSuccessUserCreated from '../components/auth/componentsAuth/EmailSuccessUserCreated';
 import EmailFailedveri from '../components/auth/componentsAuth/EmailFailedveri';
-
+import { useSelector } from 'react-redux';
+import {selectMailSent} from '../redux/authSlice'
 
 const EmailVerificationPage = () => {
 
-    const [emailSent, setEmailSent] = useState(true);
+    let emailSent=useSelector(selectMailSent)
     const [isVerified, setIsVerified] = useState(true);
 
     useEffect(() => {
         const timer = setTimeout(() => {
-          setEmailSent(false);
+          emailSent=false;
         }, 5000);
     
         return () => clearTimeout(timer);
@@ -24,7 +25,7 @@ const EmailVerificationPage = () => {
       ) : isVerified ? (
         <EmailSuccessUserCreated />
       ) : (
-        <EmailFailedveri setEmailSent={setEmailSent} />
+        <EmailFailedveri emailSent={emailSent} />
       )}
     </>
   )

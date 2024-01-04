@@ -82,11 +82,26 @@ export const createUserAsync = createAsyncThunk(
   }
 );
 
+// export const resetPasswordRequestAsync = createAsyncThunk(
+//   'user/resetPasswordRequest',
+//   async (email,{rejectWithValue}) => {
+//     try {
+//       const response = await resetPasswordRequest(email);
+//       return response.data;
+//     } catch (error) {
+//       console.log(error);
+//       return rejectWithValue(error);
+
+//     }
+//   }
+// );
+
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
   async (loginInfo, { rejectWithValue }) => {
     try {
       const response = await loginUser(loginInfo);
+      console.log(response.data.message)
       return response.data;
     } catch (error) {
       console.log(error);
@@ -102,7 +117,7 @@ const initialState = {
   user: null,
   userToken: null, // for storing the JWT
   status: 'idle',
-  error: null,
+  error: '',
   userChecked: false,
   mailSent: false,
   passwordReset:false,
@@ -119,7 +134,7 @@ export const authSlice = createSlice({
     .addCase(createUserAsync.pending, async (state, action) => {
       state.status = 'loading';
       state.mailSent = true;
-      state.isLoading = true;
+      state.loading = true;
 
       try {
         // wait for verification or token expiration
@@ -136,7 +151,7 @@ export const authSlice = createSlice({
       } finally {
         // Reset mailSent after verification or token expiration
         state.mailSent = false;
-        state.isLoading = false;
+        state.loading = false;
       }
     })
       .addCase(createUserAsync.fulfilled, (state, action) => {
@@ -148,7 +163,7 @@ export const authSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.loggedInUserToken = action.payload;
+        state.user = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'idle';
@@ -157,7 +172,7 @@ export const authSlice = createSlice({
 
   },
 });
-export const setLoading=(state)=>state.auth.isLoading
+export const setLoading=(state)=>state.auth.loading
 export const selectLoggedInUser = (state) => state.auth.loggedInUserToken;
 export const selectError = (state) => state.auth.error;
 export const selectUserChecked = (state) => state.auth.userChecked;

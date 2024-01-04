@@ -3,18 +3,18 @@ import { FaEye,FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Circles } from "react-loader-spinner";
 import useLoading from '../../../customhooks/Loading';
-import {loginUser} from '../../../API/authAPI'
+import {loginUserAsync,selectError,setLoading} from '../../../redux/authSlice'
 
 import { useForm, SubmitHandler } from "react-hook-form"
-import {loginUserAsync} from '../../../redux/authSlice'
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [error,setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const error= useSelector(selectError);
+  const loading=useSelector(setLoading);
   const navigate = useNavigate();
   const loadingspinner = useLoading();
 const dispatch=useDispatch()
@@ -25,26 +25,9 @@ const dispatch=useDispatch()
     formState: { errors },
   } = useForm();
 
-
-  const onSubmit = async (data) => {
-    try {
-      setLoading(true);
-      const response = await loginUser(data);
-      if(!response){
-        setError(error.message);
-      }else{
-        dispatch(loginUserAsync(data))
-        navigate('/')
-      }
-    } catch (error) {
-      setError(error.message);
-      console.error("Error during login:", error.message);
- 
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = async(data) => {
+      dispatch(loginUserAsync(data))
   };
-  
   
   
   const toggleRememberMe = () => {

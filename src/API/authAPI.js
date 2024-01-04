@@ -68,13 +68,14 @@ const getBody = () => {
   // }
   export async function loginUser(userData) {
     try {
-      const resp = await fetch("http://localhost:8000/auth/login", {
+      const resp = await fetch("http://localhost:5000/api/authenticate/", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: { "content-type": "application/json" },
       });
   
       const data = await resp.json();
+      console.log(data.data.message)
   
       if (!resp.ok) {
         const errorMessage = data.error || "Invalid credentials";
@@ -91,27 +92,7 @@ const getBody = () => {
 
 
 
-  export function loginUser1(loginInfo) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch('/auth/login', {
-          method: 'POST',
-          body: JSON.stringify(loginInfo),
-          headers: { 'content-type': 'application/json' },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          resolve({ data });
-        } else {
-          const error = await response.text();
-          reject(error);
-        }
-      } catch (error) {
-        reject( error );
-      }
-  
-    });
-  }
+
   
   export function checkAuth() {
     return new Promise(async (resolve, reject) => {
@@ -197,7 +178,7 @@ const getBody = () => {
   // Placeholder function for waiting for verification or token expiration
  export  async function waitForVerificationOrTokenExpiration(token) {
     const maxAttempts = 10; // You can adjust the number of attempts
-    const delayBetweenAttempts = 3000; // Delay in milliseconds between attempts
+    const delayBetweenAttempts = 300000; // Delay in milliseconds between attempts
   
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       try {
@@ -219,10 +200,11 @@ const getBody = () => {
   }
   
 
-// Placeholder function for checking verification status
+//for checking verification status
 
 export async function checkVerificationStatus(token) {
-  // Replace this with your actual API call to check the verification status
+
+  //API call to check the verification status
   const resp = await fetch(`${BASE_URL}/api/authenticate`, {
     method: 'GET',
     headers: {
@@ -237,6 +219,6 @@ export async function checkVerificationStatus(token) {
   }
 
   const data = await resp.json();
-  return data.status; // Replace 'status' with the actual field representing verification status
+  return data.status; 
 }
 
