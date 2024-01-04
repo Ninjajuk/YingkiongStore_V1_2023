@@ -6,7 +6,7 @@ import useLoading from '../../../customhooks/Loading';
 import {loginUser} from '../../../API/authAPI'
 
 import { useForm, SubmitHandler } from "react-hook-form"
-import {login} from '../../../redux/authSlice'
+import {loginUserAsync} from '../../../redux/authSlice'
 import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
@@ -33,7 +33,7 @@ const dispatch=useDispatch()
       if(!response){
         setError(error.message);
       }else{
-        dispatch(login(data))
+        dispatch(loginUserAsync(data))
         navigate('/')
       }
     } catch (error) {

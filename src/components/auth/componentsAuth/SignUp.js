@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
-import {createUser} from '../../../API/authAPI'
+import {createUserAsync} from '../../../redux/authSlice'
 import { useNavigate } from "react-router-dom";
 import UserCreatedSuccessfully from "../../modal/UserCreatedAuccessful";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const RegistrationForm = () => {
-
+  const loading = useSelector((state) => state.auth.isLoading);
   const [error,setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch=useDispatch()
 
@@ -20,26 +19,15 @@ const RegistrationForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      setLoading(true);
-      // dispatch(createUser(data))
-      navigate('/signup/user')
-  
+      dispatch(createUserAsync(data))
     } catch (error) {
       setError(error.message);
       console.error("Error during Register:", error.message);
  
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
-
-
-  //   setTimeout(() => {
-
-  //     setUser(initailUserState);
-  //   }, 0); 
-  // };
-
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">

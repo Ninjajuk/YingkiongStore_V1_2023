@@ -192,3 +192,51 @@ const getBody = () => {
   
     });
   }
+
+
+  // Placeholder function for waiting for verification or token expiration
+ export  async function waitForVerificationOrTokenExpiration(token) {
+    const maxAttempts = 10; // You can adjust the number of attempts
+    const delayBetweenAttempts = 3000; // Delay in milliseconds between attempts
+  
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        // Call an API to check verification status or wait for token expiration
+        const verificationStatus = await checkVerificationStatus(token);
+  
+        if (verificationStatus === 'verified') {
+          // Verification successful, break out of the loop
+          break;
+        } else {
+          // Verification not yet successful, wait before the next attempt
+          await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
+        }
+      } catch (error) {
+        // Handle errors from the API call
+        console.error('Error checking verification status:', error);
+      }
+    }
+  }
+  
+
+// Placeholder function for checking verification status
+
+export async function checkVerificationStatus(token) {
+  // Replace this with your actual API call to check the verification status
+  const resp = await fetch(`${BASE_URL}/api/authenticate`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth-token': token, 
+    },
+  });
+
+  if (!resp.ok) {
+    const errorData = await resp.json();
+    throw new Error(errorData.message || 'Failed to check verification status');
+  }
+
+  const data = await resp.json();
+  return data.status; // Replace 'status' with the actual field representing verification status
+}
+

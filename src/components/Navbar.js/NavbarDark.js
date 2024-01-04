@@ -7,7 +7,7 @@ import { FaCartPlus,FaUser,FaAngleDown } from "react-icons/fa";
 import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
 import { useDispatch, useSelector } from 'react-redux';
-import{logout} from '../../redux/authSlice'
+// import{logout} from '../../redux/authSlice'
 
 const navigationLinks = [
   { to: "/", text: "Home" },
@@ -188,7 +188,7 @@ const navigate=useNavigate()
                             {({ active }) => (
                               <a
                                 href="/"
-                                onClick={() => dispatch(logout())}
+                                // onClick={() => dispatch(logout())}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -306,7 +306,9 @@ const navigate=useNavigate()
                     Cart
                   </Disclosure.Button>
                   {isAuthenticated ? (
-                    <button onClick={() => dispatch(logout())} className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                    <button 
+                    // onClick={() => dispatch(logout())} 
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
                       Sign out
                     </button>
                   ) : (
