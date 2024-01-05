@@ -55,7 +55,7 @@ const getBody = () => {
   
 
 
-export async function createUser(userData) {
+export async function createUser(userData,callback) {
 
   try {
     const resp = await fetch(
@@ -67,9 +67,10 @@ export async function createUser(userData) {
       const successMessage = userdata.message;
 
       console.log(successMessage, "Initially success response"); //For new User  before returning response verify token and call API parallely
-     
-// Dispatch the success message to Redux
-// dispatch(setSuccessMessage(successMessage));
+     alert(successMessage)
+  // Execute the callback function provided
+  callback();
+
       //a delay of 10 seconds using setTimeout
       await new Promise(resolve => setTimeout(resolve, 10000));
 

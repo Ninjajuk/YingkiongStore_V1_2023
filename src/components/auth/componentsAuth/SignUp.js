@@ -18,14 +18,30 @@ const RegistrationForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     dispatch(createUserAsync(data));
+    
   };
+
+  // const handleCreateUser = async () => {
+  //   try {
+  //     const result = await createUser(userData, () => {
+  //       // Callback function to be executed after alert and delay
+  //       navigate('/verify-email');
+  //     });
+
+  //     // Handle the result if needed
+  //     console.log(result);
+  //   } catch (error) {
+  //     // Handle errors if needed
+  //     console.error(error);
+  //   }
+  // };
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
-        <div className="w-full md:w-1/2 flex flex-col md:flex-row rounded-md shadow-md">
-          <div className=" md:block md:w-1/2">
+        <div className="w-full lg:w-1/2 flex flex-col lg:flex-row rounded-md shadow-md">
+          <div className=" lg:block lg:w-1/2">
             <img
               src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
               alt="Your Image"
@@ -33,7 +49,7 @@ const RegistrationForm = () => {
             />
           </div>
           <form
-            className="bg-white p-6 rounded-lg shadow-md w-full md:w-1/2"
+            className="bg-white p-6 rounded-lg shadow-md w-full lg:w-1/2"
             noValidate
             onSubmit={handleSubmit(onSubmit)}
           >
