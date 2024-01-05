@@ -68,7 +68,6 @@ import {
   waitForVerificationOrTokenExpiration
 } from '../API/authAPI';
 
-
 export const createUserAsync = createAsyncThunk(
   'user/createUser',
   async (userData) => {
@@ -109,14 +108,14 @@ export const createUserAsync = createAsyncThunk(
 
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
-  async (loginInfo, thunkAPI) => {
+  async (loginInfo, {rejectWithValue} ) => {
     try {
       const response = await loginUser(loginInfo);
       return response.data;
     } catch (error) {
-      console.error('Unexpected error during login:', error);
-      console.log('Rejected value:', error.data); // Log the rejected value
-      return thunkAPI.rejectWithValue(error.data);
+      // console.error('Unexpected error during login:', error,'in loginsyncthunkfunction');
+      console.log('Rejected value: in (before returning) rejectWithValue loginsyncthunkfunction', error.message); 
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -134,7 +133,7 @@ const initialState = {
   userChecked: false,
   mailSent: false,
   passwordReset:false,
-  success: false, // for monitoring the registration process.
+  success: false,
   
 };
 
@@ -144,19 +143,27 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-
+      .addCase(loginUserAsync.pending, (state) => {
+        state.loading = true; 
+      })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        state.user = action.payload?.message || null;
-        console.log('Login successful:', action.payload.message);
+        state.user = action.payload.data.user;
+        state.userToken=action.payload.data.token;
+        console.log("Login successful:", action.payload, "Samsu");
+        console.log("User", action.payload.data.user);
+        console.log("userToken", action.payload.data.token);
         state.loading = false;
-
+        // Save user data to local storage
+        localStorage.setItem("userData", JSON.stringify(action.payload));
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        console.error('Login failed:', action.payload);
         state.loading = false;
-        console.log('Rejected value:', action.payload); // Log the rejected value
-        state.error = action.payload.message || "Login failed. Please try again.";
+        state.error = action.payload;
+        // console.log('Rejected action:', action);
+        console.log("Rejected value:", action.payload, "Rejected valueSamsu");
       });
+      
+      
 
   },
 });

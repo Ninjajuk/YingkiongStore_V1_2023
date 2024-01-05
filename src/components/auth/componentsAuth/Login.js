@@ -27,12 +27,9 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      await dispatch(loginUserAsync(data));
-    } catch (error) {
-      console.error('Login error:',);
-    }
+  const onSubmit = async(data) => {
+   await dispatch(loginUserAsync(data));
+   
   };
 
 
@@ -46,9 +43,6 @@ const LoginForm = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
-
-
 
   return (
     <>
@@ -176,7 +170,7 @@ const LoginForm = () => {
                 </button>
               </div>
               {error && (
-                <p className="text-red-500">{error || error.message}</p>
+                <p className="text-red-500">{error}</p>
               )}
               
             </form>

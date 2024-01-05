@@ -99,10 +99,10 @@ const getBody = () => {
       } else {
         const error = await response.json();
         console.log(error.message)
-        // throw error;
+        throw error;
       }
     } catch (error) {
-      console.error("Unexpected error during login:", error);
+      console.error("Unexpected error during login:", error,'in loginUserAPICALL');
       throw error; // Re-throw the error to propagate it to the calling code
     }
   }
