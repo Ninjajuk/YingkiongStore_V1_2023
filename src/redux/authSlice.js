@@ -64,47 +64,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   loginUser,
+  signOut,
   createUser,
   waitForVerificationOrTokenExpiration
 } from '../API/authAPI';
 
 export const createUserAsync = createAsyncThunk(
-  'user/createUser',
-  async (userData) => {
-    const response = await createUser(userData);
+  "user/createUser",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await createUser(userData);
+      if (response) {
+        console.log(response.data);
+        return response.data;
+      }
+      // else{
+      //   throw new Error
+      // }
+    } catch (error) {
 
-    return response.data;
+      console.log(
+        "Rejected value: in (before returning) rejectWithValue Createsyncthunkfunction",
+        error.data.error
+      );
+      return rejectWithValue(error.data.error);
+    }
   }
 );
-
-// export const resetPasswordRequestAsync = createAsyncThunk(
-//   'user/resetPasswordRequest',
-//   async (email,{rejectWithValue}) => {
-//     try {
-//       const response = await resetPasswordRequest(email);
-//       return response.data;
-//     } catch (error) {
-//       console.log(error);
-//       return rejectWithValue(error);
-
-//     }
-//   }
-// );
-
-// export const loginUserAsync = createAsyncThunk(
-//   'user/loginUser',
-//   async (loginInfo, thunkAPI) => {
-//     try {
-//       const response = await loginUser(loginInfo);
-//       return response;
-//     } catch (error) {
-//       // Make sure the rejected value is an object
-//       const rejectedValue = error.response ? error.response.data : { message: error.message };
-//       return thunkAPI.rejectWithValue(rejectedValue);
-//     }
-//   }
-// );
-
 
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
@@ -119,15 +105,26 @@ export const loginUserAsync = createAsyncThunk(
     }
   }
 );
+export const signOutAsync = createAsyncThunk("user/signOut", async () => {
+  try {
+    localStorage.removeItem("userData"); // Reset local storage
+
+    return { data: {} };
+  } catch (error) {
+    console.error("Unexpected error during logout", error, "Logout");
+    throw error;
+  }
+});
 
 
 
-// Check local storage for initial authentication state
-// Retrieve the stored data from localStorage
+
+
+//Check local storage for initial authentication state Retrieve the stored data from localStorage
 const storedDataString = localStorage.getItem("userData");
 
-// Parse the JSON string into a JavaScript object or use default values
-const storedData = storedDataString ? JSON.parse(storedDataString) : {};
+
+const storedData = storedDataString ? JSON.parse(storedDataString) : {};// Parse the JSON string into a JavaScript object or use default values
 
 // Extract the individual values with default values
 const userLocal = storedData.user || null;
@@ -144,16 +141,36 @@ const initialState = {
   userChecked: false,
   mailSent: false,
   passwordReset:false,
-  success: false,
+  successMessage: null,
   
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setSuccessMessage: (state, action) => {
+      state.successMessage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
+    .addCase(createUserAsync.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(createUserAsync.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.data.user;
+      state.error=action.payload.message
+      console.log("Signup Error",  state.error, "Samsu");
+    })
+    .addCase(createUserAsync.rejected, (state, action) => {
+      state.loading = false;
+      state.error=action.payload
+      console.log('Rejected action:', action);
+      console.log('Rejected value:', 'Rejected valueSamsu in createuser thunk',action.payload);
+    })
+    
       .addCase(loginUserAsync.pending, (state) => {
         state.loading = true;
       })
@@ -182,6 +199,16 @@ export const authSlice = createSlice({
         state.error = action.payload;
         // console.log('Rejected action:', action);
         console.log("Rejected value:", action.payload, "Rejected valueSamsu");
+      })
+      .addCase(signOutAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(signOutAsync.fulfilled, (state, action) => {
+        // Clear local storage on successful sign out
+        localStorage.removeItem("userData");
+      })
+      .addCase(signOutAsync.rejected, (state) => {
+        console.log("Sign out rejected");
       });
   },
 });

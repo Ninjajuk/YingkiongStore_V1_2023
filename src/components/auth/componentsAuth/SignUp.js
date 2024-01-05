@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
-import {createUserAsync} from '../../../redux/authSlice'
+import {createUserAsync,selectError,setLoading} from '../../../redux/authSlice'
 import { useNavigate } from "react-router-dom";
 import UserCreatedSuccessfully from "../../modal/UserCreatedAuccessful";
 import { useDispatch, useSelector } from "react-redux";
 
 const RegistrationForm = () => {
-  const loading = useSelector((state) => state.auth.isLoading);
-  const [error,setError] = useState('');
+  const loading = useSelector(setLoading);
+  const error = useSelector(selectError);
+  
   const navigate = useNavigate();
   const dispatch=useDispatch()
 
@@ -17,16 +18,8 @@ const RegistrationForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      dispatch(createUserAsync(data))
-    } catch (error) {
-      setError(error.message);
-      console.error("Error during Register:", error.message);
- 
-    } finally {
-      // setLoading(false);
-    }
+  const onSubmit = (data) => {
+    dispatch(createUserAsync(data));
   };
   return (
     <>
@@ -133,7 +126,7 @@ const RegistrationForm = () => {
                 Login
               </button>
             </div>
-            {error && <p className="text-red-500">{error || error.message}</p>}
+            {error && <p className="text-red-500">{error}</p>}
           </form>
         </div>
       </div>

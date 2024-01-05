@@ -7,7 +7,7 @@ import { FaCartPlus,FaUser,FaAngleDown } from "react-icons/fa";
 import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
 import { useDispatch, useSelector } from 'react-redux';
-import{setIsauthenticated,selectLoggedInUser} from '../../redux/authSlice'
+import{setIsauthenticated,selectLoggedInUser,signOutAsync} from '../../redux/authSlice'
 
 const navigationLinks = [
   { to: "/", text: "Home" },
@@ -26,14 +26,18 @@ function classNames(...classes) {
   const cartItems = useSelector((state) => state.cart);
   const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
-
-console.log(user)
-console.log(isAuthenticated)
+const dispatch = useDispatch();
 
 
 const navigate=useNavigate()
   const handlecartOpen = () => {
     setIsCartOpen((prevIsCartOpen) => !prevIsCartOpen);
+  };
+
+  const handleLogout = () => {
+    dispatch(signOutAsync());
+    // Redirect to the login page after dispatching the logout action
+    navigate('/');
   };
 
 
@@ -192,7 +196,8 @@ const navigate=useNavigate()
                             {({ active }) => (
                               <a
                                 href="/"
-                                // onClick={() => dispatch(logout())}
+                                // onClick={() => dispatch(signOutAsync())}
+                                onClick={handleLogout}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -311,12 +316,13 @@ const navigate=useNavigate()
                   </Disclosure.Button>
                   {isAuthenticated ? (
                     <button 
-                    // onClick={() => dispatch(logout())} 
+                    // onClick={() => dispatch(signOutAsync())}
+                    onClick={handleLogout}
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
                       Sign out
                     </button>
                   ) : (
-                    <button className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</button>
+                    <button onClick={()=>navigate('/login')} className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</button>
                   )}
                 </div>
               </div>

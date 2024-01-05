@@ -1,7 +1,8 @@
 
 
+import { useDispatch } from "react-redux";
 import { AUTH_URLS, BASE_URL } from "../constants";
-
+import{validateUserInput} from '../utility/validationAuth'
 const postBody = (body) => {
   return {
     method: "POST",
@@ -25,28 +26,65 @@ const getBody = () => {
 }
 
   
-  export async function createUser(userData) {
-    try {
-      const resp = await fetch(`${BASE_URL}/${AUTH_URLS.SIGN_UP}`, postBody(userData));
+// export async function createUser(userData) {
+//   // const validationErrors = validateUserInput(userData);
+
+//   // if (Object.keys(validationErrors).length > 0) {
+//   //   console.error("Client-side validation error:", validationErrors);
+//   //   throw { data: { error: "Validation error", validationErrors } };
+//   // }
+
+//   try {
+//     const resp = await fetch(`${BASE_URL}/${AUTH_URLS.SIGN_UP}`, postBody(userData));
+//     if (resp.ok) {
+//       const userdata = await resp.json();
+//       console.log(userdata, 'Initially success response');
+//       return { userdata };
+//     } else {
+//       const error = await resp.json();
+//       console.log( 'Initially Failure response',error.message);
+//           throw error;
+//     }
+//   } catch (error) {
+//     console.error("Error creating user:", error.data.error, 'in CreateUserUserAPICALL');
+//     throw error;
+//   }
+// }
+
+
   
-      if (!resp.ok) {
-        // handle the error
-        const errorData = await resp.json();
-        console.error("Error creating user:", errorData);
-       throw new Error(errorData.message || "Failed to create user");
-      }
-  
-      const data = await resp.json();
-      return { data };
-    } catch (error) {
-      console.error("Error creating user:", error);
-      throw error;
+
+
+export async function createUser(userData) {
+
+  try {
+    const resp = await fetch(
+      `${BASE_URL}/${AUTH_URLS.SIGN_UP}`,
+      postBody(userData)
+    );
+    if (resp.ok) {
+      const userdata = await resp.json();
+      const successMessage = userdata.message;
+
+      console.log(successMessage, "Initially success response"); //For new User  before returning response verify token and call API parallely
+     
+// Dispatch the success message to Redux
+// dispatch(setSuccessMessage(successMessage));
+      //a delay of 10 seconds using setTimeout
+      await new Promise(resolve => setTimeout(resolve, 10000));
+
+      return {userdata, successMessage}
     }
+    else {
+      const error = await resp.json();
+      console.log( 'Initially Failure response',error.message);
+      throw { data: { error: error.message, data: {} } }; 
+    }
+  } catch (error) {
+    console.error("Error creating user:",error.data.error,"in CreateUserUserAPICALL");
+    throw error;
   }
-  
-
-
-
+}
   export async function loginUser(userData) {
     try {
       const response = await fetch("http://localhost:5000/api/authenticate/", {
@@ -57,7 +95,7 @@ const getBody = () => {
   
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message)
+        console.log('error inititally before getting called in thunk',data.data)
         return { data };
       } else {
         const error = await response.json();
@@ -66,11 +104,28 @@ const getBody = () => {
       }
     } catch (error) {
       console.error("Unexpected error during login:", error,'in loginUserAPICALL');
-      throw error; // Re-throw the error to propagate it to the calling code
+      throw error; 
     }
   }
   
-  
+  export async function signOut(userId) {
+      try {
+        const response = await fetch('http://localhost:5000/api/authenticate/logout');
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.message)
+          return { data };
+        } else {
+          const error = await response.json();
+          console.log(error.message)
+          throw error;
+        }
+      } catch (error) {
+        console.error("Unexpected error during logout", error,'in loginUserAPICALL');
+        throw error; 
+      }
+
+  }
 
 
 
@@ -93,25 +148,7 @@ const getBody = () => {
     });
   }
   
-  
-  export function signOut(userId) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch('/auth/logout');
-        if (response.ok) {
-          resolve({ data:'success' });
-        } else {
-          const error = await response.text();
-          reject(error);
-        }
-      } catch (error) {
-        console.log(error)
-        reject( error );
-      }
-    });
-  }
-  
-  
+
   export async function resetPasswordRequest(email) {
       try {
         const response = await fetch('http://localhost:8000/auth/send-otp', {
