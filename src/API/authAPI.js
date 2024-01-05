@@ -45,45 +45,8 @@ const getBody = () => {
   }
   
 
-  // export async function loginUser(userData) {
-  //   try {
-  //     const resp = await fetch("http://localhost:8000/auth/login", {
-  //       method: "POST",
-  //       body: JSON.stringify(userData),
-  //       headers: { "content-type": "application/json" },
-  //     });
-  
-  //     if (!resp.ok) {
-  //       const errorData = await resp.json();
-  //       console.error("Login error:", errorData);
-  //       throw new Error("Invalid credentials"); 
-  //     }
-  
-  //     const data = await resp.json();
-  //     return { data };
-  //   } catch (error) {
-  //     console.error("Error during login:", error);
-  //     throw error;
-  //   }
-  // }
-  // export async function loginUser(userData) {
-  //   try {
-  //     const resp = await fetch("http://localhost:5000/api/authenticate/", {
-  //       method: "POST",
-  //       body: JSON.stringify(userData),
-  //       headers: { "content-type": "application/json" },
-  //     });
-  
-  //     const data = await resp.json();
-  //     console.log(data)
-  //     return {data}
 
-  //   } catch (error) {
-  //     console.error("Error during login:", );
-   
-  //   }
-  // }
-  
+
   export async function loginUser(userData) {
     try {
       const response = await fetch("http://localhost:5000/api/authenticate/", {

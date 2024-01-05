@@ -1,5 +1,5 @@
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -7,7 +7,7 @@ import { FaCartPlus,FaUser,FaAngleDown } from "react-icons/fa";
 import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
 import { useDispatch, useSelector } from 'react-redux';
-// import{logout} from '../../redux/authSlice'
+import{setIsauthenticated,selectLoggedInUser} from '../../redux/authSlice'
 
 const navigationLinks = [
   { to: "/", text: "Home" },
@@ -24,15 +24,19 @@ function classNames(...classes) {
 
   const[isCartOpen,setIsCartOpen]=useState(false)
   const cartItems = useSelector((state) => state.cart);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
+
+console.log(user)
+console.log(isAuthenticated)
+
 
 const navigate=useNavigate()
   const handlecartOpen = () => {
     setIsCartOpen((prevIsCartOpen) => !prevIsCartOpen);
   };
 
-  const dispatch=useDispatch()
+
   return (
     <>
       <Disclosure as="nav" className="bg-purple-700 sticky top-0 z-10">
@@ -112,7 +116,7 @@ const navigate=useNavigate()
                 <div className="hidden lg:block">
                   {isAuthenticated && user ? (
                     <h1 className="font-medium text-gray-300 ">
-                      {user.email.slice(0, 6)}
+                      {user.fullName.slice(0, 6)}
                     </h1>
                   ) : (
                     <button

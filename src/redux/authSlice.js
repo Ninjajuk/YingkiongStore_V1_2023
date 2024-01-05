@@ -122,13 +122,24 @@ export const loginUserAsync = createAsyncThunk(
 
 
 
+// Check local storage for initial authentication state
+// Retrieve the stored data from localStorage
+const storedDataString = localStorage.getItem("userData");
+
+// Parse the JSON string into a JavaScript object or use default values
+const storedData = storedDataString ? JSON.parse(storedDataString) : {};
+
+// Extract the individual values with default values
+const userLocal = storedData.user || null;
+const tokenLocal = storedData.token || null;
+const isAuthenticatedLocal = storedData.isAuthenticated || false;
 
 
 const initialState = {
+  isAuthenticated:isAuthenticatedLocal ,
   loading:false,
-  user: null,
-  userToken: null, // for storing the JWT
-  status: 'idle',
+  user: userLocal,
+  userToken: tokenLocal, // for storing the JWT
   error: null,
   userChecked: false,
   mailSent: false,
@@ -144,17 +155,27 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUserAsync.pending, (state) => {
-        state.loading = true; 
+        state.loading = true;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
+        state.isAuthenticated = action.payload.data.user.isVerified;
         state.user = action.payload.data.user;
-        state.userToken=action.payload.data.token;
+        state.success = true;
+        state.userToken = action.payload.data.token;
         console.log("Login successful:", action.payload, "Samsu");
         console.log("User", action.payload.data.user);
         console.log("userToken", action.payload.data.token);
+        // console.log("isAuthenticated", action.payload.data.user.isVerified);
         state.loading = false;
         // Save user data to local storage
-        localStorage.setItem("userData", JSON.stringify(action.payload));
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            user: action.payload.data.user,
+            isAuthenticated: action.payload.data.user.isVerified,
+            token: action.payload.data.token,
+          })
+        );
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.loading = false;
@@ -162,13 +183,11 @@ export const authSlice = createSlice({
         // console.log('Rejected action:', action);
         console.log("Rejected value:", action.payload, "Rejected valueSamsu");
       });
-      
-      
-
   },
 });
 export const setLoading=(state)=>state.auth.loading
-export const selectLoggedInUser = (state) => state.auth.loggedInUserToken;
+export const selectLoggedInUser = (state) => state.auth.user;
+export const setIsauthenticated=(state)=>state.auth.isAuthenticated;
 export const selectError = (state) => state.auth.error;
 export const selectUserChecked = (state) => state.auth.userChecked;
 export const selectMailSent = (state) => state.auth.mailSent;

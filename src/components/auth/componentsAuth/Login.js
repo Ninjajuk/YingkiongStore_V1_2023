@@ -3,7 +3,7 @@ import { FaEye,FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Circles } from "react-loader-spinner";
 import useLoading from '../../../customhooks/Loading';
-import {loginUserAsync,selectError,setLoading} from '../../../redux/authSlice'
+import {loginUserAsync,selectError,setLoading,setIsauthenticated} from '../../../redux/authSlice'
 
 import { useForm, SubmitHandler } from "react-hook-form"
 
@@ -13,6 +13,8 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const loginStatus = useSelector((state) => state.auth.success);
+  const isAuthenticated = useSelector(setIsauthenticated); 
 
   const error = useSelector(selectError);
 
@@ -27,9 +29,16 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async(data) => {
-   await dispatch(loginUserAsync(data));
-   
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(loginUserAsync(data));
+      if(loginStatus){
+        navigate('/');
+      }
+    } catch (error) {
+      // Handle any login errors if needed
+      console.error('Login error:', error);
+    }
   };
 
 
@@ -43,6 +52,15 @@ const LoginForm = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  //Show Login Page onlywhen user data and authenticated state is unavailable or false
+  useEffect(() => {
+    // Check if the user is already authenticated (data available in localStorage)
+    if (isAuthenticated) {
+      // Redirect to a different page, e.g., the home page
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <>
