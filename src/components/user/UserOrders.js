@@ -4,6 +4,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 import UserDashboard from './usercomponents/UserDashboard'
+import Navbar1 from '../Navbar.js/NavbarDark'
 
 const orders = [
   {
@@ -61,7 +62,8 @@ function classNames(...classes) {
 
 export default function OrderHistoryInvoicePanel() {
   return (
-    <UserDashboard>
+    <>
+    <Navbar1/>
            <div className="bg-white w-full overflow-y-auto">
       <div className="py-2">
         <div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
@@ -228,7 +230,7 @@ export default function OrderHistoryInvoicePanel() {
         </div>
       </div>
     </div>
-    </UserDashboard>
+    </>
  
   )
 }
