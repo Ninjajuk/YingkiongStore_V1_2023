@@ -162,6 +162,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload.data.user;
       state.error=action.payload.message
+      state.mailSent=true
       console.log("Signup Error",  state.error, "Samsu");
     })
     .addCase(createUserAsync.rejected, (state, action) => {
