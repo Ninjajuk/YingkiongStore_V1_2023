@@ -25,7 +25,7 @@ const ProductDetails = ({ params }) => {
         setProduct(productData);
       } catch (error) {
         console.error(error);
-        // Handle error, e.g., set an error state
+        // Handle error
       }
     };
 
