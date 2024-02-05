@@ -61,6 +61,7 @@
 
 
 
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   loginUser,
@@ -71,9 +72,9 @@ import {
 
 export const createUserAsync = createAsyncThunk(
   "user/createUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData, { rejectWithValue },callback) => {
     try {
-      const response = await createUser(userData);
+      const response = await createUser(userData,callback);
       if (response) {
         console.log(response.data);
         return response.data;
