@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UserDashboard from "./usercomponents/UserDashboard";
+import Navbar1 from "../Navbar.js/NavbarDark";
 
 
 
@@ -31,51 +32,32 @@ const PersonalInfoCard = () => {
   const { name, phone, email, gender, address, memberRole, image } = data;
 
   return (
-    <UserDashboard>
-      <main className="w-full">
-      <div className="w-full md:max-w-3xl  bg-white rounded-md shadow-md">
-        <div className="w-full mx-auto md:flex">
-          <div className="md:w-1/2 h-1/2 flex justify-center items-center">
-            <div className="p-2">
-              <img
-                src={image}
-                alt={name}
-                className="w-full h-full  object-cover rounded-md"
-              />
-            </div>
-          </div>
-          <div className="p-4 md:w-2/3 ">
-            <div>
-              <h2 className="text-xl font-semibold">{name}</h2>
-              <p className="text-gray-600">{phone}</p>
-              <p className="text-gray-600">{email}</p>
-              <p className="text-gray-600">{gender}</p>
-              <p className="text-gray-600">{address}</p>
-              <p className="text-gray-600">{memberRole}</p>
-              <div className="mt-4 flex ">
-                <button
-                  className="mr-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-                  // onClick={() => setIsModalOpen(!isModalOpen)}
-                >
-                  Update
-                </button>
-                <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-                  // onClick={() => setisdeleteModalOpen(!isdeleteModalOpen)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+    <>
+      <Navbar1 />
+
+
+      <div className="container mx-auto mt-8 md:px-[8rem]">
+
+        <div className="p-4  w-full lg:max-w-lg  bg-gray-100 rounded-md shadow-md  mx-auto">
+          <h2 className="text-2xl font-bold leading-6 pb-2">{name}</h2>
+          <p className="text-gray-600 pb-1">{phone}</p>
+          <p className="text-gray-600 pb-1">{email}</p>
+          <p className="text-gray-600 pb-1">{gender}</p>
+          <p className="text-gray-600 pb-1">{address}</p>
+          <p className="text-gray-600 pb-1">{memberRole}</p>
+          <div className="mt-4 flex items-center justify-center ">
+            <button
+              className=" bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+              // onClick={() => setIsModalOpen(!isModalOpen)}
+            >
+              Update
+            </button>
           </div>
         </div>
-        {/* {isModalOpen && <UserModal closeModal={closeModal} data={data} />}
-      {isdeleteModalOpen && <DeleteUserModal closeModal={closeModal} />} */}
+        {/* {isModalOpen && <UserModal closeModal={closeModal} data={data} />} */}
       </div>
-      </main>
 
-
-    </UserDashboard>
+    </>
   );
 };
 

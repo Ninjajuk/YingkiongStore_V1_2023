@@ -179,20 +179,7 @@ const navigate=useNavigate()
                               </a>
                             )}
                           </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="/cart"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Cart
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
+                          {isAuthenticated?   <Menu.Item>
                             {({ active }) => (
                               <a
                                 href="/"
@@ -206,7 +193,20 @@ const navigate=useNavigate()
                                 Sign out
                               </a>
                             )}
-                          </Menu.Item>
+                          </Menu.Item>:       <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/login"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Login
+                              </a>
+                            )}
+                          </Menu.Item>}
+                   
                         </Menu.Items>
                       </Transition>
                     </Menu>
