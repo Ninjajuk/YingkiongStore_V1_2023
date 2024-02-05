@@ -6,43 +6,47 @@ import { useSelector } from 'react-redux';
 import { selectMailSent } from '../redux/authSlice';
 
 const EmailVerificationPage = () => {
-  // const emailSent = useSelector(selectMailSent);
-  const [isVerified, setIsVerified] = useState(true);
-  const emailSent=false
+  const emailSent = useSelector(selectMailSent);
+  const [isVerified, setIsVerified] = useState(false);
+  const query = new URLSearchParams(window.location.search);
+  const token = query.get('x-auth-token')
+  console.log(token)
+  console.log(query)
   useEffect(() => {
-    const fetchData = async () => {
-
+    const verifyEmail = async (token) => {
       try {
-        const response = await fetch('http://localhost:5000/api/authenticate');
-        if (response.ok) {
-          console.log('API call successful');
-   // Extract token from the headers
-   const token = response.headers.get('Authorization');
-   console.log('Token:', token);
-          // Set a timer to reset emailSent after 5 seconds
-          const timer = setTimeout(() => {
-            emailSent = false;
-          }, 5000);
+        const response = await fetch('http://localhost:5000/api/authenticate/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': `Bearer ${token}`, 
+          },
+        });
 
-          // Do additional verification logic here
 
-          // Set isVerified to true when verification is successful
-          setIsVerified(true);
-
-          // Clear the timer when verification is successful
-          clearTimeout(timer);
-        } else {
-          emailSent = false;
-          console.error('API call failed');
-        }
       } catch (error) {
-        console.error('Error during API call:', error.message);
+        // Handle network or other errors
+        setIsVerified(false);
       }
     };
 
-    fetchData(); // Call the async function within useEffect
 
-  }, []);
+
+    if (emailSent && token) {
+      verifyEmail(token);
+    }
+
+    // Cleanup function to clear the timer
+    const timer = setTimeout(() => {
+      setIsVerified(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [emailSent]);
+
+
 
   return (
     <>

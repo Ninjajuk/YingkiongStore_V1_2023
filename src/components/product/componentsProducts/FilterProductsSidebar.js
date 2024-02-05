@@ -14,47 +14,48 @@ const sortOptions = [
 const subCategories = [
   { name: 'Fruits-vegetables', href: '#' },
   { name: 'Meat', href: '#' },
-  { name: 'Foods', href: '#' },
+  // { name: 'Foods', href: '#' },
   { name: 'Local Items', href: '#' },
-  { name: 'Electronics', href: '#' },
+  // { name: 'Electronics', href: '#' },
   { name: 'Grocery', href: '#' },
 ]
 const filters = [
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-  },
+  // {
+  //   id: 'color',
+  //   name: 'Color',
+  //   options: [
+  //     { value: 'white', label: 'White', checked: false },
+  //     { value: 'beige', label: 'Beige', checked: false },
+  //     { value: 'blue', label: 'Blue', checked: true },
+  //     { value: 'brown', label: 'Brown', checked: false },
+  //     { value: 'green', label: 'Green', checked: false },
+  //     { value: 'purple', label: 'Purple', checked: false },
+  //   ],
+  // },
   {
     id: 'category',
     name: 'Category',
     options: [
+      { value: 'All', label: 'All', checked: true },
       { value: 'Fruits-Vegetables', label: 'Fruits-Vegetables', checked: false },
       { value: 'Meat', label: 'Meat', checked: false },
-      { value: 'Local Items', label: 'Local Items', checked: true },
+      { value: 'Local Items', label: 'Local Items', checked: false },
       { value: 'Grocery', label: 'Grocery', checked: false },
       { value: 'Electronics', label: 'Electronics', checked: false },
     ],
   },
-  {
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
-    ],
-  },
+  // {
+  //   id: 'size',
+  //   name: 'Size',
+  //   options: [
+  //     { value: '2l', label: '2L', checked: false },
+  //     { value: '6l', label: '6L', checked: false },
+  //     { value: '12l', label: '12L', checked: false },
+  //     { value: '18l', label: '18L', checked: false },
+  //     { value: '20l', label: '20L', checked: false },
+  //     { value: '40l', label: '40L', checked: true },
+  //   ],
+  // },
 ]
 
 function classNames(...classes) {
@@ -239,13 +240,13 @@ export default function ProductWithFilterCateogrySidebar({children}) {
               {/* Filters */}
               <form className="hidden lg:block stciky top-0">
                 <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+                {/* <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
                       <a href={category.href}>{category.name}</a>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
 
                 {filters.map((section) => (
                   <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">

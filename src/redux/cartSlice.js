@@ -56,7 +56,7 @@ const cartSlice = createSlice({
           thumbnail,
           discountPercentage,
           brand,
-          quantity: 1,
+          quantity: 0,
         });
       }
       saveCartToLocalStorage(state);

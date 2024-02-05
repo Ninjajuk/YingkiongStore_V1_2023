@@ -10,10 +10,10 @@ const HeroSection = () => {
                 <div className="mx-auto max-w-2xl py-16 lg:max-w-none lg:py-48">
                   <div className="lg:pr-16">
                     <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
-                    Discover the Art of Shopping
+                    Discover the <span className='text-purple-800'>Art</span> of Shopping
                     </h1>
                     <p className="mt-4 text-xl text-gray-600">
-                    Welcome to YingKiong Store- Where Every Purchase Tells a Story
+                    Welcome to <span className='text-purple-800 font-bold'>YingKiong Store</span>- Where Every Purchase Tells a Story.
                     </p>
                     <div className="mt-6">
                       <a

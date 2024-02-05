@@ -267,7 +267,7 @@ const products = [
                           alt={product.title}
                         />
                       </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
+                      <td className="lg:px-6 py-4 whitespace-no-wrap">
                         <button
                           className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
                           // onClick={() => handleEditProduct(product.id)}
