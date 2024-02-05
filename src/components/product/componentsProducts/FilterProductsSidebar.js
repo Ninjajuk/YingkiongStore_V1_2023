@@ -36,10 +36,10 @@ const filters = [
     id: 'category',
     name: 'Category',
     options: [
-      { value: 'All', label: 'All', checked: false },
+      { value: 'All', label: 'All', checked: true },
       { value: 'Fruits-Vegetables', label: 'Fruits-Vegetables', checked: false },
       { value: 'Meat', label: 'Meat', checked: false },
-      { value: 'Local Items', label: 'Local Items', checked: true },
+      { value: 'Local Items', label: 'Local Items', checked: false },
       { value: 'Grocery', label: 'Grocery', checked: false },
       { value: 'Electronics', label: 'Electronics', checked: false },
     ],
