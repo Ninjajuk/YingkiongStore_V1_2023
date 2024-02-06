@@ -18,11 +18,16 @@ const RegistrationForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async(data) => {
-    dispatch(createUserAsync(data));
+  const onSubmit = async(data,) => {
+   await dispatch(createUserAsync(data,));
+
     
   };
 
+
+  const handlenavigate=()=>{
+    return   navigate('/verify-email');
+  }
   // const handleCreateUser = async () => {
   //   try {
   //     const result = await createUser(userData, () => {
