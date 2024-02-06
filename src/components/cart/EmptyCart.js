@@ -53,16 +53,16 @@ function EmptyCart() {
                           aria-hidden="true"
                           className="relative mb-4 h-60 w-60 text-muted-foreground"
                         >
-                          {/* <img
+                          <img
                             src="/hippo-empty-cart.png"
                             alt="empty shopping cart hippo"
-                          /> */}
+                          />
                         </div>
                         <div className="text-xl font-semibold">
                           Your cart is empty
                         </div>
 
-                        <a href="/"className=' bg-sky-400 py-2 px-4 rounded-md shadow-md my-2'>
+                        <a href="/"className=' bg-purple-600 hover:bg-purple-700 py-2 px-4 rounded-md shadow-md my-2'>
                           Shop Now
                         </a>
                       </div>

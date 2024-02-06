@@ -10,7 +10,12 @@ import ProductWithFilterCateogrySidebar from '../components/product/componentsPr
 const Shop = () => {
   const loading = useLoading();
     const [data, setData] = useState([]);
-   
+    const [UniqueCategories, setUniqueCategories] = useState([]);
+    const categoryOptionsMap = {
+      vegetables: [1, 2, 3, 5],
+      grocery: [0.5, 1, 2],
+      // Add more categories and their options as needed
+    };
 useEffect(()=>{
   async function getData() {
     try {
@@ -19,8 +24,9 @@ useEffect(()=>{
       console.log(product)
 
           // Extract unique categories
-          // const categories = [...new Set(product.map(item => item.category))];
-          // setUniqueCategories(categories);
+          const categories = [...new Set(product.map(item => item.category))];
+          setUniqueCategories(UniqueCategories);
+          console.log(UniqueCategories)
     } catch (error) {
       console.log('Error in fetching data:', error);
    
@@ -36,20 +42,22 @@ useEffect(()=>{
     <>
       <Navbar1 />
       {loading ? (
-       <div className="flex items-center justify-center h-screen">    <Circles
-       height="80"
-       width="80"
-       color="#7b09e7"
-       ariaLabel="circles-loading"
-       wrapperStyle={{}}
-       wrapperClass=""
-       visible={true}
-       /></div>
-
-    ):(
-      <ProductWithFilterCateogrySidebar>
-      <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
-            {data.slice(0,32).map((product) => (
+        <div className="flex items-center justify-center h-screen">
+          {" "}
+          <Circles
+            height="80"
+            width="80"
+            color="#7b09e7"
+            ariaLabel="circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      ) : (
+        <ProductWithFilterCateogrySidebar>
+          <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
+            {data.slice(0, 32).map((product) => (
               <div
                 key={product.id}
                 className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"
@@ -67,7 +75,7 @@ useEffect(()=>{
 
                 <div className="mt-4 flex flex-col">
                   <a href={`/shop/${product.id}`}>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className=" font-medium text-gray-900">
                       {product.title}
                     </p>
                   </a>
@@ -79,6 +87,28 @@ useEffect(()=>{
                       {product.discountPercentage}% off
                     </span>
                   </p>
+                  <div className="py-2">
+                    {/* {["vegetables", "grocery"].includes(product.category) && (
+                      <select className="block w-full p-2 border border-gray-300 rounded-md mt-1">
+                        {weightOptions.map((weight, weightIndex) => (
+                          <option key={weightIndex} value={weight}>
+                            {weight} kg
+                          </option>
+                        ))}
+                      </select>
+                    )} */}
+                    {product.category in categoryOptionsMap && (
+                      <select className="block w-full p-2 border border-gray-300 rounded-md mt-1">
+                        {categoryOptionsMap[product.category].map(
+                          (weight, weightIndex) => (
+                            <option key={weightIndex} value={weight}>
+                              {weight} kg
+                            </option>
+                          )
+                        )}
+                      </select>
+                    )}
+                  </div>
                 </div>
 
                 <div className="text-center py-3 mb-3">
@@ -90,7 +120,7 @@ useEffect(()=>{
                       {/* {isItemInCart(product._id, cartItems)
                         ? "Remove"
                         : "Add to Cart"} */}
-                     Add
+                      Add
                     </span>
                   </button>
                 </div>
@@ -98,8 +128,8 @@ useEffect(()=>{
               </div>
             ))}
           </div>
-      </ProductWithFilterCateogrySidebar>
-    )}
+        </ProductWithFilterCateogrySidebar>
+      )}
       <Footer1 />
     </>
   );

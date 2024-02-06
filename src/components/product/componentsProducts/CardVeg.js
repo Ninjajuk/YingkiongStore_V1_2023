@@ -19,7 +19,7 @@ const dispatch=useDispatch()
   
   return (
     <>
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-4">
+       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-4">
       {visibleCards.map(item => 
         <div key={item._id} className="bg-white p-6 rounded-lg shadow-md flex flex-col">
           <div className="mb-4 aspect-w-1 aspect-h-1">
@@ -30,9 +30,9 @@ const dispatch=useDispatch()
             />
           </div>
 
-          <div className="flex flex-col flex-grow">
+          <div className="flex flex-col flex-grow justify-between">
             <p className="text-md text-slate-800 font-semibold">Fresh</p>
-            <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+            <h2 className="text-xl font-semibold mb-2 ">{item.title}</h2>
             <div className="py-2">
               <select
                 id={`${item.title}-weight`}
@@ -57,12 +57,12 @@ const dispatch=useDispatch()
           <div className="flex items-center justify-center mt-auto ring-1 rounded-md text-white bg-purple-700 hover:bg-purple-900 cursor-pointer">
           <button
                   onClick={() => handleAddCart(item)}
-                  className={`w-full text-white bg-purple-700 hover:bg-purple-900  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+                  className={`w-full text-white bg-purple-700 hover:bg-purple-900  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
                 >
                   <span className={`inline-block w-18 `}>
                     {isItemInCart(item._id, cartItems)
                         ? "Remove"
-                        : "Add to Cart"}
+                        : "Add"}
                     {/* Add to Cart */}
                   </span>
                 </button>
