@@ -1,6 +1,7 @@
 
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import Lightsidebarwithheader from '../admin/componentsAdmin/AdminDashLayout'
+import { useState } from 'react';
 const colors = [
     {
       name: 'White',
@@ -33,10 +34,55 @@ const colors = [
     { name: '3XL', inStock: true, id: '3xl' },
   ];
 export default function ProductAddForm() {
+    const [selectedFile, setSelectedFile] = useState(null);
+    const initialstate={
+        title:'',
+        description:'',
+        thumbnail:null,
+        price:'',
+        cuttedprice:'',
+        discount:'',
+        category:'',
+        brand:'',
+        units:'',
+        stock:'',
+        rating:'',
+        highlight1:'',
+        highlight2:'',
+        highlight3:'',
+    }
+    const [productInfo,setProductInfo]=useState(initialstate)
+    const handleChange=(e)=>{
+        // Update the productInfo state with the new value
+        setProductInfo({
+            ...productInfo,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleFileChange = (event) => {
+      // Get the selected file
+      const file = event.target.files[0];
+  
+      // Update state to store the selected file
+      setSelectedFile(file);
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Create URL string for the selected file
+        const fileUrl = selectedFile ? URL.createObjectURL(selectedFile) : '';
+        
+        // Log the productInfo state along with the file URL to the console
+        console.log({
+            ...productInfo,
+            thumbnailUrl: fileUrl, // Add thumbnailUrl property with file URL
+        });
+    };
+    
   return (
     <>
     <Lightsidebarwithheader>
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12 px-8">
 
           <h2 className="mt-2 text-base font-bold leading-7 text-gray-900 lg:text-2xl">Add Products</h2>
@@ -57,6 +103,8 @@ export default function ProductAddForm() {
                     name="title"
                     id="title"
                     autoComplete="title"
+                    value={productInfo.title}
+                    onChange={handleChange}
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
              
                   />
@@ -75,6 +123,8 @@ export default function ProductAddForm() {
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
+                  value={productInfo.description}
+                  onChange={handleChange}
                 />
               </div>
               <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about the Products.</p>
@@ -95,12 +145,22 @@ export default function ProductAddForm() {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
                       <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                      <input id="file-upload" onChange={handleFileChange} name="file-upload" type="file" className="sr-only" />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                  <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 2MB</p>
                 </div>
+                {selectedFile && (
+        <div className="mt-4">
+          <p className="text-sm text-gray-600">Selected file: {selectedFile.name}</p>
+          <img
+            className="mt-2 w-32 h-32 object-cover"
+            src={URL.createObjectURL(selectedFile)}
+            alt="Selected file"
+          />
+        </div>
+      )}
               </div>
             </div>
           </div>
@@ -122,6 +182,8 @@ export default function ProductAddForm() {
                   name="price"
                   id="price"
                   autoComplete="price"
+                  value={productInfo.price}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -137,6 +199,8 @@ export default function ProductAddForm() {
                   name="cuttedprice"
                   id="cuttedprice"
                   autoComplete="cuttedprice"
+                  value={productInfo.cuttedprice}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -152,6 +216,7 @@ export default function ProductAddForm() {
                   name="discount"
                   id="discount"
                   autoComplete="discount"
+                  value={productInfo.discount}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -163,9 +228,11 @@ export default function ProductAddForm() {
               </label>
               <div className="mt-2">
                 <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
+                  id="category"
+                  name="category"
+                  autoComplete="category-name"
+                  value={productInfo.category}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Vegetables</option>
@@ -188,6 +255,8 @@ export default function ProductAddForm() {
                   name="brand"
                   id="brand"
                   autoComplete="brand"
+                  value={productInfo.brand}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -203,6 +272,8 @@ export default function ProductAddForm() {
                   id="units"
                   name="units"
                   autoComplete="units-name"
+                  value={productInfo.units}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Kg</option>
@@ -223,6 +294,8 @@ export default function ProductAddForm() {
                   name="stock"
                   id="stock"
                   autoComplete="stock"
+                  value={productInfo.stock}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -238,6 +311,8 @@ export default function ProductAddForm() {
                   name="rating"
                   id="rating"
                   autoComplete="rating"
+                  value={productInfo.rating}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -255,6 +330,8 @@ export default function ProductAddForm() {
                   name="highlight1"
                   id="highlight1"
                   autoComplete="highlight1"
+                  value={productInfo.highlight1}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -270,6 +347,8 @@ export default function ProductAddForm() {
                   name="highlight2"
                   id="highlight2"
                   autoComplete="highlight2"
+                  value={productInfo.highlight2}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -284,6 +363,8 @@ export default function ProductAddForm() {
                   name="highlight3"
                   id="highlight3"
                   autoComplete="highlight3"
+                  value={productInfo.highlight3}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -333,12 +414,13 @@ export default function ProductAddForm() {
                   ))}
                 </div>
               </div> */}
+            
           </div>
  
 
       </div>
-
-      <div className=" px-8 my-6 flex items-center justify-end gap-x-6">
+      <div className="border-b border-gray-900/10 pb-8"></div>
+      <div className=" px-8 py-6 flex items-center justify-end gap-x-6 shadow-lg">
         <button type="button" className="text-sm font-semibold leading-6 text-red-900">
           Cancel
         </button>
