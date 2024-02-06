@@ -26,6 +26,8 @@ import ProductDetails from "../components/product/Productdetails";
 import VerifyEmail from "../components/auth/componentsAuth/VerifyEmail";
 import EmailVerificationPage from "../pages/EmailVerificationPage";
 import SkeletonCard from "../components/skeleton/Skeleton1";
+import ProductForm from "../components/Form/ProductForm";
+import ProductAddForm from "../components/Form/ProductFormAdd";
 
 
 
@@ -117,6 +119,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedAdmin>
         <AdminProductList />
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/addproducts",
+    element: (
+      <ProtectedAdmin>
+        <ProductAddForm />
       </ProtectedAdmin>
     ),
   },

@@ -16,6 +16,8 @@
 // import Modal from '../../common/Modal';
 // import { useAlert } from 'react-alert';
 
+import Lightsidebarwithheader from "../admin/componentsAdmin/AdminDashLayout";
+
 function ProductForm() {
 //   const {
 //     register,
@@ -108,7 +110,8 @@ function ProductForm() {
 
   return (
     <>
-      <form
+    <Lightsidebarwithheader>
+    <form
       >
         <div className="space-y-12 bg-white p-12">
           <div className="border-b border-gray-900/10 pb-12">
@@ -118,9 +121,9 @@ function ProductForm() {
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               {/* {selectedProduct && selectedProduct.deleted && ( */}
-                <h2 className="text-red-500 sm:col-span-6">
+                {/* <h2 className="text-red-500 sm:col-span-6">
                   This product is deleted
-                </h2>
+                </h2> */}
               {/* )} */}
 
               <div className="sm:col-span-6">
@@ -565,7 +568,7 @@ function ProductForm() {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
+        <div className="m-6 flex items-center justify-end gap-x-6">
           <button
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
@@ -593,6 +596,8 @@ function ProductForm() {
           </button>
         </div>
       </form>
+    </Lightsidebarwithheader>
+   
       {/* {selectedProduct && (
         <Modal
           title={`Delete ${selectedProduct.title}`}

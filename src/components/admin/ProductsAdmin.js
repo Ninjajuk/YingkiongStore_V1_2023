@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import {getallProducts,} from '../../API/productAPI'
 
 import Lightsidebarwithheader from './componentsAdmin/AdminDashLayout';
+import { useNavigate } from 'react-router-dom';
 
 const products = [
   {
@@ -115,7 +116,7 @@ const products = [
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [uniqueCategories, setUniqueCategories] = useState([]);
-
+const navigate=useNavigate()
 
   const handleFilter = (e) => {
     setSearchTerm(e.target.value);
@@ -205,6 +206,7 @@ const products = [
               <div className="flex px-6 py-2 ">
                 <button
                   type="button"
+                  onClick={()=>navigate('/admin/addproducts')}
                   className="px-4 py-2 bg-green-600 hover:bg-green-800 hover:text-white rounded-md cursor-pointer"
                 >
                   Add Products

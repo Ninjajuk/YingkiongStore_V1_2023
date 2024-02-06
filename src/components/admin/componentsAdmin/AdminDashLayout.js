@@ -4,16 +4,17 @@ import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { Bars3BottomLeftIcon,BellIcon,XMarkIcon,  HomeIcon,UserGroupIcon,} from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import {FaFolder, FaWrench, FaUserFriends ,FaMoneyCheckAlt} from "react-icons/fa";
+import {FaFolder, FaWrench, FaUserFriends ,FaRegPlusSquare } from "react-icons/fa";
 import {  MdOutlineSms,MdShoppingCart } from "react-icons/md";
 import { NavLink } from 'react-router-dom';
 const navigation = [
     { name: 'Dashboard', to: "/dashboard", icon: HomeIcon,  },
     { name: 'Products', to: "/admin/products", icon: MdShoppingCart,  },
-    { name: 'Orders', to: '/my-orders', icon: FaFolder, },
+    { name: 'Add Product', to: "/admin/addproducts", icon: FaRegPlusSquare,  },
+    { name: 'Orders', to: '/admin/orders', icon: FaFolder, },
     { name: 'Customers', to: '/customers', icon: FaUserFriends, },
     { name: 'Customer Details', to: '/customer-details', icon: MdOutlineSms, },
-    { name: 'Refund', to: '/customers', icon: FaMoneyCheckAlt, },
+    // { name: 'Refund', to: '/customers', icon: FaMoneyCheckAlt, },
     { name: 'Setting', to: '/setting', icon: FaWrench,  },
     { name: 'Teams', to: '/team', icon: UserGroupIcon,  },
   ]
