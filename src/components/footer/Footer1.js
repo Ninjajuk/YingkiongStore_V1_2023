@@ -2,23 +2,23 @@ import React from 'react'
 import { MdOutlineMailOutline,MdPhone } from "react-icons/md";
 const footerNavigation = {
     products: [
-      { name: 'Bags', href: '#' },
-      { name: 'Tees', href: '#' },
-      { name: 'Objects', href: '#' },
-      { name: 'Home Goods', href: '#' },
-      { name: 'Accessories', href: '#' },
+      { name: 'Vegetables', href: '#' },
+      { name: 'Local items', href: '#' },
+      { name: 'Electronics', href: '#' },
+      { name: 'Grocery', href: '#' },
+      { name: 'Meat', href: '#' },
     ],
     customerService: [
-      { name: 'Contact', href: '#' },
+      { name: 'Contact', href: '/contact-us' },
       { name: 'Shipping', href: '#' },
       { name: 'Returns', href: '#' },
-      { name: 'Warranty', href: '#' },
-      { name: 'Secure Payments', href: '#' },
+      // { name: 'Warranty', href: '#' },
+      // { name: 'Secure Payments', href: '#' },
       { name: 'FAQ', href: '#' },
-      { name: 'Find a store', href: '#' },
+      { name: 'Find a store', href: '/contact-us' },
     ],
     company: [
-      { name: 'Who we are', href: '#' },
+      { name: 'Who we are', href: '/about-us' },
       { name: 'Sustainability', href: '#' },
       { name: 'Press', href: '#' },
       { name: 'Careers', href: '#' },

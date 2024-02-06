@@ -93,9 +93,9 @@ const ProducList = () => {
           </ul>
         </div>
 
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+        {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">
           Customers also purchased
-        </h2>
+        </h2> */}
         {/* <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {filteredProducts.slice(0, 20).map((product) => (
             <div

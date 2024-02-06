@@ -41,9 +41,9 @@ const HomeAdmin = () => {
         className=" md:w-full max-h-screen flex-grow   md:px-4 py-2"
         // style={{ height: "calc(100vh - 4rem)" }}
       >
-        <div className=' mx-2 p-4 bg-gray-200 rounded-md mb-2 text-lg text-sky-500 font-bold'>
+        {/* <div className=' mx-2 p-4 bg-gray-200 rounded-md mb-2 text-lg text-sky-500 font-bold'>
             Welcome Admin
-        </div>
+        </div> */}
         <div className=" w-full flex flex-col md:flex-row ">
           {/* Left column */}
           <div className=" w-full md:w-3/5">
