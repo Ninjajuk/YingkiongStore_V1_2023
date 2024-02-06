@@ -15,7 +15,7 @@ const orders = [
     createdDatetime: '2021-07-06',
     deliveredDate: 'July 12, 2021',
     deliveredDatetime: '2021-07-12',
-    total: '$160.00',
+    total: '160.00',
     products: [
       {
         id: 1,
@@ -23,7 +23,7 @@ const orders = [
         description:
           'Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
         href: '#',
-        price: '$70.00',
+        price: '70.00',
         imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
         imageAlt:
           'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
@@ -34,7 +34,7 @@ const orders = [
         description:
           'Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
         href: '#',
-        price: '$70.00',
+        price: '70.00',
         imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
         imageAlt:
           'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
@@ -45,7 +45,7 @@ const orders = [
         description:
           'Are you a minimalist looking for a compact carry option? The Micro Backpack is the perfect size for your essential everyday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
         href: '#',
-        price: '$70.00',
+        price: '70.00',
         imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
         imageAlt:
           'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
@@ -102,7 +102,7 @@ export default function OrderHistoryInvoicePanel() {
                       </div>
                       <div>
                         <dt className="font-medium text-gray-900">Total amount</dt>
-                        <dd className="mt-1 font-medium text-gray-900">{order.total}</dd>
+                        <dd className="mt-1 font-medium text-gray-900">₹{order.total}</dd>
                       </div>
                     </dl>
 
@@ -190,7 +190,7 @@ export default function OrderHistoryInvoicePanel() {
                           <div className="ml-6 flex-1 text-sm">
                             <div className="font-medium text-gray-900 sm:flex sm:justify-between">
                               <h5>{product.name}</h5>
-                              <p className="mt-2 sm:mt-0">{product.price}</p>
+                              <p className="mt-2 sm:mt-0">₹{product.price}</p>
                             </div>
                             <p className="hidden text-gray-500 sm:mt-2 sm:block">{product.description}</p>
                           </div>
@@ -204,7 +204,7 @@ export default function OrderHistoryInvoicePanel() {
                             </p>
                           </div>
 
-                          <div className="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                          {/* <div className="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
                             <div className="flex flex-1 justify-center">
                               <a
                                 href={product.href}
@@ -218,7 +218,8 @@ export default function OrderHistoryInvoicePanel() {
                                 Buy again
                               </a>
                             </div>
-                          </div>
+                          </div> */}
+
                         </div>
                       </li>
                     ))}
