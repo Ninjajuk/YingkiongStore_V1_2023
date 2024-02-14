@@ -149,7 +149,7 @@ const HomeAdmin = () => {
                 {/* One div with the image */}
                 <div className="w-1/2 h-1/2 pr-2 bg-white  rounded-md p-2">
                   <img
-                    className="h-full h-full rounded-full"
+                    className="h-full rounded-full"
                     src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
                     alt="Card Image"
                   />
