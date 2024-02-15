@@ -7,7 +7,7 @@ import {getallProducts} from '../../API/productAPI'
 
 const ProducList = lazy(() => delayForDemo(import('./componentsProducts/ProducList')));
 
-// Add a fixed delay so you can see the loading state
+//fixed delay to see the loading state
 function delayForDemo(promise) {
   return new Promise(resolve => {
     setTimeout(resolve, 2000);
