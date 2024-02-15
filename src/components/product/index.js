@@ -9,7 +9,7 @@ const ProducList = React.lazy(() => import('./componentsProducts/ProducList'));
 const Product = () => {
   const [data, setData] = useState([]);
   const [uniqueCategories, setUniqueCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     async function getData() {
@@ -28,18 +28,12 @@ const Product = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Set loading to false after 2 seconds
-    }, 3000);
 
-    return () => clearTimeout(timer); // Clear the timer on component unmount
-  }, []);
   return (
     <>
       <Suspense
         fallback={
-          isLoading ? (
+  
             <div className="flex items-center justify-center h-screen">
               <Circles
                 height="80"
@@ -51,10 +45,10 @@ const Product = () => {
                 visible={true}
               />
             </div>
-          ) : null
+
         }
       >
-       {!isLoading && <ProducList data={data} uniqueCategories={uniqueCategories} />}
+ <ProducList data={data} uniqueCategories={uniqueCategories} />
       </Suspense>
     </>
   );
