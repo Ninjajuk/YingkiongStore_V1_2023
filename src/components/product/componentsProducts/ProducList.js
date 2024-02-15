@@ -15,9 +15,9 @@ const categoryOptionsMap = {
   grocery: [0.5, 1, 2],
   // Add more categories and their options as needed
 };
-const ProducList = () => {
-  const [data, setData] = useState([]);
-  const [uniqueCategories, setUniqueCategories] = useState([]);
+const ProducList = ({ data, uniqueCategories }) => {
+  // const [data, setData] = useState([]);
+  // const [uniqueCategories, setUniqueCategories] = useState([]);
   const dispatch=useDispatch()
   const cartItems=useSelector((state)=>state.cart)
 
@@ -35,23 +35,23 @@ const ProducList = () => {
     setSortBy(e.target.value);
   };
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const product = await getallProducts();
-        setData(product);
-        console.log(product);
+  // useEffect(() => {
+  //   async function getData() {
+  //     try {
+  //       const product = await getallProducts();
+  //       setData(product);
+  //       console.log(product);
 
-        // Extract unique categories
-        const categories = [...new Set(product.map((item) => item.category))];
-        setUniqueCategories(categories);
-      } catch (error) {
-        console.log("Error in fetching data:", error);
-      }
-    }
+  //       // Extract unique categories
+  //       const categories = [...new Set(product.map((item) => item.category))];
+  //       setUniqueCategories(categories);
+  //     } catch (error) {
+  //       console.log("Error in fetching data:", error);
+  //     }
+  //   }
 
-    getData();
-  }, []);
+  //   getData();
+  // }, []);
 
     // Filter products based on the selected category and search term
     const filteredProducts = data.filter((product) =>
