@@ -5,14 +5,9 @@ import {getallProducts} from '../../API/productAPI'
 
 // const ProducList = React.lazy(() => import('./componentsProducts/ProducList'));
 
-const ProducList = lazy(() => delayForDemo(import('./componentsProducts/ProducList')));
+const ProducList = lazy(() => import('./componentsProducts/ProducList'));
 
-//fixed delay to see the loading state
-function delayForDemo(promise) {
-  return new Promise(resolve => {
-    setTimeout(resolve, 2000);
-  }).then(() => promise);
-}
+
 
 const Product = () => {
   const [data, setData] = useState([]);
