@@ -15,14 +15,32 @@ async function fetchDataFromAPI(category) {
 
   async function getallProducts(){
     try {
-      const resp=await fetch('https://yingkiongstore.onrender.com/products/')
+      // const resp=await fetch('https://yingkiongstore.onrender.com/products/')
+      const resp=await fetch('http://localhost:8000/products/')
       const data=resp.json()
-      return data
+      return data.data.products
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error; // Re-throw the error to handle it in the component
     }
   }
+
+  export const PAGE_SIZE = 12; // Number of products to load per page
+  export let page = 1; // Initial page value
+  
+  export async function getProducts() {
+    try {
+      const resp = await fetch(`http://localhost:8000/products?limit=${PAGE_SIZE}&skip=${(page - 1) * PAGE_SIZE}`);
+      const products = await resp.json();
+      return products;
+    } catch (error) {
+      console.log("Error fetching data:", error);
+      throw error;
+    }
+  }
+  
+
+
 
 //addProduct
 async function addProduct(product) {

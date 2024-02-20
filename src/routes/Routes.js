@@ -28,6 +28,7 @@ import EmailVerificationPage from "../pages/EmailVerificationPage";
 import SkeletonCard from "../components/skeleton/Skeleton1";
 import ProductForm from "../components/Form/ProductForm";
 import ProductAddForm from "../components/Form/ProductFormAdd";
+import TestProduct from "../components/product/TestProduct";
 
 
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
+  },
+  {
+    path: "/testproduct",
+    element: <TestProduct/>,
   },
   {
     path: "/shop",
