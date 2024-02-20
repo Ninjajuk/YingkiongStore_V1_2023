@@ -11,23 +11,23 @@ const TestProduct = () => {
   const [hasMore, setHasMore] = useState(null);
   const [index, setIndex] = useState(1);
 
-  // const fetchData = useCallback(async () => {
-  //   if (isLoading) return;
-  //   setIsLoading(true);
+  const fetchData = useCallback(async () => {
+    if (isLoading) return;
+    setIsLoading(true);
 
-  //   try {
-  //     const response = await axios.get(`http://localhost:8000/products?offset=${index *10}&limit=12`);
-  //     const data = response.data.products;
-  //     console.log(response.data.products,'http://localhost:8000/products?offset=${index *10}&limit=12')
+    try {
+      const response = await axios.get(`http://localhost:8000/products?offset=${index}0&limit=12`);
+      const data = response.data.products;
+      console.log(response.data.products,'http://localhost:8000/products?offset=${index *10}&limit=12')
 
-  //       setItems((prevItems) => [...prevItems, ...data]);
+        setItems((prevItems) => [...prevItems, ...data]);
      
-  //   } catch (error) {
-  //     console.error('Error fetching products:', error)
-  //   } 
-  //   setIndex((prevIndex) => prevIndex + 1);
-  //   setIsLoading(false);
-  // }, [index,isLoading]);
+    } catch (error) {
+      console.error('Error fetching products:', error)
+    } 
+    setIndex((prevIndex) => prevIndex + 1);
+    setIsLoading(false);
+  }, [index,isLoading]);
 
   const getData = useCallback(async () => {
     setIsLoading(true);
