@@ -29,6 +29,7 @@ import SkeletonCard from "../components/skeleton/Skeleton1";
 import ProductForm from "../components/Form/ProductForm";
 import ProductAddForm from "../components/Form/ProductFormAdd";
 import TestProduct from "../components/product/TestProduct";
+import InfiniteScrollExample1 from "../pages/Test1";
 
 
 
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
   {
     path: "/testproduct",
     element: <TestProduct/>,
+  },
+
+  {
+    path: "/test1",
+    element: <InfiniteScrollExample1/>,
   },
   {
     path: "/shop",
