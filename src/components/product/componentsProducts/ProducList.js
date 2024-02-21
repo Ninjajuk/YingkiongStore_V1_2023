@@ -11,7 +11,6 @@ import useProductData from '../../../customhooks/UseProductData';
 const categoryOptionsMap = {
   vegetables: [1, 2, 3, 5],
   grocery: [0.5, 1, 2],
-  // Add more categories and their options as needed
 };
 
 const ProducList = () => {
