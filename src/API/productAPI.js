@@ -16,9 +16,10 @@ async function fetchDataFromAPI(category) {
   async function getallProducts(){
     try {
       // const resp=await fetch('https://yingkiongstore.onrender.com/products/')
-      const resp=await fetch('http://localhost:8000/products/')
-      const data=resp.json()
-      return data.data.products
+      const resp=await fetch(`http://localhost:8000/products?all=true`)
+      const data=await resp.json()
+      console.log(data.products)
+      return data.products
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error; // Re-throw the error to handle it in the component

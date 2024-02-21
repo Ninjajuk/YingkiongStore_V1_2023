@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Circles } from "react-loader-spinner";
-import TestProducList from "./componentsProducts/TestProductList";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
