@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoaderCircle from '../../common/LoaderCircle';
 
 import useProductData from '../../../customhooks/UseProductData';
+
 const categoryOptionsMap = {
   vegetables: [1, 2, 3, 5],
   grocery: [0.5, 1, 2],
@@ -23,7 +24,7 @@ const ProducList = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
 
  
-  const { items, uniqueCategories, hasMore, fetchData } = useProductData();
+  const { items, uniqueCategories, hasMore, fetchData,getallProducts } = useProductData();
 
 
 

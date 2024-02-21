@@ -41,14 +41,14 @@ const ShopByCategory = () => {
   ];
 
   return (
-    <section className="w-full bg-gray-100">
+    <section className="w-full bg-gray-100 m-0">
       <div className="mx-auto max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8">
         <div className="w-full  bg-gray-100 rounded-md px-4">
           <h1 className="text-2xl md:text-4xl font-bold py-4  text-blue-800">
             Shop by Category
           </h1>
 
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-4">
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
             {categories.map((category, index) => (
               <CategoryCard key={index} {...category} />
             ))}

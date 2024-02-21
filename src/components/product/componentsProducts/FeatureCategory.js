@@ -65,7 +65,7 @@ const FeaturedCategoryPro = () => {
       <h1 className="text-2xl md:text-4xl font-bold py-4   text-blue-800">Featured Category</h1>
       <p>Check out these popular and recommended category.</p>
 
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-4 ">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
         {categories.map((category, index) => (
           <CategoryCard key={index} {...category} />
         ))}

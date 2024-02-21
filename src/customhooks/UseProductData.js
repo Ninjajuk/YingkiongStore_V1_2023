@@ -8,6 +8,10 @@ const useProductData = () => {
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(1); 
 
+
+
+
+  //For Lazy loading Infinite scroll first 12 data on first render
   useEffect(() => {
     axios
       .get("http://localhost:8000/products?skip=0&limit=12")
@@ -18,8 +22,10 @@ const useProductData = () => {
         setUniqueCategories(categories);
       })
       .catch((err) => console.log(err));
+
   }, []);
 
+  //call subsequent data on scrolling For Lazy loading Infinite scroll
   const fetchData = () => {
     axios
       .get(`http://localhost:8000/products?skip=${index * 12}&limit=12`)
@@ -32,7 +38,9 @@ const useProductData = () => {
       setIndex((prevIndex) => prevIndex + 1);
   };
 
-  return { items, uniqueCategories, hasMore, fetchData };
+
+
+  return { items, uniqueCategories, hasMore, fetchData, };
 };
 
 export default useProductData;

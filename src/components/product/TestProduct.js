@@ -14,7 +14,9 @@ const TestProduct = () => {
     axios
       .get("http://localhost:8000/products?skip=0&limit=12")
       .then((res) => {
-        setItems(res.data.products)
+        // setItems(res.data.products)
+        const newItems=res.data.products
+        setItems((prevItems) => [...prevItems, ...newItems]);
         console.log(res.data.products,'First API call')
       })
       .catch((err) => console.log(err));
