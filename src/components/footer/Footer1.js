@@ -190,7 +190,7 @@ const Footer1 = () => {
               </a>
             ))}
           </div> */}
-          <p className="text-sm text-gray-500 font-bold">Designed and Coded by Samsu & Yogi</p>
+          <p className="text-sm text-gray-500 font-bold">Designed and Coded by <span className='text-purple-700 font-bold text-md'>Samsu & Yogi</span></p>
 
         </div>
       </div>
