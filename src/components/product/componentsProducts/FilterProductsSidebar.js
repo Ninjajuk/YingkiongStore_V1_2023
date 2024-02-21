@@ -238,7 +238,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block stciky top-0">
+              <form className="hidden lg:block ">
                 <h3 className="sr-only">Categories</h3>
                 {/* <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
@@ -249,7 +249,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
                 </ul> */}
 
                 {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
+                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6 ">
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
@@ -293,7 +293,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
               </form>
 
               {/*Your content Product grid  */}
-              <div className="lg:col-span-3">{children}</div>
+              <div className="lg:col-span-3  ">{children}</div>
 
             </div>
           </section>

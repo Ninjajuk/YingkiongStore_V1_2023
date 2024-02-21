@@ -5,11 +5,7 @@ import HeroSection from './componentsProducts/HeroSection';
 import FeaturedCategoryPro from './componentsProducts/FeatureCategory';
 import ShopByCategory from './componentsProducts/ShopCateogory';
 import FruitsVegetables from './componentsProducts/FruitsVegetables';
-
-
-// const ProducList = React.lazy(() => import('./componentsProducts/ProducList'));
-const ProducList = lazy(() => import('./componentsProducts/ProducList'));
-
+import ProducList from './componentsProducts/ProducList'
 
 
 const Product = () => {
@@ -22,7 +18,7 @@ const Product = () => {
       <ShopByCategory />
       <FruitsVegetables />
 
-      <ProducList />
+      <ProducList/>
     </>
   );
 }
