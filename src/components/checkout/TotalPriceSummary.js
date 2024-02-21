@@ -5,7 +5,7 @@ import { calculateSubtotal, calculateTotal, } from "../../utility/cartUtils";
 import { useNavigate } from 'react-router-dom';
 
 
-const TotalPriceSummary = () => {
+const TotalPriceSummary = ({handleSubmit}) => {
   const cartItems = useSelector((state) => state.cart);
 const navigate=useNavigate()
   const subtotal = calculateSubtotal(cartItems);
@@ -40,7 +40,7 @@ const navigate=useNavigate()
         {/* <span>₹1100</span> */}
         <span>₹{total}</span>
       </div>
-      <div className='w-full bg-purple-700 text-center my-2 rounded-lg text-white font-semibold'><button onClick={()=>navigate('/order-success')} className='px-2 py-2'>Place Order</button></div>
+      <div className='w-full bg-purple-700 text-center my-2 rounded-lg text-white font-semibold'><button onClick={handleSubmit} className='px-2 py-2'>Place Order</button></div>
     </div>
   );
 };

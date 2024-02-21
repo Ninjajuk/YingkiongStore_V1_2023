@@ -85,6 +85,7 @@ const navigate=useNavigate()
 
     // Log form data and order items
     console.log('Form submitted:', formData);
+    navigate('/order-success')
 
 
 
@@ -291,7 +292,7 @@ const navigate=useNavigate()
                     <div className="w-full flex flex-col">
                       {cartItems.map((item) => (
                         <>
-                          <div key={item.id} className="w-full flex mb-4 px-4 ">
+                          <div key={item._id} className="w-full flex mb-4 px-4 ">
                             <div className="w-1/2   overflow-hidden rounded-lg px-2">
                               <img
                                 src={item.thumbnail}
@@ -354,7 +355,7 @@ const navigate=useNavigate()
                       ))}
                     </div>
                     <div className="w-full">
-                      <TotalPriceSummary cartItems={cartItems} />
+                      <TotalPriceSummary cartItems={cartItems} handleSubmit={handleSubmit}/>
                     </div>
                     {/* <div className=" w-full py-4">
               <NavLink
