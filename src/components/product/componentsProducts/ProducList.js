@@ -86,7 +86,7 @@ const ProducList = () => {
           <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
             {filteredProducts.map((product) => (
               <div
-                key={product.id}
+                key={product._id}
                 className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"
               >
                 {/* <Link to={`/shop/${product.id}`}> */}

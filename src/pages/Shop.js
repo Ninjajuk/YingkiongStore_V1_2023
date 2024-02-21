@@ -67,7 +67,7 @@ const { items, uniqueCategories, hasMore, fetchData } = useProductData();
             <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
               {items.map((product) => (
                 <div
-                  key={product.id}
+                  key={product._id}
                   className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"
                 >
                   {/* <Link to={`/shop/${product.id}`}> */}
