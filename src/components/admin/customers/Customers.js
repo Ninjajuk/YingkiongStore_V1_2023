@@ -1,12 +1,13 @@
 import React from 'react'
 
-import Lightsidebarwithheader from './AdminDashLayout';
+import Lightsidebarwithheader from '../componentsAdmin/AdminDashLayout';
+import CustomersPage from './page';
 
 const Customers = () => {
   return (
     <>
       <Lightsidebarwithheader>
-        <h1>Customers Page</h1>
+       <CustomersPage/>
       </Lightsidebarwithheader>
     </>
   );

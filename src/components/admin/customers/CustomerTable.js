@@ -26,7 +26,7 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
             <div className="p-3">
                 <div className="overflow-x-auto">
                     <table className="table-auto w-full">
-                        <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50 sticky top-0 ">
+                        <thead className="text-xs font-bold uppercase text-purple-700 sticky top-0 ">
                             <tr>
                                 <th className="p-2 whitespace-nowrap">
                                     <div className="font-semibold text-left">Name</div>
@@ -38,11 +38,20 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                                     <div className="font-semibold text-left">Phone</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Spent</div>
+                                    <div className="font-semibold text-left">Address</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">City</div>
+                                    <div className="font-semibold text-left">Pin Code</div>
                                 </th>
+                                <th className="p-2 whitespace-nowrap">
+                                    <div className="font-semibold text-left">District</div>
+                                </th>
+                                <th className="p-2 whitespace-nowrap">
+                                    <div className="font-semibold text-left">State</div>
+                                </th>
+                                {/* <th className="p-2 whitespace-nowrap">
+                                    <div className="font-semibold text-left">total</div>
+                                </th> */}
                                 <th className="p-2 whitespace-nowrap">
                                     <div className="font-semibold text-left">Actions</div>
                                 </th>
@@ -63,11 +72,20 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                                 <td className="p-2 whitespace-nowrap">
                                     <div className="text-left ">{item.phone}</div>
                                 </td>
+                                {/* <td className="p-2 whitespace-nowrap">
+                                    <div className="text-lg text-left font-medium text-green-500">₹{item.address}</div>
+                                </td> */}
                                 <td className="p-2 whitespace-nowrap">
-                                    <div className="text-lg text-left font-medium text-green-500">₹{item.totalSpent}</div>
+                                    <div className="text-sm text-left">{item.address}</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
-                                    <div className="text-sm text-left">{item.city}</div>
+                                    <div className="text-sm text-left">{item.pinCode}</div>
+                                </td>
+                                <td className="p-2 whitespace-nowrap">
+                                    <div className="text-sm text-left">{item.district}</div>
+                                </td>
+                                <td className="p-2 whitespace-nowrap">
+                                    <div className="text-sm text-left">{item.state}</div>
                                 </td>
                                 <td className="p-2 whitespace-nowrap">
                                     <div className="text-sm text-left flex gap-2">
