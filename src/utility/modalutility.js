@@ -25,7 +25,7 @@ export const openEditModal = (order, setEditModalOpen, setSelectedOrderForEdit) 
     setHoveredRow(null);
   };
   
-  export const openDeleteModal = (setIsModalOpened, setIsDeleteModalOpen, setHoveredRow) => {
+  export const openDeleteModal = (setIsModalOpened, setIsDeleteModalOpen, setHoveredRow,) => {
     setIsModalOpened(true); // Indicate that modal is about to open
     setIsDeleteModalOpen(true);
     // Pass the index of the hovered row to handleDelete

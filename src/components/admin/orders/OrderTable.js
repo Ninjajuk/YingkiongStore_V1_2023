@@ -1,13 +1,13 @@
-'use client'
+
 import React, { useState } from "react";
 
 import { orderData } from "./orderdata";
-import { DeleteModal } from "@/app/Components/Modal/DeleteModal";
-import { OrderModal } from "@/app/Components/Modal/orderModal";
-import { paginate, } from '../../utility/utilitypagination';
-import Pagination from "@/app/Components/Pagination";
-import { toggleSortDirection, sortItems, searchItems } from '../../utility/sortingFiltering';
-import {openEditModal,closeEditModal,submitEditChanges,handleMouseEnterRow,handleMouseLeaveRow,openDeleteModal,handleCheckboxChange} from '../../utility/modalutility';
+// import { DeleteModal } from "@/app/Components/Modal/DeleteModal";
+// import { OrderModal } from "@/app/Components/Modal/orderModal";
+// import { paginate, } from '../../utility/utilitypagination';
+// import Pagination from "@/app/Components/Pagination";
+// import { toggleSortDirection, sortItems, searchItems } from '../../../utility/modalutility';
+// import {openEditModal,closeEditModal,submitEditChanges,handleMouseEnterRow,handleMouseLeaveRow,openDeleteModal,handleCheckboxChange} from '../../../utility/modalutility';
 const OrdersTable = ({searchTerm,sortBy,}) => {
   const [orders, setOrders] = useState(orderData);
   const [isEditModalOpen, setisEditModalOpen] = useState(false);
@@ -22,70 +22,70 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
 
  
 
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   
-  const handlePageChange = (pageNumber) => {
-      setCurrentPage(pageNumber);
-    };
-  const currentOrders = paginate(orders, currentPage, itemsPerPage);
+  // const handlePageChange = (pageNumber) => {
+  //     setCurrentPage(pageNumber);
+  //   };
+  // const currentOrders = paginate(orders, currentPage, itemsPerPage);
 
 
-  const handleEditClick = (order) => {
-    openEditModal(order, setisEditModalOpen, setSelectedOrderForEdit);
-  };
+  // const handleEditClick = (order) => {
+  //   openEditModal(order, setisEditModalOpen, setSelectedOrderForEdit);
+  // };
   
-  const handleModalClose = () => {
-    closeEditModal(setisEditModalOpen, setSelectedOrderForEdit);
-  };
+  // const handleModalClose = () => {
+  //   closeEditModal(setisEditModalOpen, setSelectedOrderForEdit);
+  // };
   
-  const onSubmit = (editedOrder) => {
-    submitEditChanges(editedOrder, setisEditModalOpen, setSelectedOrderForEdit);
-  };
+  // const onSubmit = (editedOrder) => {
+  //   submitEditChanges(editedOrder, setisEditModalOpen, setSelectedOrderForEdit);
+  // };
   
-  const handleMouseEnter = (index) => {
-    handleMouseEnterRow(index, setHoveredRow);
-  };
+  // const handleMouseEnter = (index) => {
+  //   handleMouseEnterRow(index, setHoveredRow);
+  // };
   
-  const handleMouseLeave = () => {
-    handleMouseLeaveRow(setHoveredRow);
-  };
+  // const handleMouseLeave = () => {
+  //   handleMouseLeaveRow(setHoveredRow);
+  // };
   
-  const handleDelete = (index) => {
-    openDeleteModal(setIsModalOpened, setIsDeleteModalOpen, setHoveredRow);
-  };
+  // const handleDelete = (index) => {
+  //   openDeleteModal(setIsModalOpened, setIsDeleteModalOpen, setHoveredRow);
+  // };
 
-  const handleCheckboxChange = (index) => {
-    setCheckboxStates((prevState) => {
-      return { ...prevState, [index]: !prevState[index] };
-    });
-  };
+  // const handleCheckboxChange = (index) => {
+  //   setCheckboxStates((prevState) => {
+  //     return { ...prevState, [index]: !prevState[index] };
+  //   });
+  // };
 
 
-  const handleConfirmDelete = () => {
-    if (isModalOpened && hoveredRow !== null) {
-      setIsModalOpened(false);
+  // const handleConfirmDelete = () => {
+  //   if (isModalOpened && hoveredRow !== null) {
+  //     setIsModalOpened(false);
   
-      // Use filter to create a new array excluding the element at hoveredRow
-      const updatedOrders = orders.filter((_, index) => index !== hoveredRow);
+  //     // Use filter to create a new array excluding the element at hoveredRow
+  //     const updatedOrders = orders.filter((_, index) => index !== hoveredRow);
       
-      console.log("Updated orders after deletion:", updatedOrders);
-      setOrders(updatedOrders);
-      setIsDeleteModalOpen(false);
-    }
-  };
+  //     console.log("Updated orders after deletion:", updatedOrders);
+  //     setOrders(updatedOrders);
+  //     setIsDeleteModalOpen(false);
+  //   }
+  // };
   
 
-  const handleDeleteAndConfirm = async () => {
-    if (hoveredRow !== null) {
-      await handleDelete(hoveredRow); // Wait for handleDelete to complete
-      handleConfirmDelete();
-    }
-  };
+  // const handleDeleteAndConfirm = async () => {
+  //   if (hoveredRow !== null) {
+  //     await handleDelete(hoveredRow); // Wait for handleDelete to complete
+  //     handleConfirmDelete();
+  //   }
+  // };
   
 
-  const handleCancelDelete = (index) => {
-    setIsDeleteModalOpen(false);
-  };
+  // const handleCancelDelete = (index) => {
+  //   setIsDeleteModalOpen(false);
+  // };
   return (
     <>
       <div className="flex flex-col w-full h-full">
@@ -180,8 +180,8 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                 </th>
               </tr>
             </thead>
-            <tbody className="-z-10">
-              {currentOrders.map((order, index) => (
+            <tbody className="">
+              {orderData.map((order, index) => (
                 <tr
                   key={order.id}
                   className={
@@ -191,8 +191,8 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                       ? "bg-gray-100 hover:bg-gray-400 shadow-lg"
                       : "bg-sky-100 hover:bg-gray-400 shadow-lg"
                   }
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={() => handleMouseLeave(index)}
+                  // onMouseEnter={() => handleMouseEnter(index)}
+                  // onMouseLeave={() => handleMouseLeave(index)}
                   style={{ position: "relative", cursor: "pointer" }}
                 >
                   <td
@@ -228,14 +228,14 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                     }`}
                   >
                     <button
-                      onClick={() => handleEditClick(order)}
+                      // onClick={() => handleEditClick(order)}
                       className="mr-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded "
                     >
                       Edit
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleDelete(index)}
+                      // onClick={() => handleDelete(index)}
                       className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"
                     >
                       Delete
@@ -246,7 +246,7 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
             </tbody>
           </table>
         </div>
-        <div className="w-full h-1/6">
+        {/* <div className="w-full h-1/6">
           <Pagination
             currentPage={currentPage}
             totalPages={Math.ceil(orderData.length / itemsPerPage)}
@@ -254,10 +254,10 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
             totalnumber={orderData.length }
             
           />
-        </div>
+        </div> */}
       </div>
 
-      {isEditModalOpen && (
+      {/* {isEditModalOpen && (
         <OrderModal
           order={selectedOrderForEdit}
           onSubmit={onSubmit}
@@ -273,7 +273,7 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
           closeModal={handleCancelDelete}
           onDelete={handleDeleteAndConfirm}
         />
-      )}
+      )} */}
     </>
   );
 };
