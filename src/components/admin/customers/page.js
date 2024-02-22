@@ -62,14 +62,14 @@ const CustomersPage = () => {
     };
 
   return (
-    <section className="w-full   h-full bg-white ">
-      <div className="w-full flex-flex-col h-full">
+
+      <div className="w-full flex-flex-col h-full bg-white ">
         {/* Product Headline */}
-        <div className="h-1/3 bg-white flex flex-col">
-          <h1 className="px-6 py-2 md:text-3xl font font-semibold text-center text-sky-600">
-            Customers Management
+        {/* <div className="h-1/3 bg-white flex flex-col">
+          <h1 className="px-6 py-2 lg:text-xl font font-semibold  text-sky-600">
+          Elevate Customer Engagement
           </h1>
-          <p className="px-6">Elevate Customer Engagement</p>
+
           <div className="flex px-6 py-2">
             <button
               type="button"
@@ -101,11 +101,25 @@ const CustomersPage = () => {
               ))}
             </select>
           </div>
+        </div> */}
+        <div className="h-12 flex justify-between bg-gray-200">
+          <header className="px-5 py-4 border-b border-gray-100">
+            <h2 className="font-semibold text-gray-800">Customers</h2>
+          </header>
+          <div className="flex items-center px-6 py-2">
+            <button
+              type="button"
+              onClick={openModal}
+              className="px-4 py-2 text-gray-900 bg-green-600 hover:bg-green-800 rounded-md cursor-pointer"
+            >
+              Add Customer
+            </button>
+          </div>
         </div>
 
         {/* Product Headline */}
-        <div className="h-2/3 overflow-y-auto flex-grow">
-          <div className="max-h-full">
+        <div className="h-2/3  flex-grow">
+          <div className="overflow-y-auto max-h-full">
             <CustomerTable
               customerTable={customerTable}
               deleteCustomer={deleteCustomer}
@@ -119,11 +133,11 @@ const CustomersPage = () => {
             closeModal={closeModal}
             customerTable={customerTable}
             updateCustomerTable={updateCustomerTable}
-            addCustomer={addCustomer}  // Pass the addCustomer function to the CustomerForm
+            addCustomer={addCustomer} // Pass the addCustomer function to the CustomerForm
           />
         )}
       </div>
-    </section>
+
   );
 };
 
