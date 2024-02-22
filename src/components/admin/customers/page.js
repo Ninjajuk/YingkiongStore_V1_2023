@@ -1,4 +1,4 @@
-'use client'
+
 import React, { useState,useReducer } from 'react';
 
 import CustomerTable from './CustomerTable';
