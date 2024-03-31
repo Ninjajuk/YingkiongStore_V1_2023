@@ -14,7 +14,7 @@ const useProductData = () => {
   //For Lazy loading Infinite scroll first 12 data on first render
   useEffect(() => {
     axios
-      .get("https://yingkiongstore.onrender.com?skip=0&limit=12")
+      .get(`https://yingkiongstore.onrender.com/products?skip=0&limit=12`)
       .then((res) => {
         setItems(res.data.products);
         // Extract unique categories
@@ -28,7 +28,7 @@ const useProductData = () => {
   //call subsequent data on scrolling For Lazy loading Infinite scroll
   const fetchData = () => {
     axios
-      .get(`https://yingkiongstore.onrender.com?skip=${index * 12}&limit=12`)
+      .get(`https://yingkiongstore.onrender.com/products?skip=${index * 12}&limit=12`)
       .then((res) => {
         const newItems = res.data.products;
         setItems((prevItems) => [...prevItems, ...newItems]);
