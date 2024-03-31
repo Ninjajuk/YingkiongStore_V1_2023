@@ -15,8 +15,8 @@ async function fetchDataFromAPI(category) {
 
   async function getallProducts(){
     try {
-      // const resp=await fetch('https://yingkiongstore.onrender.com/products/')
-      const resp=await fetch(`http://localhost:8000/products?all=true`)
+      const resp=await fetch('https://yingkiongstore.onrender.com/products?all=true')
+      // const resp=await fetch(`http://localhost:8000/products?all=true`)
       const data=await resp.json()
       console.log(data.products)
       return data.products
@@ -31,7 +31,7 @@ async function fetchDataFromAPI(category) {
   
   export async function getProducts() {
     try {
-      const resp = await fetch(`http://localhost:8000/products?limit=${PAGE_SIZE}&skip=${(page - 1) * PAGE_SIZE}`);
+      const resp = await fetch(`https://yingkiongstore.onrender.com/products?limit=${PAGE_SIZE}&skip=${(page - 1) * PAGE_SIZE}`);
       const products = await resp.json();
       return products;
     } catch (error) {
