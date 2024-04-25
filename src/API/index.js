@@ -1,5 +1,5 @@
-const backendDomin = "https://yingkiongstore.onrender.com"
-// const backendDomin = "http://localhost:8080"
+// const backendDomin = "https://yingkiongstore.onrender.com"
+const backendDomin = "http://localhost:8000"
 
 
 const SummaryApi = {
@@ -37,6 +37,10 @@ const SummaryApi = {
     },
     updateProduct : {
         url : `${backendDomin}/api/update-product`,
+        method  : 'post'
+    },
+    deleteProduct : {
+        url : `${backendDomin}/products/deleteproduct/${productId}`,
         method  : 'post'
     },
     categoryProduct : {

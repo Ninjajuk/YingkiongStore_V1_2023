@@ -1,10 +1,12 @@
 
 
 import { useEffect, useState } from 'react';
-import {getallProducts,} from '../../API/productAPI'
+import {getallProducts,deleteProduct} from '../../API/productAPI'
 
 import Lightsidebarwithheader from './componentsAdmin/AdminDashLayout';
 import { useNavigate } from 'react-router-dom';
+import { DeleteModal } from '../modal/DeleteModal';
+import EditProductModal from '../modal/EditProductModal';
 
 const products = [
   {
@@ -112,6 +114,11 @@ const products = [
 
  function AdminProductList() {
   const [data,setData]=useState([])
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)       //Flag for the DeleteProduct  Modal
+  const [productIdToDelete, setProductIdToDelete] = useState(null);  //Flag for the DeleteProduct Id 
+
+  const [openEditProductModal, setOpenEditProductModal] = useState(false)       //Flag for the Edit Product  Modal
+  const [productIdToEdit, setProductIdToEdit] = useState(null);                 //Flag for the Edit Product Id 
 
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('');
@@ -141,7 +148,7 @@ const navigate=useNavigate()
     }
 
     getData();
-  },[data])
+  },[])
 
   // Filter products based on the selected category and search term
   const filteredProducts = data.filter((product) =>
@@ -151,20 +158,30 @@ const navigate=useNavigate()
       : true)
   );
 
+  const handleEditProductButtonClick = (productId) => {
+    setProductIdToEdit(productId);
+    setOpenEditProductModal(true);
+  };
 
 
-  
-//   const handleDeleteProduct = async (productId) => {
-//     try {
-//       await deleteProduct(productId);
-//       // After successful deletion, you may want to refresh the product list
-//       const updatedData = await getallProducts();
-//       setData(updatedData);
-//       console.log(`Product with ID ${productId} deleted successfully`);
-//     } catch (error) {
-//       console.error('Error deleting product:', error);
-//     }
-//   };
+
+
+  const handleDeleteButtonClick = (productId) => {
+    setProductIdToDelete(productId);
+    setOpenDeleteModal(true);
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await deleteProduct(productId);
+      // After successful deletion, you may want to refresh the product list
+      const updatedData = await getallProducts();
+      setData(updatedData);
+      console.log(`Product with ID ${productId} deleted successfully`);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+  };
   
   return (
     <Lightsidebarwithheader>
@@ -206,7 +223,7 @@ const navigate=useNavigate()
               <div className="flex px-6 py-2 ">
                 <button
                   type="button"
-                  onClick={()=>navigate('/admin/addproducts')}
+                  onClick={() => navigate("/admin/addproducts")}
                   className="px-4 py-2 bg-green-600 hover:bg-green-800 hover:text-white rounded-md cursor-pointer"
                 >
                   Add Products
@@ -272,13 +289,14 @@ const navigate=useNavigate()
                       <td className="lg:px-6 py-4 whitespace-no-wrap">
                         <button
                           className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
-                          // onClick={() => handleEditProduct(product.id)}
+                          onClick={() => handleEditProductButtonClick(product._id)}
                         >
                           Edit
                         </button>
                         <button
                           className="ml-4 text-red-600 hover:text-red-900 focus:outline-none"
                           // onClick={() => handleDeleteProduct(product._id)}
+                          onClick={() => handleDeleteButtonClick(product._id)}
                         >
                           Delete
                         </button>
@@ -291,6 +309,21 @@ const navigate=useNavigate()
           </div>
         </div>
       </section>
+
+      {openEditProductModal && (
+        <EditProductModal
+        closeModal={() => setOpenEditProductModal(false)}
+        onDelete={() => setProductIdToEdit(productIdToDelete)}
+        productId={productIdToDelete}
+        />
+      )}
+      {openDeleteModal && (
+        <DeleteModal
+        closeModal={() => setOpenDeleteModal(false)}
+        onDelete={() => handleDeleteProduct(productIdToDelete)}
+        productId={productIdToDelete}
+        />
+      )}
     </Lightsidebarwithheader>
   );
 }

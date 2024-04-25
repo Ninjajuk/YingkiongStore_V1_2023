@@ -71,7 +71,7 @@ async function addProduct(product) {
 //Edit Product function here
 async function editProduct(productId, updatedData) {
   try {
-    const resp = await fetch(`https://yingkiongstore.onrender.com/products/editproduct/${productId}`, {
+    const resp = await fetch(`http://localhost:8000/products/editproduct/${productId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ async function editProduct(productId, updatedData) {
 //Delete Product function here
 async function deleteProduct(productId) {
   try {
-    const resp = await fetch(`https://yingkiongstore.onrender.com/products/deleteproduct/${productId}`, {
+    const resp = await fetch(`http://localhost:8000/products/deleteproduct/${productId}`, {
       method: 'DELETE',
     });
 
@@ -104,7 +104,7 @@ async function deleteProduct(productId) {
       throw new Error(`Error deleting product: ${errorMessage}`);
     }
   } catch (error) {
-    console.error('Error deleting product:', error);
+    console.error('Error deleting product:Sam', error);
     throw error;
   }
 }
