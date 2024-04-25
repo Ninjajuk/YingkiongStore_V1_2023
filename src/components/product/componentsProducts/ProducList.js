@@ -56,7 +56,7 @@ const ProducList = () => {
         dataLength={items.length}
         next={fetchData} // Call fetchData function when reaching bottom
         hasMore={hasMore}
-        loader={<SkeletonProduct />}
+        loader={<LoaderCircle />}
       >
         <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
           <div className="overflow-x-auto  bg-black rounded-lg shadow-lg">

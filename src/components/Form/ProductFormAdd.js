@@ -2,6 +2,9 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import Lightsidebarwithheader from '../admin/componentsAdmin/AdminDashLayout'
 import { useState } from 'react';
+import uploadImage from '../../utility/uploadImageHelper'
+import {productCategory,unitCategory} from '../../utility/productCategory'
+// import {addProduct} from '../../API/productAPI'
 const colors = [
     {
       name: 'White',
@@ -35,21 +38,22 @@ const colors = [
   ];
 export default function ProductAddForm() {
     const [selectedFile, setSelectedFile] = useState(null);
+    const [imageUploaded, setImageUploaded] = useState(false); // to track image upload status
     const initialstate={
         title:'',
         description:'',
-        thumbnail:null,
+        thumbnail:'',
         price:'',
         cuttedprice:'',
         discount:'',
         category:'',
         brand:'',
-        units:'',
+        unit:'',
         stock:'',
-        rating:'',
-        highlight1:'',
-        highlight2:'',
-        highlight3:'',
+        rating:0,
+        // highlight1:'',
+        // highlight2:'',
+        // highlight3:'',
     }
     const [productInfo,setProductInfo]=useState(initialstate)
     const handleChange=(e)=>{
@@ -60,24 +64,55 @@ export default function ProductAddForm() {
         });
     }
 
-    const handleFileChange = (event) => {
-      // Get the selected file
-      const file = event.target.files[0];
-  
-      // Update state to store the selected file
-      setSelectedFile(file);
+    const handleUploadImage = async(event) => {
+      try {
+        // Get the selected file
+        const file = event.target.files[0];
+      
+        // Update state to store the selected file
+        setSelectedFile(file);
+        const uploadImageCloudinary = await uploadImage(file);
+        setProductInfo((prev) => ({
+          ...prev,
+          thumbnail: uploadImageCloudinary.url
+        }));
+        console.error(' uploading image:', uploadImageCloudinary.url);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        // Handle error (e.g., display error message to the user)
+      }
     };
-    const handleSubmit = (event) => {
+    
+    const handleSubmit = async(event) => {
         event.preventDefault();
-        // Create URL string for the selected file
-        const fileUrl = selectedFile ? URL.createObjectURL(selectedFile) : '';
-        
-        // Log the productInfo state along with the file URL to the console
-        console.log({
-            ...productInfo,
-            thumbnailUrl: fileUrl, // Add thumbnailUrl property with file URL
-        });
-    };
+
+        console.log({...productInfo,}); // Log the productInfo state along with the file URL to the console
+       
+        try {
+          const response = await fetch('http://localhost:8000/products/addproduct', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productInfo),
+          });
+      
+          if (!response.ok) {
+            throw new Error('Failed to add product');
+          }
+      
+          const data = await response.json();
+          console.log('Product added successfully:', data);
+ 
+    setProductInfo(initialstate);            // Reset form after successful submission
+          return data;
+        } catch (error) {
+          console.error('Error adding product:', error);
+          throw error;
+        }
+
+        } 
+
     
   return (
     <>
@@ -105,6 +140,7 @@ export default function ProductAddForm() {
                     autoComplete="title"
                     value={productInfo.title}
                     onChange={handleChange}
+                    required
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
              
                   />
@@ -125,6 +161,7 @@ export default function ProductAddForm() {
                   defaultValue={''}
                   value={productInfo.description}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about the Products.</p>
@@ -145,7 +182,7 @@ export default function ProductAddForm() {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                     >
                       <span>Upload a file</span>
-                      <input id="file-upload" onChange={handleFileChange} name="file-upload" type="file" className="sr-only" />
+                      <input id="file-upload" onChange={handleUploadImage} name="file-upload" type="file" className="sr-only" />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
@@ -156,7 +193,7 @@ export default function ProductAddForm() {
           <p className="text-sm text-gray-600">Selected file: {selectedFile.name}</p>
           <img
             className="mt-2 w-32 h-32 object-cover"
-            src={URL.createObjectURL(selectedFile)}
+            src={URL.createObjectURL(selectedFile)} // Use selectedFile for the image source
             alt="Selected file"
           />
         </div>
@@ -184,6 +221,7 @@ export default function ProductAddForm() {
                   autoComplete="price"
                   value={productInfo.price}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -201,6 +239,7 @@ export default function ProductAddForm() {
                   autoComplete="cuttedprice"
                   value={productInfo.cuttedprice}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -218,6 +257,7 @@ export default function ProductAddForm() {
                   autoComplete="discount"
                   value={productInfo.discount}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -234,14 +274,17 @@ export default function ProductAddForm() {
                   autoComplete="category-name"
                   value={productInfo.category}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
-                  <option>Vegetables</option>
-                  <option>Fruits</option>
-                  <option>Local Items</option>
-                  <option>Electronics</option>
-                  <option>Grocery</option>
-                  <option>Meat</option>
+                  <option value={""}>Select Category</option>
+                  {
+                    productCategory.map((el,index)=>{
+                      return(
+                        <option value={el.value} key={el.value+index}>{el.label}</option>
+                      )
+                    })
+                  }
                 </select>
               </div>
             </div>
@@ -255,6 +298,7 @@ export default function ProductAddForm() {
                   type="text"
                   name="brand"
                   id="brand"
+                  
                   autoComplete="brand"
                   value={productInfo.brand}
                   onChange={handleChange}
@@ -270,17 +314,22 @@ export default function ProductAddForm() {
               </label>
               <div className="mt-2">
                 <select
-                  id="units"
-                  name="units"
+                  id="unit"
+                  name="unit"
                   autoComplete="units-name"
-                  value={productInfo.units}
+                  value={productInfo.unit}
                   onChange={handleChange}
+                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
-                  <option>Kg</option>
-                  <option>Gram</option>
-                  <option>Litres</option>
-                  <option>Item</option>
+                  <option value={""}>Select Units</option>
+                  {
+                    unitCategory.map((el,index)=>{
+                      return(
+                        <option value={el.value} key={el.value+index}>{el.label}</option>
+                      )
+                    })
+                  }
                 </select>
               </div>
             </div>
@@ -308,7 +357,7 @@ export default function ProductAddForm() {
               </label>
               <div className="mt-2">
                 <input
-                  type="text"
+                  type="number"
                   name="rating"
                   id="rating"
                   autoComplete="rating"
@@ -320,8 +369,8 @@ export default function ProductAddForm() {
             </div>
 
 
-
-            <div className="sm:col-span-3">
+{/* HighLights */}
+            {/* <div className="sm:col-span-3">
               <label htmlFor="highlight1" className="block text-sm font-medium leading-6 text-gray-900">
                 Highlight1
               </label>
@@ -369,7 +418,7 @@ export default function ProductAddForm() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-            </div>
+            </div> */}
 
 
             {/* <div className="col-span-full">

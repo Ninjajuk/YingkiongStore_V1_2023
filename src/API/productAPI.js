@@ -46,22 +46,21 @@ async function fetchDataFromAPI(category) {
 //addProduct
 async function addProduct(product) {
   try {
-    const resp=await fetch('https://yingkiongstore.onrender.com/products/addproduct',{
-      method:'POST',
-      headers:{
+    const response = await fetch('http://localhost:8000/products/addproduct', {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
       },
-      body:JSON.stringify(product)
-    })
-    if (resp.ok) {
-      const data = await resp.json();
-      console.log('Product added successfully:', data);
-      return data;
-    } else {
-      const errorData = await resp.json();
-      console.error('Error adding product:', errorData);
-      throw new Error(errorData.message);
+      body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add product');
     }
+
+    const data = await response.json();
+    console.log('Product added successfully:', data);
+    return data;
   } catch (error) {
     console.error('Error adding product:', error);
     throw error;
