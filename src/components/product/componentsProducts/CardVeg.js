@@ -22,7 +22,7 @@ const dispatch=useDispatch()
        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-4">
       {visibleCards.map(item => 
         <div key={item._id} className="bg-white p-6 rounded-lg shadow-md flex flex-col">
-          <div className="mb-4 aspect-w-1 aspect-h-1">
+          <div className="mb-4 h-40 aspect-w-1 aspect-h-1">
             <img
               src={item.thumbnail}
               alt={item.title}

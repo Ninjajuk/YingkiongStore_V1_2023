@@ -91,15 +91,15 @@ const ProducList = () => {
                 className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"
               >
                 {/* <Link to={`/shop/${product.id}`}> */}
-                <a href={`/shop/${product.id}`}>
-                  <div className="h-40 w-40 aspect-h-1 aspect-w-1  overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-48">
+                {/* <a href={`/shop/${product.id}`}> */}
+                  <div className="h-40  aspect-h-1 aspect-w-1  overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-48">
                     <img
                       src={product.thumbnail}
                       alt={product.title}
                       className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                     />
                   </div>
-                </a>
+                {/* </a> */}
 
                 <div className="mt-4 flex flex-col">
                   <a href={`/shop/${product.id}`}>
@@ -112,7 +112,7 @@ const ProducList = () => {
                       ₹{product.price}
                     </span>
                     <span className="text-green-500">
-                      {product.discountPercentage}% off
+                    ₹{product.discount} Save
                     </span>
                   </p>
                   <div className="py-2">
