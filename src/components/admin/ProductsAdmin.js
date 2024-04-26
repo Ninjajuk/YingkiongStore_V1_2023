@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from 'react';
-import {getallProducts,deleteProduct} from '../../API/productAPI'
+import {getallProducts,deleteProduct,editProduct} from '../../API/productAPI'
 
 import Lightsidebarwithheader from './componentsAdmin/AdminDashLayout';
 import { useNavigate } from 'react-router-dom';
@@ -161,7 +161,9 @@ const navigate=useNavigate()
   const handleEditProductButtonClick = (productId) => {
     setProductIdToEdit(productId);
     setOpenEditProductModal(true);
+    console.log(productId)
   };
+
 
 
 
@@ -208,7 +210,7 @@ const navigate=useNavigate()
                   value={sortBy}
                   onChange={handleFilterSelect}
                 >
-                  <option value="">Select Category</option>
+                  <option value="">All </option>
                   {uniqueCategories.map((option) => (
                     <option
                       key={option}
@@ -289,7 +291,7 @@ const navigate=useNavigate()
                       <td className="lg:px-6 py-4 whitespace-no-wrap">
                         <button
                           className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
-                          onClick={() => handleEditProductButtonClick(product._id)}
+                          onClick={() => handleEditProductButtonClick(product)}
                         >
                           Edit
                         </button>
@@ -313,8 +315,9 @@ const navigate=useNavigate()
       {openEditProductModal && (
         <EditProductModal
         closeModal={() => setOpenEditProductModal(false)}
-        onDelete={() => setProductIdToEdit(productIdToDelete)}
-        productId={productIdToDelete}
+        // onEdit={() => handleEditProduct(productIdToEdit)}
+        product={productIdToEdit}
+        refreshProductList={setData} // Pass the setData function to update the product list
         />
       )}
       {openDeleteModal && (
