@@ -75,8 +75,9 @@ export const createUserAsync = createAsyncThunk(
   async (userData, { rejectWithValue },callback) => {
     try {
       const response = await createUser(userData,callback);
+      console.log('authslice async thunk',userData);
       if (response) {
-        console.log(response.data);
+        console.log(response);
         return response.data;
       }
       // else{

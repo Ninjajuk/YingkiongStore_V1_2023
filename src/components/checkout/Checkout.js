@@ -307,7 +307,7 @@ const navigate=useNavigate()
                                   {item.title}
                                 </p>
                                 <p className="text-gray-600">
-                                  ₹{item.price} each
+                                  ₹{item.price}/ <sub>each</sub>
                                 </p>
                               </div>
 

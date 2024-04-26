@@ -146,8 +146,8 @@ export default function ShoppingCart({isCartOpen}) {
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
                                         <p className="text-gray-500">
-                                          Qty {product.quantity}
-                                        {product.category === 'fruits_vegetables' ? 'kg' : 'items'}
+                                          Qty {product.quantity}/
+                                        <sub>{product.category === 'vegetables' ? 'kg' : 'items'}</sub>
                                         </p>
 
                                         <div className="flex">

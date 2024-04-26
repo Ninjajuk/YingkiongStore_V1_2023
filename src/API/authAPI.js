@@ -60,6 +60,7 @@ export async function createUser(userData,callback) {
       `${BASE_URL}/${AUTH_URLS.SIGN_UP}`,
       postBody(userData)
     );
+
     if (resp.ok) {
       const userdata = await resp.json();
       const successMessage = userdata.message;
@@ -77,7 +78,7 @@ export async function createUser(userData,callback) {
     }
     else {
       const error = await resp.json();
-      console.log( 'Initially Failure response',error.message);
+      console.log( 'Initially Failure response authAPI',error.message);
       throw { data: { error: error.message, data: {} } }; 
     }
   } catch (error) {

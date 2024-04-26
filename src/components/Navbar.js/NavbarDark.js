@@ -26,7 +26,7 @@ function classNames(...classes) {
   const cartItems = useSelector((state) => state.cart);
   const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
 const navigate=useNavigate()

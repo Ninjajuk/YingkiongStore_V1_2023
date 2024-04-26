@@ -19,6 +19,7 @@ const RegistrationForm = () => {
   } = useForm();
 
   const onSubmit = async(data,) => {
+    console.log(data)
    await dispatch(createUserAsync(data,));
 
     
@@ -73,6 +74,9 @@ const RegistrationForm = () => {
                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
                 placeholder="Enter your name"
               />
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
             </div>
             <div className="mb-4">
               {/* <label htmlFor="email" className="block text-gray-600">Email</label> */}
@@ -90,10 +94,10 @@ const RegistrationForm = () => {
                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-400"
                 placeholder="Enter your email"
               />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
             </div>
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
-            )}
 
             <div className="mb-4">
               {/* <label htmlFor="phone" className="block text-gray-600">Phone</label> */}
@@ -111,10 +115,11 @@ const RegistrationForm = () => {
                   },
                 })}
               />
+              {errors.phone && (
+                <p className="text-red-500">{errors.phone.message}</p>
+              )}
             </div>
-            {errors.phone && (
-              <p className="text-red-500">{errors.phone.message}</p>
-            )}
+
             <div className="mb-4">
               {/* <label htmlFor="password" className="block text-gray-600">Password</label> */}
               <input
@@ -127,10 +132,10 @@ const RegistrationForm = () => {
                   required: "password is required",
                 })}
               />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
             </div>
-            {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
-            )}
             <button
               type="submit"
               className="w-full bg-purple-600 text-white rounded-lg py-2 hover:bg-purple-700 transition duration-300"

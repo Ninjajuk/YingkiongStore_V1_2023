@@ -13,10 +13,10 @@ export const DeleteModal = ({ closeModal, onDelete,productId }) => {
             />
           </div>
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Deactivate account
+            Deactivate Product
           </h1>
           <p className="text-sm text-gray-500">
-            Are you sure you want to deactivate your account? All of your data
+            Are you sure you want to deactivate your Product? All of this Product
             will be permanently removed. This action cannot be undone.
           </p>
           <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

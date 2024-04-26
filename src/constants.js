@@ -1,7 +1,7 @@
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "http://localhost:8000";
 
 const AUTH_URLS = {
-    SIGN_UP: 'api/authenticate/userVerification'
+    SIGN_UP: 'auth/signup'
 }
 
 
