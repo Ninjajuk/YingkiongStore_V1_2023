@@ -2,7 +2,7 @@ import React from 'react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 
-const EmailSuccessUserCreated = () => {
+const UserCreatedSuccessfullyPage = () => {
 
     const navigate=useNavigate()
   return (
@@ -18,7 +18,7 @@ const EmailSuccessUserCreated = () => {
               as="h3"
               className="text-lg font-medium leading-6 text-gray-900"
             >
-             Thank You! Welcome to YingkiongStore
+             Greetings from YingkiongStore
             </h2>
             <div className="mt-2">
               <p className="text-sm text-gray-500">
@@ -42,4 +42,4 @@ const EmailSuccessUserCreated = () => {
   )
 }
 
-export default EmailSuccessUserCreated
+export default UserCreatedSuccessfullyPage

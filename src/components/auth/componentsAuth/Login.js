@@ -3,7 +3,7 @@ import { FaEye,FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Circles } from "react-loader-spinner";
 import useLoading from '../../../customhooks/Loading';
-import {loginUserAsync,selectError,setLoading,setIsauthenticated} from '../../../redux/authSlice'
+import {loginUserAsync,selectError,setLoading,setIsauthenticated,selectsuccessFlag,selectLoggedInUser} from '../../../redux/authSlice'
 
 import { useForm, SubmitHandler } from "react-hook-form"
 
@@ -13,11 +13,10 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const loginStatus = useSelector((state) => state.auth.success);
+  // const loginStatus = useSelector(selectLoggedInUser);
   const isAuthenticated = useSelector(setIsauthenticated); 
 
   const error = useSelector(selectError);
-
   const loading = useSelector(setLoading);
   const navigate = useNavigate();
   const loadingspinner = useLoading();
@@ -32,7 +31,8 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       await dispatch(loginUserAsync(data));
-      if(loginStatus){
+      // console.log(loginStatus)
+      if(isAuthenticated){
         navigate('/');
       }
     } catch (error) {

@@ -1,6 +1,9 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
+
 export const DeleteModal = ({ closeModal, onDelete,productId }) => {
+
+  
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -24,6 +27,7 @@ export const DeleteModal = ({ closeModal, onDelete,productId }) => {
               onClick={() => {
                 onDelete(); // Call the onDelete function when "Delete" is clicked
                 closeModal(); // Close the modal
+
               }}
               className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
             >

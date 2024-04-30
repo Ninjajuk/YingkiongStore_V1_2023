@@ -53,42 +53,31 @@ const getBody = () => {
   
 
 
-export async function createUser(userData,callback) {
-
+export async function createUser(userData, callback) {
   try {
     const resp = await fetch(
       `${BASE_URL}/${AUTH_URLS.SIGN_UP}`,
       postBody(userData)
     );
-
     if (resp.ok) {
       const userdata = await resp.json();
       const successMessage = userdata.message;
-
       console.log(successMessage, "Initially success response"); //For new User  before returning response verify token and call API parallely
-     alert(successMessage)
-
-    // Dispatch the successMessage to the Redux store
-    // store.dispatch(setSuccessMessage(successMessage));
-
-      //a delay of 10 seconds using setTimeout
-      await new Promise(resolve => setTimeout(resolve, 10000));
-
-      return {userdata, successMessage}
-    }
-    else {
+      alert(successMessage);
+      return { userdata, successMessage };
+    } else {
       const error = await resp.json();
-      console.log( 'Initially Failure response authAPI',error.message);
-      throw { data: { error: error.message, data: {} } }; 
+      console.log("Error in createUser:", error);
+      throw error;
     }
   } catch (error) {
-    console.error("Error creating user:",error.data.error,"in CreateUserUserAPICALL");
+    console.error("Error creating user:", error, "in CreateUserUserAPICALL");
     throw error;
   }
 }
   export async function loginUser(userData) {
     try {
-      const response = await fetch("http://localhost:5000/api/authenticate/", {
+      const response = await fetch(`${BASE_URL}/${AUTH_URLS.LOGIN_URL}`, {
         method: "POST",
         body: JSON.stringify(userData),
         headers: { "content-type": "application/json" },
@@ -96,7 +85,7 @@ export async function createUser(userData,callback) {
   
       if (response.ok) {
         const data = await response.json();
-        console.log('error inititally before getting called in thunk',data.data)
+        console.log('error inititally before getting called in thunk',data)
         return { data };
       } else {
         const error = await response.json();
@@ -125,7 +114,6 @@ export async function createUser(userData,callback) {
         console.error("Unexpected error during logout", error,'in loginUserAPICALL');
         throw error; 
       }
-
   }
 
 

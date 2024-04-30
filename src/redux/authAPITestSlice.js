@@ -1,4 +1,4 @@
-// import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+// // import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 
 // // Check local storage for initial authentication state
 // let storedIsAuthenticated;
@@ -72,11 +72,14 @@ import {
 
 export const createUserAsync = createAsyncThunk(
   "user/createUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData, { rejectWithValue, dispatch }) => {
     try {
-      const response = await createUser(userData);
+      const response = await createUser(userData, dispatch);
       console.log('authslice async thunk', response);
-      return {response}; // Return the entire response object
+      if (response) {
+        console.log(response,'');
+        return response; // Return the entire response object
+      }
     } catch (error) {
       console.log(
         "Rejected value: in (before returning) rejectWithValue Createsyncthunkfunction",
@@ -87,17 +90,17 @@ export const createUserAsync = createAsyncThunk(
   }
 );
 
+
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
   async (loginInfo, {rejectWithValue} ) => {
     try {
       const response = await loginUser(loginInfo);
-      console.log('response is being sent to redux throuh asyncthunk',response.data.user.name)
-      return {response}
+      return {response};
     } catch (error) {
       // console.error('Unexpected error during login:', error,'in loginsyncthunkfunction');
       console.log('Rejected value: in (before returning) rejectWithValue loginsyncthunkfunction', error); 
-      return rejectWithValue(error);
+      return rejectWithValue({error});
     }
   }
 );
@@ -138,7 +141,6 @@ const initialState = {
   mailSent: false,
   passwordReset:false,
   successMessage: null,
-  successFlag:false
   
 };
 
@@ -157,20 +159,16 @@ export const authSlice = createSlice({
     })
     .addCase(createUserAsync.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload.response.userdata.user
-      console.log("Signup User", action.payload.response, "Ansari");
-      state.successFlag = true;
-      console.log(state.successFlag)
-       localStorage.setItem('user',    JSON.stringify({
-        user: action.payload.response.userdata.user,
-        successFlag: true,
-        // token: action.payload
-      }));    // Store user information in localStorage
+      state.user = action.payload.userdata
+      state.error=action.payload.successMessage
+      // state.mailSent=true
+      console.log("Signup Error",  state.successMessage, "Samsu");
     })
     .addCase(createUserAsync.rejected, (state, action) => {
       state.loading = false;
-      state.error=action.payload.error
-      console.log('Rejected value:', action.payload.error);
+      state.error=action.payload
+      // console.log('Rejected action:', action,action.meta.arg);
+      // console.log('Rejected value:', state.error);
 
     })
     
@@ -178,28 +176,29 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        state.isAuthenticated = true;
-        state.user = action.payload.response.data.user
-        state.successFlag = true;
-        // state.userToken = action.payload
-        console.log("Login successful:", action.payload.response.data.user, "Samsu");
-        console.log("isAuthenticated",state.isAuthenticated);
-        console.log(state.successFlag)
+        state.isAuthenticated = action.payload.data.user.isVerified;
+        state.user = action.payload
+        state.success = true;
+        state.userToken = action.payload
+        console.log("Login successful:", action.payload, "Samsu");
+        console.log("User", action.payload.data.user);
+        console.log("userToken", action.payload.data.token);
         // console.log("isAuthenticated", action.payload.data.user.isVerified);
         state.loading = false;
         // Save user data to local storage
         localStorage.setItem(
           "userData",
           JSON.stringify({
-            user: action.payload.response.data.user,
-            isAuthenticated: true,
-            // token: action.payload
+            user: action.payload,
+            isAuthenticated: action.payload,
+            token: action.payload
           })
         );
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.error;
+        state.error = action.payload;
+        // console.log('Rejected action:', action);
         console.log("Rejected value:", action.payload.error, "Rejected valueSamsu");
       })
       .addCase(signOutAsync.pending, (state) => {
@@ -218,7 +217,6 @@ export const setLoading=(state)=>state.auth.loading
 export const selectLoggedInUser = (state) => state.auth.user;
 export const setIsauthenticated=(state)=>state.auth.isAuthenticated;
 export const selectError = (state) => state.auth.error;
-export const selectsuccessFlag = (state) => state.auth.successFlag;
 export const selectUserChecked = (state) => state.auth.userChecked;
 export const selectMailSent = (state) => state.auth.mailSent;
 export const selectPasswordReset = (state) => state.auth.passwordReset;

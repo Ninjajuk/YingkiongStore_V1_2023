@@ -120,7 +120,7 @@ const navigate=useNavigate()
                 <div className="hidden lg:block">
                   {isAuthenticated && user ? (
                     <h1 className="font-medium text-gray-300 ">
-                      {user.fullName.slice(0, 6)}
+                      {user.name.slice(0, 6)}
                     </h1>
                   ) : (
                     <button

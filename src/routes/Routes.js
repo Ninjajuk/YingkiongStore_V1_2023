@@ -22,7 +22,7 @@ import ResetPassword from "../components/auth/componentsAuth/ResetPassword";
 import ProductDetails from "../components/product/Productdetails";
 
 import VerifyEmail from "../components/auth/componentsAuth/VerifyEmail";
-import EmailVerificationPage from "../pages/EmailVerificationPage";
+
 import SkeletonCard from "../components/skeleton/Skeleton1";
 import ProductForm from "../components/Form/ProductForm";
 import ProductAddForm from "../components/Form/ProductFormAdd";
@@ -30,6 +30,7 @@ import TestProduct from "../components/product/TestProduct";
 import InfiniteScrollExample1 from "../pages/Test1";
 import MyOrderPage from "../components/admin/orders/MyOrderPage";
 import Customers from "../components/admin/customers/Customers";
+import UserCreatedSuccessfullyPage from "../components/auth/componentsAuth/EmailSuccessUserCreated";
 
 
 
@@ -64,8 +65,8 @@ const router = createBrowserRouter([
     element: <RegistrationForm />,
   },
   {
-    path: "/signup/user",
-    element: <EmailVerificationPage/>,
+    path: "/signup/usercreatedsuccessfully",
+    element: <UserCreatedSuccessfullyPage/>,
   },
   {
     path: "/forgot-password",

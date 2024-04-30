@@ -1,48 +1,48 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
-import {createUserAsync,selectError,setLoading} from '../../../redux/authSlice'
+import {createUserAsync,selectError,setLoading,selectsuccessFlag} from '../../../redux/authSlice'
 import { useNavigate } from "react-router-dom";
 import UserCreatedSuccessfully from "../../modal/UserCreatedAuccessful";
 import { useDispatch, useSelector } from "react-redux";
+import UserCreatedSuccessfullyPage from "./EmailSuccessUserCreated";
+
 
 const RegistrationForm = () => {
   const loading = useSelector(setLoading);
   const error = useSelector(selectError);
-  
+ const successuser = useSelector(selectsuccessFlag);
+ const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch=useDispatch()
 
   const {
     register,
     handleSubmit,
+    reset, // Destructure reset from useForm
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async(data,) => {
-    console.log(data)
-   await dispatch(createUserAsync(data,));
+  const onSubmit = async (data) => {
+    // console.log(data)
+    try {
+      await dispatch(createUserAsync(data));
+      // Reset the form upon successful user creation
+      reset();
+    } catch (error) {
+            // Handle any Signup errors if needed
+            console.error('Signup error:', error);
+    }
 
-    
   };
 
-
-  const handlenavigate=()=>{
-    return   navigate('/verify-email');
-  }
-  // const handleCreateUser = async () => {
-  //   try {
-  //     const result = await createUser(userData, () => {
-  //       // Callback function to be executed after alert and delay
-  //       navigate('/verify-email');
-  //     });
-
-  //     // Handle the result if needed
-  //     console.log(result);
-  //   } catch (error) {
-  //     // Handle errors if needed
-  //     console.error(error);
-  //   }
-  // };
+  //Show Login Page onlywhen user data and authenticated state is unavailable or false
+  useEffect(() => {
+    // Check if the user is already authenticated (data available in localStorage)
+    if (user) {
+      // Redirect to a different page, e.g., the home page
+      navigate('/signup/usercreatedsuccessfully');
+    }
+  }, [user, navigate]);
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
@@ -156,7 +156,7 @@ const RegistrationForm = () => {
           </form>
         </div>
       </div>
-      {/* {isUser && <UserCreatedSuccessfully/>} */}
+      {user && <UserCreatedSuccessfullyPage/>}
     </>
   );
 };
