@@ -17,7 +17,7 @@ import OrderHistoryInvoicePanel from "../components/user/UserOrders";
 import ContactUs from "../pages/ContactUs";
 import Protected from "./Protected";
 import ProtectedAdmin from "./ProtectedAdmin";
-import ForgotPassword from "../components/auth/componentsAuth/ForgotPassword";
+
 import ResetPassword from "../components/auth/componentsAuth/ResetPassword";
 import ProductDetails from "../components/product/Productdetails";
 
@@ -31,6 +31,7 @@ import InfiniteScrollExample1 from "../pages/Test1";
 import MyOrderPage from "../components/admin/orders/MyOrderPage";
 import Customers from "../components/admin/customers/Customers";
 import UserCreatedSuccessfullyPage from "../components/auth/componentsAuth/EmailSuccessUserCreated";
+import ForgotPasswordRequest from "../components/auth/componentsAuth/ForgotPasswordRequest";
 
 
 
@@ -52,10 +53,10 @@ const router = createBrowserRouter([
     path: "/shop",
     element: <Shop />,
   },
-  // {
-  //   path: "/shop/:productId",
-  //   element: <ProductDetails/>,
-  // },
+  {
+    path: "/shop/:productId",
+    element: <ProductDetails/>,
+  },
   {
     path: "/login",
     element: <LoginForm />,
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/forgot-password",
-    element: <ForgotPassword />,
+    element: <ForgotPasswordRequest />,
   },
   {
     path: '/reset-password',

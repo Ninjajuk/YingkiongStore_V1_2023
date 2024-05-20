@@ -15,7 +15,7 @@ export default function ErrorPage() {
                 href="/"
                 className="rounded-md bg-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
               >
-                Go back home
+                Go back to Yingkiong Store
               </a>
               <a href="/" className="text-sm font-semibold text-gray-900">
                 Contact support <span aria-hidden="true">&rarr;</span>

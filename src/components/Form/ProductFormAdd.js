@@ -4,6 +4,9 @@ import Lightsidebarwithheader from '../admin/componentsAdmin/AdminDashLayout'
 import { useState } from 'react';
 import uploadImage from '../../utility/uploadImageHelper'
 import {productCategory,unitCategory} from '../../utility/productCategory'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { showToast } from '../../utility/toastify';
 // import {addProduct} from '../../API/productAPI'
 const colors = [
     {
@@ -102,6 +105,7 @@ export default function ProductAddForm() {
           }
       
           const data = await response.json();
+          showToast('success', 'Product added successful!');
           console.log('Product added successfully:', data);
  
     setProductInfo(initialstate);            // Reset form after successful submission
@@ -482,6 +486,7 @@ export default function ProductAddForm() {
         </button>
       </div>
     </form>
+    <ToastContainer />
     </Lightsidebarwithheader>
 
     </>

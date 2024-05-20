@@ -8,6 +8,7 @@ import { NavLink,useNavigate } from "react-router-dom";
 import ShoppingCart from '../cart/Cart';
 import { useDispatch, useSelector } from 'react-redux';
 import{setIsauthenticated,selectLoggedInUser,signOutAsync} from '../../redux/authSlice'
+import { selectItems } from '../../redux/cartSliceasyn';
 
 const navigationLinks = [
   { to: "/", text: "Home" },
@@ -23,9 +24,11 @@ function classNames(...classes) {
  function Navbar1() {
 
   const[isCartOpen,setIsCartOpen]=useState(false)
-  const cartItems = useSelector((state) => state.cart);
+  // const cartItems = useSelector((state) => state.cart);
+  const cartItems=useSelector(selectItems)
   const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
+  
   const dispatch = useDispatch();
 
 
@@ -95,6 +98,8 @@ const navigate=useNavigate()
                     </Disclosure.Button>
                   </div>
                 </div>
+
+{/* Search button center */}
                 <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                   <div className="w-full max-w-lg lg:max-w-xs">
                     <label htmlFor="search" className="sr-only">
@@ -117,6 +122,8 @@ const navigate=useNavigate()
                     </div>
                   </div>
                 </div>
+
+
                 <div className="hidden lg:block">
                   {isAuthenticated && user ? (
                     <h1 className="font-medium text-gray-300 ">
@@ -179,34 +186,52 @@ const navigate=useNavigate()
                               </a>
                             )}
                           </Menu.Item>
-                          {isAuthenticated?   <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="/"
-                                // onClick={() => dispatch(signOutAsync())}
-                                onClick={handleLogout}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Sign out
-                              </a>
-                            )}
-                          </Menu.Item>:       <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="/login"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Login
-                              </a>
-                            )}
-                          </Menu.Item>}
-                   
+                          {user && user.role === "admin" && (
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href="/dashboard"
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}
+                                >
+                                  Dashboard
+                                </a>
+                              )}
+                            </Menu.Item>
+                          )}
+                          {isAuthenticated ? (
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href="/"
+                                  // onClick={() => dispatch(signOutAsync())}
+                                  onClick={handleLogout}
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}
+                                >
+                                  Sign out
+                                </a>
+                              )}
+                            </Menu.Item>
+                          ) : (
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href="/login"
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}
+                                >
+                                  Login
+                                </a>
+                              )}
+                            </Menu.Item>
+                          )}
                         </Menu.Items>
                       </Transition>
                     </Menu>
@@ -315,14 +340,20 @@ const navigate=useNavigate()
                     Cart
                   </Disclosure.Button>
                   {isAuthenticated ? (
-                    <button 
-                    // onClick={() => dispatch(signOutAsync())}
-                    onClick={handleLogout}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                    <button
+                      // onClick={() => dispatch(signOutAsync())}
+                      onClick={handleLogout}
+                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                    >
                       Sign out
                     </button>
                   ) : (
-                    <button onClick={()=>navigate('/login')} className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign In</button>
+                    <button
+                      onClick={() => navigate("/login")}
+                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                    >
+                      Sign In
+                    </button>
                   )}
                 </div>
               </div>

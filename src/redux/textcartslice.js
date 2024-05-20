@@ -1,8 +1,35 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  cartItems: JSON.parse(localStorage.getItem("cart")) || [],
-  orderItems: [],
+// const initialState = [];
+// Load cart from local storage or use an empty array as the initial state
+// let initialState;
+// if (typeof window !== 'undefined') {
+//  const initialState = JSON.parse(localStorage.getItem("cart")) || [];
+// }
+
+const getInitialCartState = () => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const storedCart = localStorage.getItem("cart");
+      return storedCart ? JSON.parse(storedCart) : [];
+    }
+  } catch (error) {
+    console.error("Error accessing localStorage:", error);
+  }
+  return [];
+};
+
+const initialState = getInitialCartState();
+
+const saveCartToLocalStorage = (cart) => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("cart", JSON.stringify(cart) || []);
+    }
+  } catch (error) {
+    console.error("Error accessing localStorage:", error);
+  }
 };
 
 const cartSlice = createSlice({
@@ -10,76 +37,65 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      const { id, title, price, thumbnail, discountPercentage, brand } =
+      const { _id, title, price, thumbnail, discountPercentage, brand } =
         action.payload;
-      const newState = { ...state };
+        const newState = [...state];
 
       // Check if the item already exists in the cart
-      const existingItem = newState.cartItems.find((item) => item.id === id);
+      const existingItem = state.find((item) => item._id === _id);
 
       if (existingItem) {
         // If the item already exists, increment the quantity
         existingItem.quantity += 1;
       } else {
         // If the item doesn't exist, add it with a quantity of 1
-        newState.cartItems.push({
-          id,
+        state.push({
+          _id,
           title,
           price,
           thumbnail,
           discountPercentage,
           brand,
-          quantity: 1,
+          quantity: 0,
         });
       }
-      saveCartToLocalStorage(newState.cartItems);
-      return newState;
+      saveCartToLocalStorage(state);
     },
     removeItem(state, action) {
-      const newState = { ...state };
-      newState.cartItems = newState.cartItems.filter(
-        (item) => item.id !== action.payload
-      );
-      saveCartToLocalStorage(newState.cartItems);
+      // return state.filter((item) => item.id !== action.payload);
+      const newState = state.filter((item) => item._id !== action.payload);
+      saveCartToLocalStorage(newState);
       return newState;
     },
     increaseQuantity(state, action) {
-      const newState = { ...state };
-      const item = newState.cartItems.find((item) => item.id === action.payload);
+      const item = state.find((item) => item._id === action.payload);
       if (item) {
         item.quantity += 1;
+        saveCartToLocalStorage(state);
       }
-      saveCartToLocalStorage(newState.cartItems);
-      return newState;
     },
     decreaseQuantity(state, action) {
-      const newState = { ...state };
-      const item = newState.cartItems.find((item) => item.id === action.payload);
+      const item = state.find((item) => item._id === action.payload);
       if (item && item.quantity > 1) {
         item.quantity -= 1;
+        saveCartToLocalStorage(state);
       }
-      saveCartToLocalStorage(newState.cartItems);
-      return newState;
     },
 
-    // // Code for resetting the cart
+    // // Code for resetting the cart)
     clearCart: (state) => {
-      const newState = { ...state, cartItems: [] };
+      const newState = [];
       localStorage.removeItem("cart");
-      return newState;
-    },
-
-    // New action to save order items
-    saveOrderItems: (state) => {
-      const newState = { ...state };
-      newState.orderItems = [...state.cartItems];
-      return newState;
-    },
-
-    // New action to clear order items
-    clearOrderItems: (state) => {
-      const newState = { ...state, orderItems: [] };
       return newState;
     },
   },
 });
+
+export const {
+  addItem,
+  removeItem,
+  increaseQuantity,
+  decreaseQuantity,
+  clearCart
+} = cartSlice.actions;
+export default cartSlice.reducer;

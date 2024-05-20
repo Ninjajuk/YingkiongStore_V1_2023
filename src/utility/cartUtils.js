@@ -33,3 +33,13 @@ export const calculateSubtotal = (cartItems) => {
     return subtotal + shipping + taxes;
   };
   
+//Save to Local Storage
+ export const saveCartToLocalStorage = (cart) => {
+    try {
+      if (typeof window !== "undefined" && window.localStorage) {
+        localStorage.setItem("cart", JSON.stringify(cart) || []);
+      }
+    } catch (error) {
+      console.error("Error accessing localStorage:", error);
+    }
+  };

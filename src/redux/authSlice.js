@@ -139,7 +139,6 @@ const initialState = {
   passwordReset:false,
   successMessage: null,
   successFlag:false
-  
 };
 
 export const authSlice = createSlice({
@@ -193,7 +192,7 @@ export const authSlice = createSlice({
           JSON.stringify({
             user: action.payload.response.data.user,
             isAuthenticated: true,
-            // token: action.payload
+            userToken: action.payload.response.data.token
           })
         );
       })
@@ -217,6 +216,7 @@ export const authSlice = createSlice({
 export const setLoading=(state)=>state.auth.loading
 export const selectLoggedInUser = (state) => state.auth.user;
 export const setIsauthenticated=(state)=>state.auth.isAuthenticated;
+export const setUserToken=(state)=>state.auth.userToken;
 export const selectError = (state) => state.auth.error;
 export const selectsuccessFlag = (state) => state.auth.successFlag;
 export const selectUserChecked = (state) => state.auth.userChecked;

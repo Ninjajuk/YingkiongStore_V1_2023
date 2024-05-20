@@ -3,6 +3,7 @@ import { orderData } from "./orderdata";
 import Lightsidebarwithheader from '../componentsAdmin/AdminDashLayout'
 import OrdersTable from './OrderTable';
 import Pagination from '../../common/Pagination';
+import AdminOrders from './AdminOrder';
 
 const MyOrderPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -59,6 +60,7 @@ const MyOrderPage = () => {
 
           <div className="h-5/6  overflow-y-auto ">
             <OrdersTable searchTerm={searchTerm} sortBy={sortBy} />
+            {/* <AdminOrders/> */}
           </div>
 
           {/* <div className='h-1/6'><Pagination currentPage={currentPage} totalPages={Math.ceil(products.length / itemsPerPage)} onPageChange={handlePageChange}/></div> */}

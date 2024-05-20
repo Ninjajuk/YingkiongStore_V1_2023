@@ -101,6 +101,12 @@ const FruitsVegetables = () => {
     async function getData() {
       try {
         const vegData = await fetchDataFromAPI('vegetables');
+                // Check if the data length is greater than 8 and slice it accordingly
+                // if (vegData.length > 8) {
+                //   setData(vegData.slice(0, 8));
+                // } else {
+                //   setData(vegData);
+                // }
         setData(vegData);
       } catch (error) {
         console.log('Error in fetching data:', error);

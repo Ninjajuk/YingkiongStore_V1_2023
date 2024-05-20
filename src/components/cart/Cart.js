@@ -1,5 +1,5 @@
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -8,60 +8,53 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {calculateSubtotal,} from '../../utility/cartUtils'
 import {removeItem} from '../../redux/cartSlice'
+import { fetchItemsByUserIdAsync, selectCartLoaded, selectCartStatus, selectItems } from '../../redux/cartSliceasyn';
+import { setUserToken } from '../../redux/authSlice';
 
-// const products = [
-//   {
-//     id: 1,
-//     title: 'Throwback Hip Bag',
-//     href: '#',
-//     color: 'Salmon',
-//     price: '$90.00',
-//     quantity: 1,
-//     thumbnail: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-//     imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-//   },
-//   {
-//     id: 2,
-//     title: 'Medium Stuff Satchel',
-//     href: '#',
-//     color: 'Blue',
-//     price: '$32.00',
-//     quantity: 1,
-//     thumbnail: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-//     imageAlt:
-//       'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-//   },
-
-// ]
 
 export default function ShoppingCart({isCartOpen}) {
-
+  const [data,setData]=useState(null)
+  const productsArray = useSelector(selectItems);
+  const cartStatus = useSelector(selectCartStatus);
+  const cartLoaded = useSelector(selectCartLoaded);
   const [open, setOpen] = useState(true)
-  const cartItems = useSelector((state) => state.cart);
-//   const isLoggedIn = useSelector((state) => state.auth);
+  // const cartItems = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+// console.log(Items)
+
+  // useEffect(() => {
+  //   if (!cartLoaded) {
+  //     dispatch(fetchItemsByUserIdAsync());
+  //   }
+  // }, [dispatch, cartLoaded]);
+
+  // console.log(Itemsincart)
+
+  // const cartItems = productsArray.map(item => item.product);
+  // const productsArray = cartItems.map(item => item.product);
+
+  const cartItems = productsArray.map(item => {
+    const product = item.product;
+    const quantity = item.quantity;
+    return { ...product, quantity: quantity }; // Add quantity property to each product
+});
+
 
   const subtotal = calculateSubtotal(cartItems);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  // const removeFromCArt = (itemid) => {
-  //   dispatch(removeItem(itemid));
-  // };
+  const removeFromCArt = (itemid) => {
+    dispatch(removeItem(itemid));
+  };
 
-  // const handleCheckout = () => {
-  //   if (isLoggedIn.isAuthenticated && cartItems.length > 0) {
-  //     // Redirect to "/checkout" only when authenticated and there are cart items
-  //     router.push("/checkout");
-  //     setOpen(false); // Close the cart panel
-  //   } else {
-  //     // Optionally, you can display a message or show a login modal
-  //     console.log('User is not authenticated or there are no cart items.');
-  //   }
-  // };
+
+
 
   return (
     <>
-      {cartItems.length === 0 &&  open===true ? (
-        <EmptyCart/>
+      {cartStatus === "loading" && <div>Loading...</div>}
+      {cartItems.length === 0 && open === true ? (
+        <EmptyCart />
       ) : (
         <Transition.Root show={open} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -136,8 +129,13 @@ export default function ShoppingCart({isCartOpen}) {
                                               {product.title}
                                             </a>
                                           </h3>
+                                          <p>
+                                            <span>
+                                              Qty {product.quantity}
+                                            </span>
+                                          </p>
                                           <p className="ml-4">
-                                            ₹{product.price}
+                                            ₹{product.price * product.quantity}
                                           </p>
                                         </div>
                                         <p className="mt-1 text-sm text-gray-500">
@@ -146,8 +144,23 @@ export default function ShoppingCart({isCartOpen}) {
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
                                         <p className="text-gray-500">
-                                          Qty {product.quantity}/
-                                        <sub>{product.category === 'vegetables' ? 'kg' : 'items'}</sub>
+                                          {/* <span>
+                                            {" "}
+                                            Qty {product.quantity}/
+                                            <sub>
+                                              {product.category === "vegetables"
+                                                ? "kg"
+                                                : "items"}
+                                            </sub>
+                                          </span> */}
+                                          <span>
+                                            Price ₹{product.price} per{" "}
+                                            <sub>
+                                              {product.category === "vegetables"
+                                                ? "kg"
+                                                : "items"}
+                                            </sub>{" "}
+                                          </span>
                                         </p>
 
                                         <div className="flex">
@@ -180,13 +193,13 @@ export default function ShoppingCart({isCartOpen}) {
                           </p>
                           <div className="mt-6">
                             {/* {isLoggedIn.isAuthenticated ? ( */}
-                              <a
-                                href="/checkout"
-                                // onClick={handleCheckout}
-                                className="flex items-center justify-center rounded-md border border-transparent bg-purple-700 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-purple-900"
-                              >
-                                Checkout
-                              </a>
+                            <a
+                              href="/checkout"
+                              // onClick={handleCheckout}
+                              className="flex items-center justify-center rounded-md border border-transparent bg-purple-700 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-purple-900"
+                            >
+                              Checkout
+                            </a>
                             {/* ) : (   
                          <a href="/login" onClick={() => setOpen(false)} className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Please login</a>
                             )} */}

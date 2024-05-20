@@ -1,9 +1,11 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { showToast } from "../../utility/toastify";
 
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const DeleteModal = ({ closeModal, onDelete,productId }) => {
 
-  
+  showToast('success', 'Deleted successful!');
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -26,6 +28,7 @@ export const DeleteModal = ({ closeModal, onDelete,productId }) => {
             <button
               onClick={() => {
                 onDelete(); // Call the onDelete function when "Delete" is clicked
+                showToast('warning', 'Deleted successful!');
                 closeModal(); // Close the modal
 
               }}
@@ -41,6 +44,7 @@ export const DeleteModal = ({ closeModal, onDelete,productId }) => {
             </button>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );
