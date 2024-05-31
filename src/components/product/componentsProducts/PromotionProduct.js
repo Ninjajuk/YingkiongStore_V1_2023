@@ -8,7 +8,6 @@ const PromotionBanner=()=>{
     '/img/slide1.jpg',
     '/img/slide2.jpg',
     '/img/slide3.jpg',
-
   ]
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
