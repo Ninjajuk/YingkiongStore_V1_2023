@@ -10,12 +10,14 @@ import useProductData from '../../../customhooks/UseProductData';
 import SkeletonProduct from '../../skeleton/SkeletonProdct';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
+import { selectLoggedInUser } from '../../../redux/authSlice';
+
 const categoryOptionsMap = {
   vegetables: [1, 2, 3, 5],
   grocery: [0.5, 1, 2],
 };
 
-const ProducList = () => {
+const ProducList = ({ category }) => {
 
   const dispatch=useDispatch()
   const cartItems=useSelector((state)=>state.cart)
@@ -24,7 +26,8 @@ const ProducList = () => {
   const [sortBy, setSortBy] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
- 
+  const user=useSelector(selectLoggedInUser)
+  
   const { items, uniqueCategories, hasMore, fetchData,getallProducts } = useProductData();
 
 
@@ -41,22 +44,30 @@ const ProducList = () => {
     // Filter products based on the selected category and search term
     const filteredProducts = items.filter((product) =>
     (selectedCategory ? product.category === selectedCategory : true) 
-    // &&
-    // (searchTerm ? product.title.toLowerCase().includes(searchTerm.toLowerCase()) : true)
+    &&
+    (searchTerm ? product.title.toLowerCase().includes(searchTerm.toLowerCase()) : true)
   );
   
   const notifyAdd = () => toast.success("Added to cart!");
 const notifyRemove = () => toast.info("Removed from cart!");
-    const handleAddToCart = (product) => {
-      const isProductInCart = cartItems.some(item => item._id === product._id);
 
-      addOrRemoveFromCart(dispatch, product, cartItems);
-      console.log(product._id)
-      if (isProductInCart) {
-        notifyRemove();
-      } else {
-        notifyAdd();
-      }
+
+    const handleAddToCart = async(product) => {
+      const isProductInCart = cartItems.some(item => item._id === product._id);
+      const newItem = {
+        product: product._id,
+        quantity: 1,
+        user: user ? user._id : null // If user is not logged in,
+
+    }
+          console.log(newItem)
+      // addOrRemoveFromCart(dispatch, product, cartItems);
+      // console.log(product._id)
+      // if (isProductInCart) {
+      //   notifyRemove();
+      // } else {
+      //   notifyAdd();
+      // }
     };
  
   return (
@@ -68,7 +79,7 @@ const notifyRemove = () => toast.info("Removed from cart!");
         loader={<LoaderCircle />}
       >
         <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
-          <div className="overflow-x-auto  bg-black rounded-lg shadow-lg">
+          <div className="overflow-x-auto  bg-purple-800 rounded-lg shadow-lg">
             <ul className="flex items-center lg:justify-center whitespace-nowrap overflow-x-auto">
               <li
                 className={`inline-block px-4 py-2  hover:bg-gray-600 cursor-pointer rounded-md text-gray-300 font-medium font-sans ${
@@ -107,7 +118,9 @@ const notifyRemove = () => toast.info("Removed from cart!");
                       <input
                         id="search"
                         name="search"
-                        className="block w-full rounded-md border border-transparent bg-gray-200 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-white focus:bg-gray-600 focus:text-gray-900 focus:outline-none focus:ring-white sm:text-sm"
+                        value={searchTerm}
+                        onChange={handleFilter}
+                        className="block w-full rounded-md border border-transparent bg-gray-200 py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 focus:border-white focus:bg-purple-600 focus:text-white-900 focus:outline-none focus:ring-white sm:text-sm"
                         placeholder="Search"
                         type="search"
                       />
@@ -140,10 +153,10 @@ const notifyRemove = () => toast.info("Removed from cart!");
                   </a>
                   <p className="text-sm font-medium text-gray-900 flex items-center justify-between px-2">
                     <span className="font-semibold text-lg">
-                      ₹{product.cuttedprice}
+                      ₹{product.price}
                     </span>
                     <span className="font-semibold text-sm line-through">
-                      ₹{product.price}
+                      ₹{product.cuttedprice}
                     </span>
                     <span className="text-green-500">
                     ₹{product.discount} Save
@@ -159,7 +172,7 @@ const notifyRemove = () => toast.info("Removed from cart!");
                         ))}
                       </select>
                     )} */}
-                    {product.category in categoryOptionsMap && (
+                    {/* {product.category in categoryOptionsMap && (
                       <select className="block w-full p-2 border border-gray-300 rounded-md mt-1">
                         {categoryOptionsMap[product.category].map(
                           (weight, weightIndex) => (
@@ -169,11 +182,11 @@ const notifyRemove = () => toast.info("Removed from cart!");
                           )
                         )}
                       </select>
-                    )}
+                    )} */}
                   </div>
                 </div>
 
-                <div className="text-center py-3 mb-3">
+                {/* <div className="text-center py-3 mb-3">
                   <button
                     onClick={() => handleAddToCart(product)}
                     className={`w-full text-white bg-purple-700  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
@@ -182,10 +195,10 @@ const notifyRemove = () => toast.info("Removed from cart!");
                       {isItemInCart(product._id, cartItems)
                         ? "Remove"
                         : "Add to Cart"}
-                      {/* Add */}
+   
                     </span>
                   </button>
-                </div>
+                </div> */}
                 {/* </Link> */}
               </div>
             ))}

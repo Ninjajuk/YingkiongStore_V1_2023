@@ -6,15 +6,18 @@ import FeaturedCategoryPro from './componentsProducts/FeatureCategory';
 import ShopByCategory from './componentsProducts/ShopCateogory';
 import FruitsVegetables from './componentsProducts/FruitsVegetables';
 import ProducList from './componentsProducts/ProducList'
+import PromotionBanner from './componentsProducts/PromotionProduct';
 
 
 const Product = () => {
+  
 
 
   return (
     <>
       <HeroSection />
-      <FeaturedCategoryPro />
+      {/* <FeaturedCategoryPro /> */}
+      <PromotionBanner/>
       <ShopByCategory />
       <FruitsVegetables />
 

@@ -24,8 +24,34 @@ import axios from 'axios';
       console.error('error adding to cart',error)
     }
   }
-// cartAPI.js
 
+
+  export async function deleteItemFromCart(itemId) {
+    try {
+      const response = await fetch(`http://localhost:8000/cart/${itemId}`, {
+        method: 'DELETE',
+        headers: { 'content-type': 'application/json' }
+      });
+      const data = await response.json();
+      console.log('deleted successfully in api call')
+      return { data: { id: itemId }  }; // Ensure the format matches the expected payload
+    } catch (error) {
+      console.error('Error deleting from cart', error);
+      throw error;
+    }
+  }
+
+  export function updateCart(update) {
+    return new Promise(async (resolve) => {
+      const response = await fetch('http://localhost:8000/cart/' + update._id, {
+        method: 'PATCH',
+        body: JSON.stringify(update),
+        headers: { 'content-type': 'application/json' },
+      });
+      const data = await response.json();
+      resolve({ data });
+    });
+  }
 
 export const fetchItemByUserID = async () => {
   const token = JSON.parse(localStorage.getItem('userData')).userToken;
@@ -37,6 +63,19 @@ export const fetchItemByUserID = async () => {
   return response;
 };
 
+export const resetCart=async()=>{
+  try {
+    const resp=await fetchItemByUserID()
+    const data=resp.data
+    for(let item of data){
+      await deleteItemFromCart(item._id);
+    }
+    return data
+  } catch (error) {
+    console.error('Error resetting cart after order success')
+  }
+}
+
   // export function fetchItemsByUserId() {
   //   return new Promise(async (resolve) => {
   //     const response = await fetch('/cart');
@@ -44,29 +83,8 @@ export const fetchItemByUserID = async () => {
   //     resolve({ data });
   //   });
   // }
-  
-  // export function updateCart(update) {
-  //   return new Promise(async (resolve) => {
-  //     const response = await fetch('/cart/' + update.id, {
-  //       method: 'PATCH',
-  //       body: JSON.stringify(update),
-  //       headers: { 'content-type': 'application/json' },
-  //     });
-  //     const data = await response.json();
-  //     resolve({ data });
-  //   });
-  // }
-  
-  // export function deleteItemFromCart(itemId) {
-  //   return new Promise(async (resolve) => {
-  //     const response = await fetch('/cart/' + itemId, {
-  //       method: 'DELETE',
-  //       headers: { 'content-type': 'application/json' },
-  //     });
-  //     const data = await response.json();
-  //     resolve({ data: { id: itemId } });
-  //   });
-  // }
+
+
   
   // export function resetCart() {
   //   // get all items of user's cart - and then delete each

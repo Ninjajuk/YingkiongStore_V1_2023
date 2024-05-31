@@ -1,16 +1,83 @@
 
-import React, { useState } from "react";
-
-import { orderData } from "./orderdata";
+import React, { useEffect, useState } from "react";
 import Pagination from "../../common/Pagination";
+import {
+  PencilIcon,
+  EyeIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+} from '@heroicons/react/24/outline';
 
+import { fetchAllOrdersAsync, selectOrders, selectTotalOrders, selectTotalPages, updateOrderAsync } from "../../../redux/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getDate } from "../../../utility/orderhelper";
 const OrdersTable = ({searchTerm,sortBy,}) => {
 
-  const [hoveredRow, setHoveredRow] = useState(null);
+
   const [checkboxStates, setCheckboxStates] = useState({});
+  const [editableOrderId, setEditableOrderId] = useState(-1);
+  const [editPaymentStatus, setEditPaymentStatus] = useState(-1);
+  const [page, setPage] = useState(1);
 
+  const dispatch = useDispatch();
+  const orders = useSelector(selectOrders);
+  const totalOrders = useSelector(selectTotalOrders);
+  const totalOrdersPage = useSelector(selectTotalPages);
+ 
+  const sort = { sortBy: 'date', order: 'desc' }; 
+  const pagination = { limit: 10 }; 
+  // console.log('order data length from backend',orders)
+  // console.log('currentPage',page)
 
+const handleEdit = (order) => {
+  setEditableOrderId(order._id);
+  // console.log('order._id',order._id)
+};
+const handleEditPaymentStatus = (order) => {
+  setEditPaymentStatus(order._id);
 
+};
+const handleSort = (sortOption) => {
+  const sort = { _sort: sortOption.sort, _order: sortOption.order };
+  // console.log({ sort });
+  // setSort(sort);
+};
+const handleShow = () => {
+  console.log('handleShow');
+};
+const handleOrderStatus =(e, order) => {
+  const updatedOrder = { ...order, status: e.target.value };
+   dispatch(updateOrderAsync(updatedOrder));
+//  console.log('updatedOrder',updatedOrder)
+    setEditableOrderId(-1);
+};
+const handleOrderPaymentStatus = (e, order) => {
+  const updatedOrder = { ...order, paymentStatus: e.target.value };
+   dispatch(updateOrderAsync(updatedOrder));
+   setEditPaymentStatus(-1);
+};
+const handlePageChange = (page) => {
+  setPage(page);
+};
+const chooseColor = (status) => {
+  switch (status) {
+    case 'pending':
+      return 'bg-purple-200 text-purple-600';
+    case 'dispatched':
+      return 'bg-yellow-200 text-yellow-600';
+    case 'delivered':
+      return 'bg-green-200 text-green-600';
+    case 'received':
+      return 'bg-green-200 text-green-600';
+    case 'cancelled':
+      return 'bg-red-200 text-red-600';
+    default:
+      return 'bg-purple-200 text-purple-600';
+  }
+};
+useEffect(()=>{
+  dispatch(fetchAllOrdersAsync(page))
+}, [dispatch,page,])
   return (
     <>
       <div className="flex flex-col w-full h-full">
@@ -18,10 +85,10 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
           <table className="w-full border-collapse border border-gray-300">
             <thead className=" bg-black text-white sticky top-0 z-10">
               <tr className="">
-                <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
-                  {/* <input type="checkbox" /> */}
+                {/* <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
+                  <input type="checkbox" />
                   SL.No
-                </th>
+                </th> */}
                 <th
                   className=" p-2 cursor-pointer text-left whitespace-nowrap"
                   // onClick={() => {
@@ -29,7 +96,7 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                   //   toggleSortDirection();
                   // }}
                 >
-                  ORDER
+                  Order Id
                   {/* {sortField === "orderNumber" && (
                     <span
                       className={`ml-2 ${
@@ -40,6 +107,9 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                     </span>
                   )} */}
                 </th>
+                <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
+                  Order Date
+                </th>
                 <th
                   className="border border-gray-300 p-2 cursor-pointer text-left whitespace-nowrap"
                   // onClick={() => {
@@ -47,16 +117,7 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                   //   toggleSortDirection();
                   // }}
                 >
-                  TOTAL
-                  {/* {sortField === "total" && (
-                    <span
-                      className={`ml-2 ${
-                        sortDirection === "asc" ? "rotate-180" : ""
-                      }`}
-                    >
-                      &#8593;
-                    </span>
-                  )} */}
+                  Items
                 </th>
                 <th
                   className="border border-gray-300 p-2 cursor-pointer text-left whitespace-nowrap"
@@ -65,7 +126,7 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                   //   toggleSortDirection();
                   // }}
                 >
-                  CUSTOMER
+                  totalAmount
                   {/* {sortField === "customer" && (
                     <span
                       className={`ml-2 ${
@@ -77,14 +138,23 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                   )} */}
                 </th>
                 <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
-                  PAYMENT STATUS
+                  totalItems
                 </th>
                 <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
-                  FULFILMENT STATUS
+                  Shipping Address
                 </th>
                 <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
-                  DELIVERY TYPE
+                  Order Status
+                  {sort._sort === "id" &&
+                    (sort._order === "asc" ? (
+                      <ArrowUpIcon className="w-4 h-4 inline"></ArrowUpIcon>
+                    ) : (
+                      <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
+                    ))}
                 </th>
+                {/* <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
+                  Payment Method
+                </th> */}
                 <th
                   className="border border-gray-300 p-2 cursor-pointer text-left"
                   // onClick={() => {
@@ -92,7 +162,7 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                   //   toggleSortDirection();
                   // }}
                 >
-                  DATE
+                  Payment Status
                   {/* {sortField === "date" && (
                     <span
                       className={`ml-2 ${
@@ -103,69 +173,171 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
                     </span>
                   )} */}
                 </th>
+                {/* <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
+                  Actions
+                </th> */}
               </tr>
             </thead>
             <tbody className="">
-              {orderData.map((order, index) => (
+              {orders.map((order, index) => (
                 <tr
                   key={order.id}
                   className={
                     checkboxStates[index]
                       ? "bg-green-200 hover:bg-green-400 shadow-lg"
                       : index % 2 === 0
-                      ? "bg-gray-100 hover:bg-gray-400 shadow-lg"
-                      : "bg-sky-100 hover:bg-gray-400 shadow-lg"
+                      ? "bg-gray-50 hover:bg-green-100 shadow-lg hover:cursor-pointer"
+                      : "bg-gray-200 hover:bg-green-100 shadow-lg hover:cursor-pointer"
                   }
                   // onMouseEnter={() => handleMouseEnter(index)}
                   // onMouseLeave={() => handleMouseLeave(index)}
-                  style={{ position: "relative", cursor: "pointer" }}
+                  style={{ position: "relative" }}
                 >
-                  <td
+                  {/* <td
                     className={`border border-gray-300 p-2 'bg-green-500 text-white' : ''}`}
                   >
-                    {/* <input
+                    <input
                       type="checkbox"
                       checked={checkboxStates[index]}
                       onChange={() => handleCheckboxChange(index)}
-                    /> */}
-                    {order.id}
+                    />
+                    {order.orderId}
+                  </td> */}
+                  <td className="border border-gray-300 p-2 whitespace-nowrap">
+                    {order.orderId}
                   </td>
                   <td className="border border-gray-300 p-2 whitespace-nowrap">
-                    {order.orderNumber}
-                  </td>
-                  <td className="border border-gray-300 p-2 whitespace-nowrap">₹{order.total}</td>
-                  <td className="border border-gray-300 p-2 whitespace-nowrap">
-                    {order.customer}
+                    {getDate(order.createdAt)}
                   </td>
                   <td className="border border-gray-300 p-2 whitespace-nowrap">
-                    {order.paymentStatus}
+                    {order.items.map((item, index) => (
+                      <div key={index} className="flex items-center">
+                        <div className="mr-2">
+                          <img
+                            className="w-6 h-6 rounded-full"
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
+                          />
+                        </div>
+                        <span>
+                          {item.product.title} - #{item.quantity} - ₹
+                          {item.product.price}
+                        </span>
+                      </div>
+                    ))}
                   </td>
                   <td className="border border-gray-300 p-2 whitespace-nowrap">
-                    {order.fulfilmentStatus}
+                    <div className="flex items-center justify-center">
+                      ₹{order.totalAmount}
+                    </div>
                   </td>
                   <td className="border border-gray-300 p-2 whitespace-nowrap">
-                    {order.deliveryType}
+                    <div className="flex items-center justify-center">
+                      {order.totalItems}
+                    </div>
                   </td>
-                  <td className="border border-gray-300 p-2 whitespace-nowrap">{order.date}</td>
-                  <td
-                    className={` p-2 absolute right-0 top-0 ${
-                      hoveredRow === index ? "block" : "hidden"
-                    }`}
-                  >
-                    <button
-                      // onClick={() => handleEditClick(order)}
-                      className="mr-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded "
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      // onClick={() => handleDelete(index)}
-                      className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"
-                    >
-                      Delete
-                    </button>
+                  <td className="border border-gray-300 p-2 whitespace-nowrap">
+                    <div className="">
+                      <div>
+                        <strong>
+                          <span>{order.selectedAddress.firstName}</span>
+                          <span className="pl-2">
+                            {order.selectedAddress.lastName}
+                          </span>
+                        </strong>
+                        ,
+                      </div>
+                      <div>{order.selectedAddress.phone},</div>
+                      <div>{order.selectedAddress.email}, </div>
+                      <div>{order.selectedAddress.address}, </div>
+                      <div>{order.selectedAddress.district}</div>
+                      <div>{order.selectedAddress.pincode}, </div>
+                    </div>
                   </td>
+                  <td className="border border-gray-300 p-2 whitespace-nowrap">
+                    {order._id === editableOrderId ? (
+                      <select
+                        value={order.status}
+                        onChange={(e) => handleOrderStatus(e, order)}
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="dispatched">Dispatched</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                    ) : (
+                      // <span
+                      //   className={`${chooseColor(
+                      //     order.status
+                      //   )} py-1 px-3 rounded-full text-xs`}
+                      // >
+                      //   {order.status}
+                      // </span>
+                      <div className="flex item-center justify-center">
+                      <span
+                        className={`${chooseColor(
+                          order.status
+                        )} py-1 px-3 rounded-full text-xs`}
+                      >
+                        {order.status}
+                      </span>
+                      <span>
+                        <PencilIcon
+                          className="w-6 h-6 py-1 cursor-pointer hover:text-green-700 hover:scale-120"
+                          onClick={(e) => handleEdit(order)}
+                        ></PencilIcon>
+                      </span>
+                    </div>
+                    )}
+                  </td>
+                  {/* <td className="border border-gray-300 p-2 whitespace-nowrap">
+                    <div className="flex items-center justify-center">
+                    {order.paymentMethod}
+                    </div>
+                  </td> */}
+                  <td className="border border-gray-300 p-2 whitespace-nowrap">
+                    {order._id === editPaymentStatus ? (
+                      <select
+                        value={order.paymentStatus}
+                        onChange={(e) => handleOrderPaymentStatus(e, order)}
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="received">Received</option>
+                      </select>
+                    ) : (
+                      <div className="flex item-center justify-center">
+                        <span
+                          className={`${chooseColor(
+                            order.paymentStatus
+                          )} py-1 px-3 rounded-full text-xs`}
+                        >
+                          {order.paymentStatus}
+                        </span>
+                        <span>
+                          <PencilIcon
+                            className="w-6 h-6 py-1 cursor-pointer hover:text-green-700 hover:scale-120"
+                            onClick={(e) => handleEditPaymentStatus(order)}
+                          ></PencilIcon>
+                        </span>
+                      </div>
+                    )}
+                  </td>
+                  {/* <td className="border border-gray-300 p-2 whitespace-nowrap">
+                    <div className="flex item-center justify-center">
+                      <div className="w-6 mr-4 transform hover:text-purple-500 hover:scale-120">
+                        <EyeIcon
+                          className="w-4 h48"
+                          onClick={(e) => handleShow(order)}
+                        ></EyeIcon>
+                      </div>
+                      <div className="w-6 mr-2 transform hover:text-purple-500 hover:scale-120">
+                        <PencilIcon
+                          className="w-4 h-4"
+                          onClick={(e) => handleEdit(order)}
+                        ></PencilIcon>
+                      </div>
+                    </div>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
@@ -173,32 +345,13 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
         </div>
         <div className="w-full h-1/6">
           <Pagination
-            // currentPage={currentPage}
-            // totalPages={Math.ceil(orderData.length / itemsPerPage)}
-            // handlePageChange={handlePageChange}
-            // totalnumber={orderData.length }
-            
+            totalPages={totalOrdersPage}
+            handlePageChange={setPage}
+            currentPage={page}
+            // totalnumber={ordertableData.length}
           />
         </div>
       </div>
-
-      {/* {isEditModalOpen && (
-        <OrderModal
-          order={selectedOrderForEdit}
-          onSubmit={onSubmit}
-          closeModal={() => {
-            setisEditModalOpen(false);
-            setSelectedOrderForEdit(null);
-          }}
-        />
-      )}
-
-      {isDeleteModalOpen && (
-        <DeleteModal
-          closeModal={handleCancelDelete}
-          onDelete={handleDeleteAndConfirm}
-        />
-      )} */}
     </>
   );
 };

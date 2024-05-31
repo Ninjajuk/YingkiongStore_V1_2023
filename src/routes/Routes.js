@@ -26,12 +26,13 @@ import VerifyEmail from "../components/auth/componentsAuth/VerifyEmail";
 import SkeletonCard from "../components/skeleton/Skeleton1";
 import ProductForm from "../components/Form/ProductForm";
 import ProductAddForm from "../components/Form/ProductFormAdd";
-import TestProduct from "../components/product/TestProduct";
+
 import InfiniteScrollExample1 from "../pages/Test1";
 import MyOrderPage from "../components/admin/orders/MyOrderPage";
 import Customers from "../components/admin/customers/Customers";
 import UserCreatedSuccessfullyPage from "../components/auth/componentsAuth/EmailSuccessUserCreated";
 import ForgotPasswordRequest from "../components/auth/componentsAuth/ForgotPasswordRequest";
+import SettingsPage from "../components/admin/settings/page";
 
 
 
@@ -41,22 +42,22 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "/testproduct",
-    element: <TestProduct/>,
-  },
-
-  {
     path: "/test1",
-    element: <InfiniteScrollExample1/>,
+    element: <HomeAdmin/>,
   },
   {
     path: "/shop",
     element: <Shop />,
   },
+  // {
+  //   path: "/shop/:category",
+  //   element: <ProductDetails/>,
+  // },
   {
     path: "/shop/:productId",
     element: <ProductDetails/>,
   },
+
   {
     path: "/login",
     element: <LoginForm />,
@@ -103,7 +104,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/order-success/",
+    path: "/order-success/:id",
     element: (
       <Protected>
         <OrderSuccessPage />
@@ -155,9 +156,9 @@ const router = createBrowserRouter([
   {
     path: "/customers",
     element: (
-      <ProtectedAdmin>
+      // <ProtectedAdmin>
         <Customers />
-      </ProtectedAdmin>
+      // </ProtectedAdmin>
     ),
   },
   {
@@ -165,6 +166,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedAdmin>
         <CustomerDetails />
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/settings",
+    element: (
+      <ProtectedAdmin>
+        <SettingsPage/>
       </ProtectedAdmin>
     ),
   },

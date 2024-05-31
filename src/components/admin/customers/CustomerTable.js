@@ -1,4 +1,4 @@
-'use client'
+
 import React, { useState } from "react";
 
 
@@ -46,16 +46,19 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                       <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">State</div>
                       </th>
+                      <th className="p-2 whitespace-nowrap">
+                        <div className="font-semibold text-left">Role</div>
+                      </th>
                       {/* <th className="p-2 whitespace-nowrap">
                                     <div className="font-semibold text-left">total</div>
                                 </th> */}
-                      <th className="p-2 whitespace-nowrap">
+                      {/* <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">Actions</div>
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <tbody className="text-sm divide-y divide-gray-100">
-                    {customerTable.map((item, index) => (
+                    {customerTable &&customerTable.map((item, index) => (
                       <tr key={index}>
                         <td className="p-2 whitespace-nowrap">
                           <div className="flex items-center">
@@ -91,6 +94,9 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                           <div className="text-sm text-left">{item.state}</div>
                         </td>
                         <td className="p-2 whitespace-nowrap">
+                          <div className="text-sm text-left">{item.role}</div>
+                        </td>
+                        {/* <td className="p-2 whitespace-nowrap">
                           <div className="text-sm text-left flex gap-2">
                             <span className="px-2 py-1 text-sky-600">
                               <button
@@ -106,7 +112,7 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                               </button>
                             </span>
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>

@@ -37,11 +37,15 @@ const filters = [
     name: 'Category',
     options: [
       { value: 'All', label: 'All', checked: true },
-      { value: 'Fruits-Vegetables', label: 'Fruits-Vegetables', checked: false },
-      { value: 'Meat', label: 'Meat', checked: false },
-      { value: 'Local Items', label: 'Local Items', checked: false },
-      { value: 'Grocery', label: 'Grocery', checked: false },
-      { value: 'Electronics', label: 'Electronics', checked: false },
+      { value: 'vegetables', label: 'Fruits-Vegetables', checked: false },
+      { value: 'fruits', label: 'Fruits', checked: false },
+      { value: 'meat', label: 'Meat', checked: false },
+      { value: 'localitems', label: 'Local Items', checked: false },
+      { value: 'grocery', label: 'Grocery', checked: false },
+      { value: 'electronics', label: 'Electronics', checked: false },
+      { value: 'food', label: 'Food', checked: false },
+      { value: 'cosmetics', label: 'Cosmetics', checked: false },
+  
     ],
   },
   // {
@@ -62,7 +66,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductWithFilterCateogrySidebar({children}) {
+export default function ProductWithFilterCateogrySidebar({children,handleFilterSelect}) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   return (
@@ -142,9 +146,11 @@ export default function ProductWithFilterCateogrySidebar({children}) {
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
+                            
                                       defaultValue={option.value}
                                       type="checkbox"
                                       defaultChecked={option.checked}
+                                      onChange={handleFilterSelect}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -174,7 +180,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
-                <div>
+                {/* <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                     Sort
                     <ChevronDownIcon
@@ -182,7 +188,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
                       aria-hidden="true"
                     />
                   </Menu.Button>
-                </div>
+                </div> */}
 
                 <Transition
                   as={Fragment}
@@ -218,7 +224,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
 
               <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
+                {/* <Squares2X2Icon className="h-5 w-5" aria-hidden="true" /> */}
               </button>
               <button
                 type="button"
@@ -274,6 +280,7 @@ export default function ProductWithFilterCateogrySidebar({children}) {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
+                                  onChange={handleFilterSelect}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label

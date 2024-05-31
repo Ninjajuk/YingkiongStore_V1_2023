@@ -1,15 +1,15 @@
-import React, { useState,  } from 'react';
+import React, { memo, useState,  } from 'react';
 import { orderData } from "./orderdata";
 import Lightsidebarwithheader from '../componentsAdmin/AdminDashLayout'
 import OrdersTable from './OrderTable';
-import Pagination from '../../common/Pagination';
-import AdminOrders from './AdminOrder';
+
+import useLoading from '../../../customhooks/Loading';
+import { Circles } from 'react-loader-spinner';
 
 const MyOrderPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('');
-  const [hoveredRow, setHoveredRow] = useState(null);
-  const [checkboxStates, setCheckboxStates] = useState({});
+
   const filterOptions = ['name', 'price']; 
 
   const handleFilter = (e) => {
@@ -19,7 +19,7 @@ const MyOrderPage = () => {
   const handleFilterSelect = (e) => {
     setSortBy(e.target.value);
   };
-
+  const loading = useLoading();
   return (
     <Lightsidebarwithheader>
       <section className="w-full   h-full bg-white ">
@@ -59,7 +59,23 @@ const MyOrderPage = () => {
           {/* Product Headline */}
 
           <div className="h-5/6  overflow-y-auto ">
-            <OrdersTable searchTerm={searchTerm} sortBy={sortBy} />
+            {loading ? (
+              <div className="flex items-center justify-center h-screen">
+                {" "}
+                <Circles
+                  height="80"
+                  width="80"
+                  color="#7b09e7"
+                  ariaLabel="circles-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              </div>
+            ) : (
+              <OrdersTable searchTerm={searchTerm} sortBy={sortBy} />
+            )}
+
             {/* <AdminOrders/> */}
           </div>
 
@@ -70,4 +86,4 @@ const MyOrderPage = () => {
   );
 }
 
-export default MyOrderPage
+export default memo(MyOrderPage)

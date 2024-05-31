@@ -140,10 +140,10 @@ const handlePrev = () => {
 
   return (
     <section className="w-full bg-gray-100">
-      <div className="mx-auto max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8">
+      <div className="mx-auto max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8 pb-4">
 
         <div className="flex justify-between ">
-          <h1 className="text-xl lg:text-2xl font-bold py-4   text-blue-800">
+          <h1 className="text-xl lg:text-2xl px-2 font-bold py-4   text-purple-800">
            Vegetables
           </h1>
          
@@ -156,7 +156,7 @@ const handlePrev = () => {
         </div>
         <p>Find fresh and organic vegetables for your meals.</p>
 
-        <div>
+        <div className="my-4">
           <CategoryCard visibleCards={visibleCards}/>
         </div>
       </div>

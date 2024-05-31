@@ -1,7 +1,8 @@
 import React from 'react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
-const EmailFailedveri = () => {
+
+const EmailFailedResetPasswrod = () => {
 
     const navigate=useNavigate()
   return (
@@ -22,7 +23,7 @@ const EmailFailedveri = () => {
             </h2>
             <div className="mt-2">
               <p className="text-sm text-gray-500">
-              Please Register Again.
+              Please Reset Password Again.
               </p>
             </div>
           </div>
@@ -30,10 +31,10 @@ const EmailFailedveri = () => {
         <div className="mt-5 sm:mt-6">
           <button
             type="button"
-            onClick={()=>navigate('/signup')}
+            onClick={()=>navigate('/forgot-password')}
             className="inline-flex w-full justify-center rounded-md border border-transparent bg-purple-700 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
           >
-            Register
+            Reset  Password
           </button>
         </div>
       </div>
@@ -43,4 +44,4 @@ const EmailFailedveri = () => {
   )
 }
 
-export default EmailFailedveri
+export default EmailFailedResetPasswrod

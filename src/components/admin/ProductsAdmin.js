@@ -7,6 +7,8 @@ import Lightsidebarwithheader from './componentsAdmin/AdminDashLayout';
 import { useNavigate } from 'react-router-dom';
 import { DeleteModal } from '../modal/DeleteModal';
 import EditProductModal from '../modal/EditProductModal';
+import useLoading from '../../customhooks/Loading';
+import { Circles } from 'react-loader-spinner';
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 
@@ -83,7 +85,7 @@ const navigate=useNavigate()
       console.error('Error deleting product:', error);
     }
   };
-  
+  const loading = useLoading();
   return (
     <Lightsidebarwithheader>
       <section className="w-full   h-full ">
@@ -133,100 +135,115 @@ const navigate=useNavigate()
             </div>
           </div>
           {/* Product Headline */}
-
+          {loading ? (
+            <div className="flex items-center justify-center h-screen">
+              {" "}
+              <Circles
+                height="80"
+                width="80"
+                color="#7b09e7"
+                ariaLabel="circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            </div>
+          ) : (
+            <div className="h-5/6  overflow-y-auto flex-grow">
+              <div className="max-h-full">
+                <table className="min-w-full ">
+                  <thead className="sticky top-0">
+                    <tr>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Product
+                      </th>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Price
+                      </th>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Image
+                      </th>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {filteredProducts.map((product) => (
+                      <tr key={product._id}>
+                        <td className="px-6 py-4 whitespace-no-wrap">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-10 w-10">
+                              <img
+                                className="h-10 w-10 rounded-full"
+                                src={product.thumbnail}
+                                alt={product.title}
+                              />
+                            </div>
+                            <div className="ml-4">
+                              <div className="text-sm leading-5 font-medium text-gray-900">
+                                {product.title}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap">
+                          <div className="text-sm leading-5 text-gray-900">
+                            ₹{product.price}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-no-wrap">
+                          <img
+                            className="h-16 w-16"
+                            src={product.thumbnail}
+                            alt={product.title}
+                          />
+                        </td>
+                        <td className="lg:px-6 py-4 whitespace-no-wrap">
+                          <button
+                            className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
+                            onClick={() =>
+                              handleEditProductButtonClick(product)
+                            }
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="ml-4 text-red-600 hover:text-red-900 focus:outline-none"
+                            // onClick={() => handleDeleteProduct(product._id)}
+                            onClick={() => handleDeleteButtonClick(product._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
           {/* <h2 className="text-2xl font-semibold  bg-white px-6 py-2">
             Product List
           </h2> */}
-          <div className="h-5/6  overflow-y-auto flex-grow">
-            <div className="max-h-full">
-              <table className="min-w-full ">
-                <thead className="sticky top-0">
-                  <tr>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                      Product
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                      Price
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                      Image
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredProducts.map((product) => (
-                    <tr key={product._id}>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10">
-                            <img
-                              className="h-10 w-10 rounded-full"
-                              src={product.thumbnail}
-                              alt={product.title}
-                            />
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm leading-5 font-medium text-gray-900">
-                              {product.title}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        <div className="text-sm leading-5 text-gray-900">
-                          ₹{product.price}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        <img
-                          className="h-16 w-16"
-                          src={product.thumbnail}
-                          alt={product.title}
-                        />
-                      </td>
-                      <td className="lg:px-6 py-4 whitespace-no-wrap">
-                        <button
-                          className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
-                          onClick={() => handleEditProductButtonClick(product)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="ml-4 text-red-600 hover:text-red-900 focus:outline-none"
-                          // onClick={() => handleDeleteProduct(product._id)}
-                          onClick={() => handleDeleteButtonClick(product._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
 
-        
-      {/* <ToastContainer /> */}
+        {/* <ToastContainer /> */}
       </section>
 
       {openEditProductModal && (
         <EditProductModal
-        closeModal={() => setOpenEditProductModal(false)}
-        // onEdit={() => handleEditProduct(productIdToEdit)}
-        product={productIdToEdit}
-        refreshProductList={setData} // Pass the setData function to update the product list
+          closeModal={() => setOpenEditProductModal(false)}
+          // onEdit={() => handleEditProduct(productIdToEdit)}
+          product={productIdToEdit}
+          refreshProductList={setData} // Pass the setData function to update the product list
         />
       )}
       {openDeleteModal && (
         <DeleteModal
-        closeModal={() => setOpenDeleteModal(false)}
-        onDelete={() => handleDeleteProduct(productIdToDelete)}
-        productId={productIdToDelete}
+          closeModal={() => setOpenDeleteModal(false)}
+          onDelete={() => handleDeleteProduct(productIdToDelete)}
+          productId={productIdToDelete}
         />
       )}
     </Lightsidebarwithheader>

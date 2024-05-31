@@ -1,5 +1,6 @@
 // cartUtils.js
-import { addItem, removeItem } from "../redux/cartSlice";
+import { addtoCart, deleteItemFromCart } from "../API/cartAPI";
+
 
 export const isItemInCart = (itemId, cartItems) => {
   return Array.isArray(cartItems) && cartItems.some(item => item._id === itemId);
@@ -8,11 +9,11 @@ export const isItemInCart = (itemId, cartItems) => {
 export const addOrRemoveFromCart = (dispatch, product, cartItems) => {
   const isAlreadyInCart = isItemInCart(product._id, cartItems);
   
-  isAlreadyInCart?dispatch(removeItem(product.id)):dispatch(addItem(product))
+  isAlreadyInCart?dispatch(deleteItemFromCart(product.id)):dispatch(addtoCart(product))
   if (isAlreadyInCart) {
-    dispatch(removeItem(product._id));
+    dispatch(deleteItemFromCart(product._id));
   } else {
-    dispatch(addItem(product));
+    dispatch(addtoCart(product));
   }
 };
 
@@ -22,11 +23,14 @@ export const calculateSubtotal = (cartItems) => {
     if (!cartItems || cartItems.length === 0) {
       return 0;
     }
-  
-    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  // console.log('inside calculateSubtotal',cartItems)
+  const subTotal=cartItems.items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+   console.log('calculateSubtotal',subTotal)
+  return subTotal
   };
   
   export const calculateTotal = (cartItems) => {
+
     const subtotal = calculateSubtotal(cartItems);
     const shipping = subtotal>1000?0:50;
     const taxes = 0.08 * subtotal;

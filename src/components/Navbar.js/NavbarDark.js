@@ -1,7 +1,7 @@
 
 import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { FaCartPlus,FaUser,FaAngleDown } from "react-icons/fa";
 import { NavLink,useNavigate } from "react-router-dom";
@@ -46,6 +46,8 @@ const navigate=useNavigate()
 
   return (
     <>
+
+
       <Disclosure as="nav" className="bg-purple-700 sticky top-0 z-10">
         {({ open }) => (
           <>
@@ -100,7 +102,7 @@ const navigate=useNavigate()
                 </div>
 
 {/* Search button center */}
-                <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
+                {/* <div className="flex flex-1 justify-center px-2 lg:ml-6 lg:justify-end">
                   <div className="w-full max-w-lg lg:max-w-xs">
                     <label htmlFor="search" className="sr-only">
                       Search
@@ -121,13 +123,34 @@ const navigate=useNavigate()
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
 
 
-                <div className="hidden lg:block">
+                {/* <div className="hidden lg:block">
                   {isAuthenticated && user ? (
                     <h1 className="font-medium text-gray-300 ">
                       {user.name.slice(0, 6)}
+
+                    </h1>
+                  ) : (
+                    <button
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300  hover:bg-gray-700 hover:text-white"
+                      type="button"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </button>
+                  )}
+                </div> */}
+
+                <div className="hidden lg:ml-4 lg:block">
+                  <div className="flex items-center">
+                    
+                <div className="hidden lg:block">
+                  {isAuthenticated && user ? (
+                    <h1 className="font-medium text-gray-300 ">
+                      {/* {user.name.slice(0, 6)} */}
+                      {user.name}
                     </h1>
                   ) : (
                     <button
@@ -139,9 +162,6 @@ const navigate=useNavigate()
                     </button>
                   )}
                 </div>
-
-                <div className="hidden lg:ml-4 lg:block">
-                  <div className="flex items-center">
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-4 flex-shrink-0">
                       <div>
@@ -163,7 +183,7 @@ const navigate=useNavigate()
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/"
+                                href={`${isAuthenticated && user ?'/profile':'/login'}`}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
@@ -267,14 +287,14 @@ const navigate=useNavigate()
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
-                  href="/"
+                  href="/shop"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Shop
                 </Disclosure.Button>
                 <Disclosure.Button
                   as="a"
-                  href="/"
+                  href="/about-us"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   About us
@@ -282,7 +302,7 @@ const navigate=useNavigate()
 
                 <Disclosure.Button
                   as="a"
-                  href="/"
+                  href="/contact-us"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Contact us
@@ -327,7 +347,7 @@ const navigate=useNavigate()
                   </Disclosure.Button>
                   <Disclosure.Button
                     as="a"
-                    href="/"
+                    href="/my-order"
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
                     Orders

@@ -7,44 +7,62 @@ import EmptyCart from './EmptyCart';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {calculateSubtotal,} from '../../utility/cartUtils'
-import {removeItem} from '../../redux/cartSlice'
-import { fetchItemsByUserIdAsync, selectCartLoaded, selectCartStatus, selectItems } from '../../redux/cartSliceasyn';
+
+import { deleteItemFromCartAsync, fetchItemsByUserIdAsync, selectCartLoaded, selectCartStatus, selectItems } from '../../redux/cartSliceasyn';
 import { setUserToken } from '../../redux/authSlice';
+import { toast } from 'react-toastify';
 
 
 export default function ShoppingCart({isCartOpen}) {
-  const [data,setData]=useState(null)
+
   const productsArray = useSelector(selectItems);
-  const cartStatus = useSelector(selectCartStatus);
   const cartLoaded = useSelector(selectCartLoaded);
   const [open, setOpen] = useState(true)
-  // const cartItems = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
 // console.log(Items)
 
-  // useEffect(() => {
-  //   if (!cartLoaded) {
-  //     dispatch(fetchItemsByUserIdAsync());
-  //   }
-  // }, [dispatch, cartLoaded]);
+  useEffect(() => {
+    if (isCartOpen && !cartLoaded) {
+      dispatch(fetchItemsByUserIdAsync());
+    }
+  }, [dispatch, cartLoaded,isCartOpen]);
+  
+  useEffect(() => {
+    if (open) {
+      dispatch(fetchItemsByUserIdAsync());
+    }
+  }, [open, dispatch]);
 
   // console.log(Itemsincart)
 
-  // const cartItems = productsArray.map(item => item.product);
-  // const productsArray = cartItems.map(item => item.product);
+// const cartItems = productsArray.map(item => {
+//   const product = item.product;
+//   const quantity = item.quantity;
+//   return { ...product, quantity: quantity, cartItemId: item._id }; // Add cartItemId to each product
+// });
+const cartItems = productsArray.map(item => {
+  if (!item || !item.product) {
+    console.error('Undefined item or product:', item);
+    return null;
+  }
+  const product = item.product;
+  const quantity = item.quantity || 0;
+  return { ...product, quantity: quantity, cartItemId: item._id };
+}).filter(item => item !== null); // Filter out null items
 
-  const cartItems = productsArray.map(item => {
-    const product = item.product;
-    const quantity = item.quantity;
-    return { ...product, quantity: quantity }; // Add quantity property to each product
-});
+const subtotal = cartItems.length > 0 
+  ? cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  : 0;
+  const notifyRemove = () => toast.info("Removed from cart!");
 
 
-  const subtotal = calculateSubtotal(cartItems);
-  // const dispatch = useDispatch();
 
-  const removeFromCArt = (itemid) => {
-    dispatch(removeItem(itemid));
+  const removeFromCArt = async(cartItemId) => {
+    console.log('Removing cart item ID:', cartItemId);
+    notifyRemove()
+    await dispatch(deleteItemFromCartAsync(cartItemId));
+    dispatch(fetchItemsByUserIdAsync());
   };
 
 
@@ -52,7 +70,7 @@ export default function ShoppingCart({isCartOpen}) {
 
   return (
     <>
-      {cartStatus === "loading" && <div>Loading...</div>}
+      {cartLoaded === "loading" && <div>Loading...</div>}
       {cartItems.length === 0 && open === true ? (
         <EmptyCart />
       ) : (
@@ -111,7 +129,7 @@ export default function ShoppingCart({isCartOpen}) {
                                 role="list"
                                 className="-my-6 divide-y divide-gray-200"
                               >
-                                {cartItems.map((product) => (
+                                {cartLoaded && cartItems.map((product) => (
                                   <li key={product.id} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                       <img
@@ -166,8 +184,9 @@ export default function ShoppingCart({isCartOpen}) {
                                         <div className="flex">
                                           <button
                                             type="button"
-                                            onClick={() =>
-                                              dispatch(removeItem(product._id))
+                                            onClick={() =>removeFromCArt(product.cartItemId)
+                                              // dispatch(removeItem(product._id))
+                                              // dispatch(deleteItemFromCartAsync(product._id))
                                             }
                                             className="font-medium text-red-500 hover:text-red-700"
                                           >

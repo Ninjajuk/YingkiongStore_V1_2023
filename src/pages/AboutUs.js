@@ -6,7 +6,7 @@ import { Circles } from "react-loader-spinner";
 import useLoading from '../customhooks/Loading';
 import { useSelector } from 'react-redux';
 import { selectItems } from '../redux/cartSliceasyn';
-import { toast } from 'react-toastify';
+
 const Card = ({ title, content,listItems,bgcolor }) => (
   <div className={` ${bgcolor} p-6 rounded-lg shadow-md mb-6`}>
     <h2 className="text-2xl font-semibold mb-4 text-blue-600">{title}</h2>
@@ -25,10 +25,10 @@ const Card = ({ title, content,listItems,bgcolor }) => (
 const AboutUs = () => {
 
   const items=useSelector((state)=>state.cart.items)
-  console.log(items,"Items from the cart in about us page console")
+  // console.log(items,"Items from the cart in about us page console")
   const loading = useLoading();
 
-  const notify = () => toast("Wow so easy!");
+
   return (
     <>
     <Navbar1/>
@@ -46,8 +46,8 @@ const AboutUs = () => {
     ):(
     <section className=''>
           <div className="container mx-auto  p-8  rounded-md">
-      <h1 className="text-4xl font-bold mb-8 text-center text-blue-800">About Us</h1>
-      <button onClick={notify}>Notify</button>
+      <h1 className="text-4xl font-bold mb-8 text-center text-purple-800">About Us</h1>
+   
 
 
 

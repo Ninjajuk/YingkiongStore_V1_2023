@@ -4,9 +4,10 @@ import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { Bars3BottomLeftIcon,BellIcon,XMarkIcon,  HomeIcon,UserGroupIcon,} from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import {FaFolder, FaWrench, FaUserFriends ,FaRegPlusSquare } from "react-icons/fa";
+import {FaFolder, FaWrench, FaUserFriends ,FaRegPlusSquare,FaUser } from "react-icons/fa";
 import {  MdOutlineSms,MdShoppingCart,MdDashboard  } from "react-icons/md";
 import { NavLink } from 'react-router-dom';
+
 const navigation = [
     { name: 'Home', to: "/", icon: HomeIcon,  },
     { name: 'Dashboard', to: "/dashboard", icon: MdDashboard ,  },
@@ -16,12 +17,12 @@ const navigation = [
     { name: 'Customers', to: '/customers', icon: FaUserFriends, },
     { name: 'Customer Details', to: '/customer-details', icon: MdOutlineSms, },
     // { name: 'Refund', to: '/customers', icon: FaMoneyCheckAlt, },
-    { name: 'Setting', to: '/setting', icon: FaWrench,  },
+    { name: 'Setting', to: '/settings', icon: FaWrench,  },
     { name: 'Teams', to: '/team', icon: UserGroupIcon,  },
   ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
+  { name: 'Your Profile', href: '/profile' },
+  { name: 'Settings', href: '/settings' },
   { name: 'Sign out', href: '#' },
 ]
 
@@ -218,15 +219,16 @@ export default function Lightsidebarwithheader({children}) {
                 </button>
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                <Menu as="div" className="relative ml-3 px-4">
                   <div>
                     <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                       <span className="sr-only">Open user menu</span>
-                      <img
+                      {/* <img
                         className="h-8 w-8 rounded-full"
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         alt=""
-                      />
+                      /> */}
+                      <FaUser/>
                     </Menu.Button>
                   </div>
                   <Transition

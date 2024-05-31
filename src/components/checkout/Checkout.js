@@ -1,114 +1,153 @@
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-
-// import { useRouter } from 'next/navigation'
 import { useSelector,useDispatch  } from "react-redux";
-// import Link from 'next/link';
-import {increaseQuantity,decreaseQuantity,removeItem,clearCart,saveOrderItems} from "../../redux/cartSlice";
 import { Circles } from "react-loader-spinner";
 import useLoading from '../../customhooks/Loading';
 
 import TotalPriceSummary from './TotalPriceSummary';
 import Navbar1 from '../Navbar.js/NavbarDark';
 import Footer1 from '../footer/Footer1';
+import { deleteItemFromCartAsync, fetchItemsByUserIdAsync, selectCartLoaded, selectItems, updateCartAsync } from '../../redux/cartSliceasyn';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { selectLoggedInUser } from '../../redux/authSlice';
+import { createOrder, creteOrder } from '../../API/orderAPI';
+import { createOrderAsync, selectOrders, selectStatus } from '../../redux/orderSlice';
+import { validateForm, validateFormData } from '../../utility/validationAuth';
+
+
 
 const CheckoutPage = () => {
+  const {
+    register,
+    // handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
 const loadingspinner=useLoading()
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector(selectItems);
+  const user = useSelector(selectLoggedInUser);
+  const cartLoaded = useSelector(selectCartLoaded);
+  const currentOrder = useSelector(selectOrders);
+  const orderStatus = useSelector(selectStatus);
+  // console.log(cartItems)
   const dispatch = useDispatch();
 const navigate=useNavigate()
-  const handleQuantityDecrease = (itemId) => {
-    console.log("Decrease quantity for item:", itemId);
-    dispatch(decreaseQuantity(itemId));
-  };
 
-  const handleQuantityIncrease = (itemId) => {
-    console.log("Increase quantity for item:", itemId);
-    dispatch(increaseQuantity(itemId));
-  };
+const [formData, setFormData] = useState({
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  address: '',
+  city: '',
+  district: '',
+  state: '',
+  pincode: '',
+  country: '',
+});
 
+const [error, setError] = useState({});
+const handleQuantityDecrease = (item) => {
+  console.log(item.quantity)
+  if (item.quantity > 1) {
+    const updatedItem = { ...item, quantity: item.quantity - 1 };
+    dispatch(updateCartAsync(updatedItem));
+  }
+};
 
+const handleQuantityIncrease = (item) => {
+  // console.log(item.quantity)
+  console.log('previous item quantity:-',item.quantity)
+  const updatedItem = { ...item, quantity: item.quantity + 1 };
+  dispatch(updateCartAsync(updatedItem));
+  console.log('updated item quantity after dispatch:-',updatedItem.quantity)
+};
 
+const notifyRemove = () => toast.info('Removed from cart!');
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    district: '',
-    state: '',
-    pincode: '',
-    country: '',
-  });
+const removeFromCart =async(cartItemId) => {
+  console.log('Removing cart item ID:', cartItemId);
+  dispatch(deleteItemFromCartAsync(cartItemId));
+  notifyRemove();
+};
 
-  // const [orderItems, setOrderItems] = useState([
-  //   {
-  //     id: 1,
-  //     title: 'Product 1',
-  //     price: 50,
-  //     quantity: 2,
-  //     imageUrl: 'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Product 2',
-  //     price: 75,
-  //     quantity: 1,
-  //     imageUrl: 'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-  //   },
-  // ]);
+useEffect(() => {
+  if (!cartLoaded) {
+    dispatch(fetchItemsByUserIdAsync());
+  }
+}, [dispatch, cartLoaded]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleQuantityChange = (itemId, newQuantity) => {
-  //   setOrderItems((prevItems) =>
-  //     prevItems.map((item) =>
-  //       item.id === itemId ? { ...item, quantity: newQuantity } : item
-  //     )
-  //   );
-  // };
+
 
   // const handleDeleteItem = (itemId) => {
   //   setOrderItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   // };
+  const totalItems = cartItems.reduce((total, item) => item.quantity + total, 0);
+  // const totalAmount=calculateTotal(cartItems)
 
-  const handleSubmit = (e) => {
+  const calculateTotal =() => {
+    console.log('cartItems calculateTotal:', cartItems);
+    if (!cartItems || cartItems.length === 0) {
+      return 0;
+    }
+    const subTotal= cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+    console.log(subTotal,'subtotal')
+    const shipping = subTotal>1000?0:50;
+    const taxes = 0.08 * subTotal;
+    const totalsum=subTotal + shipping + taxes;
+    // console.log(totalsum)
+    return totalsum
+  };
+  const notifyAdd = () => toast.success("Order Placed Successfully!");
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    // const validationErrors = validateFormData(formData);
+    // setError(validationErrors);
 
+  //   if (Object.keys(validationErrors).length === 0) {
+  //     // Proceed with form submission (e.g., call an API or update the Redux store)
+  //     console.log('Form is valid. Submitting data:', formData);
+  //   }
+  // };
+
+    const formErrors = validateForm(formData);
+    if (Object.keys(formErrors).length > 0) {
+      setError(formErrors);
+      return;
+    }
+    const order = {
+      items:cartItems,
+      totalAmount:calculateTotal(),
+      totalItems,
+      user: user._id,
+      selectedAddress:formData,
+      status: 'pending', // other status can be delivered, received.
+    };
     // Log form data and order items
-    console.log('Form submitted:', formData);
-    navigate('/order-success')
+    console.log('order submitted:', order);
+
+    const resultAction = await dispatch(createOrderAsync(order));
+    if (createOrderAsync.fulfilled.match(resultAction)) {
+      notifyAdd()
+      navigate(`/order-success/${order.id}`, { state: { selectedAddress: formData,order: order} });
+      // alert('order success')
+    }
 
 
 
-    //  // Generate a unique order ID (you might handle this on the backend)
-    //  const orderId = generateUniqueId();
-
-      // Prepare order data to submit
-      // const orderData = {
-      //   orderId,
-      //   cartItems,
-      //   quantity: calculateTotalQuantity(cartItems),
-      //   address: formData,
-      // };
-
-    //       // Submit the order
-    // await dispatch(submitOrder(orderData));
-
-     // Clear the cart and remove it from local storage
-    //  dispatch(clearCart());
 
 
-    // Redirect to the ordersuccess page
-    // Navigate('/order-success');
 
   
   };
@@ -146,16 +185,18 @@ const navigate=useNavigate()
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-600">
-                          First Name
+                          Full Name
                         </label>
                         <input
-                          type="text"
-                          name="firstName"
+                        type='text'
+                          id="firstName"
+                          name='firstName'
                           value={formData.firstName}
                           onChange={handleChange}
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                                 {error.firstName && <p className="text-red-500">{error.firstName}</p>}
                       </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-600">
@@ -169,6 +210,7 @@ const navigate=useNavigate()
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                        {error.lastName && <p className="text-red-500">{error.lastName}</p>}
                       </div>
                     </div>
 
@@ -198,6 +240,7 @@ const navigate=useNavigate()
                         className="mt-1 p-2 w-full border rounded-md"
                         required
                       />
+                      {error.phone && <p className="text-red-500">{error.phone}</p>}
                     </div>
 
                     <div className="mb-4">
@@ -212,6 +255,7 @@ const navigate=useNavigate()
                         className="mt-1 p-2 w-full border rounded-md"
                         required
                       />
+                        {error.address && <p className="text-red-500">{error.address}</p>}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -227,6 +271,7 @@ const navigate=useNavigate()
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                         {error.city && <p className="text-red-500">{error.city}</p>}
                       </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-600">
@@ -240,6 +285,7 @@ const navigate=useNavigate()
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                          {error.district && <p className="text-red-500">{error.district}</p>}
                       </div>
                     </div>
 
@@ -256,6 +302,7 @@ const navigate=useNavigate()
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                        {error.state && <p className="text-red-500">{error.state}</p>}
                       </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-600">
@@ -269,6 +316,7 @@ const navigate=useNavigate()
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                         {error.pincode && <p className="text-red-500">{error.pincode}</p>}
                       </div>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-600">
@@ -282,6 +330,7 @@ const navigate=useNavigate()
                           className="mt-1 p-2 w-full border rounded-md"
                           required
                         />
+                        {error.country && <p className="text-red-500">{error.country}</p>}
                       </div>
                     </div>
                   </form>
@@ -292,22 +341,30 @@ const navigate=useNavigate()
                     <div className="w-full flex flex-col">
                       {cartItems.map((item) => (
                         <>
-                          <div key={item._id} className="w-full flex mb-4 px-4 ">
+                          <div
+                            key={item._id}
+                            className="w-full flex mb-4 px-4 "
+                          >
                             <div className="w-1/2   overflow-hidden rounded-lg px-2">
                               <img
-                                src={item.thumbnail}
-                                alt={item.title}
+                                src={item.product.thumbnail}
+                                alt={item.product.title}
                                 className="w-full h-full object-cover object-center"
                               />
                             </div>
 
                             <div className="w-1/2 px-2 flex flex-col ">
                               <div>
-                                <p className="font-bold whitespace-nowrap">
-                                  {item.title}
+                                <p className=" whitespace-nowrap">
+                                  <span className='font-semibold pr-2'>{item.product.title} </span>
+                                  <span className='font-bold'>Qty {item.quantity}</span>
                                 </p>
                                 <p className="text-gray-600">
-                                  ₹{item.price}/ <sub>each</sub>
+                                  <span>
+                                    ₹{item.product.price}/{" "}
+                                    <sub>{item.product.unit}</sub>
+                                  </span>
+                                  <span></span>
                                 </p>
                               </div>
 
@@ -316,7 +373,7 @@ const navigate=useNavigate()
                                 <div className="flex items-center ">
                                   <button
                                     onClick={() => {
-                                      handleQuantityDecrease(item._id);
+                                      handleQuantityDecrease(item);
                                     }}
                                     className="w-10 h-10 bg-gradient-to-b from-white to-[#f9f9f9] inline-block border border-gray-300 cursor-pointer text-base rounded-full leading-none"
                                   >
@@ -325,12 +382,12 @@ const navigate=useNavigate()
                                   <input
                                     type="text"
                                     className="w-10 text-center"
-                                    value={item.quantity} // Display the item quantity
+                                    value={item.product.quantity} // Display the item quantity
                                     readOnly
                                   />
                                   <button
                                     onClick={() =>
-                                      handleQuantityIncrease(item._id)
+                                      handleQuantityIncrease(item)
                                     }
                                     className="w-10 h-10 bg-gradient-to-b from-white to-[#f9f9f9] inline-block border border-gray-300 cursor-pointer text-base rounded-full leading-none"
                                   >
@@ -340,8 +397,8 @@ const navigate=useNavigate()
                                 <div className="flex items-center ml-auto pt-2">
                                   <button
                                     type="button"
-                                    onClick={() =>
-                                      dispatch(removeItem(item._id))
+                                    onClick={
+                                      () => removeFromCart(item._id)
                                     }
                                     className="text-red-500 hover:text-red-700 "
                                   >
@@ -355,7 +412,11 @@ const navigate=useNavigate()
                       ))}
                     </div>
                     <div className="w-full">
-                      <TotalPriceSummary cartItems={cartItems} handleSubmit={handleSubmit}/>
+                      <TotalPriceSummary
+                        cartItems={cartItems}
+                        handleSubmit={handleSubmit}
+                        isLoading={orderStatus === 'loading'}
+                      />
                     </div>
                     {/* <div className=" w-full py-4">
               <NavLink
@@ -374,10 +435,10 @@ const navigate=useNavigate()
               <p className="text-xl text-gray-600">
                 Your cart is Empty Please add items to your cart.
               </p>
-              <div className='my-2'>
+              <div className="my-2">
                 <button
                   type="button"
-                  onClick={()=>navigate('/')}
+                  onClick={() => navigate("/")}
                   className="font-bold text-red-800 hover:text-red-800 px-2 "
                 >
                   Continue Shopping

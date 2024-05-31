@@ -167,8 +167,9 @@ const Footer1 = () => {
                         </li>
                         <li className="flex items-center">
                             <span><MdOutlineMailOutline/></span>
-                          <span className='mx-2'>
-                            yingkiongstore@gmail.com
+                          <span className='mx-2 '>
+                            <a href='mailto:yingkiongstore@gmail.com'> yingkiongstore@gmail.com</a>
+                           
                           </span>
                         </li>
                       </ul>
@@ -190,11 +191,13 @@ const Footer1 = () => {
               </a>
             ))}
           </div> */}
-          <p className="text-sm text-gray-500 font-bold">Designed and Coded by <span className='text-purple-700 font-bold text-md'>Samsu & Yogi</span></p>
+          <p className="text-sm text-gray-500 font-bold">Designed and Coded by <span className='text-purple-700 font-bold text-md'>Samsuddin Ansari & Yogi</span></p>
 
         </div>
       </div>
     </div>
+    
+
   </footer>
   )
 }

@@ -7,6 +7,7 @@ export const productCategory = [
     { id : 6, label : "Local Items", value : "localitems"},
     { id : 7, label : "Cosmetics", value : "cosmetics"},
     { id : 8, label : "Fragrances", value : "fragrances"},
+    { id : 9, label : "Food", value : "food"},
 
 ]
 

@@ -1,11 +1,15 @@
 
-import React, { useState,useReducer } from 'react';
+import React, { useState,useReducer, useEffect } from 'react';
 
 import CustomerTable from './CustomerTable';
 import CustomerForm from './CustomerForm';
 import {customerData} from './customerdata'
+import { fetchUserProfile } from '../../../API/userAPI';
+import useLoading from '../../../customhooks/Loading';
+import { Circles } from 'react-loader-spinner';
 
 const CustomersPage = () => {
+  const [user, setUser] = useState()
 
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -17,7 +21,7 @@ const CustomersPage = () => {
   const [editedCustomer, setEditedCustomer] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-
+  const loading = useLoading();
 
   const addCustomer = (newCustomer) => {
     // Use the spread operator to create a new array with the existing customers and the new customer
@@ -60,6 +64,23 @@ const CustomersPage = () => {
       setModalOpen(state)
       setIsEditing(stateFromTable)
     };
+    useEffect(()=>{
+      const fethuser=async()=>{
+        try {
+          const resp=await fetch('http://localhost:8000/auth/user')
+          const data=await resp.json()
+        
+          if (data) {
+            setUser(data);
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      fethuser()
+    
+      },[])
+    console.log(user)
 
   return (
 
@@ -106,7 +127,7 @@ const CustomersPage = () => {
           <header className="px-5 py-4 border-b border-gray-100">
             <h2 className="font-semibold text-gray-800">Customers</h2>
           </header>
-          <div className="flex items-center px-6 py-2">
+          {/* <div className="flex items-center px-6 py-2">
             <button
               type="button"
               onClick={openModal}
@@ -114,20 +135,35 @@ const CustomersPage = () => {
             >
               Add Customer
             </button>
-          </div>
+          </div> */}
         </div>
 
-        {/* Product Headline */}
+        {/* Customer Table Headline */}
+        {loading ? (
+              <div className="flex items-center justify-center h-screen">
+                {" "}
+                <Circles
+                  height="80"
+                  width="80"
+                  color="#7b09e7"
+                  ariaLabel="circles-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              </div>
+            ) : (
         <div className="h-2/3  flex-grow">
           <div className="overflow-y-auto max-h-full">
             <CustomerTable
-              customerTable={customerTable}
+              customerTable={user}
               deleteCustomer={deleteCustomer}
               isModalOpen={isModalOpen}
               editCcustomer={editCcustomer}
             />
           </div>
         </div>
+            )}
         {isModalOpen && (
           <CustomerForm
             closeModal={closeModal}

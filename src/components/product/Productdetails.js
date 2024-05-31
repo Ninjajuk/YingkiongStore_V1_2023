@@ -2,24 +2,30 @@
 
 import Skeleton from '../skeleton/Skeleton1';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import {addToCartAsync,selectItems} from '../../redux/cartSliceasyn'
+import { useNavigate, useParams } from 'react-router-dom';
+import {addToCartAsync,selectCartLoaded,selectItems} from '../../redux/cartSliceasyn'
 import { useDispatch ,useSelector} from 'react-redux';
 import { selectLoggedInUser } from '../../redux/authSlice';
 import Navbar1 from '../Navbar.js/NavbarDark';
 import Footer1 from '../footer/Footer1';
 import {addOrRemoveFromCart,isItemInCart} from '../../utility/cartUtils'
+import { ToastContainer, toast } from 'react-toastify';
 
 const ProductDetails = ({ params }) => {
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
   const cartItems = useSelector(selectItems);
   const user=useSelector(selectLoggedInUser)
-  
+  const cartLoaded = useSelector(selectCartLoaded);
 
   const { productId } = useParams();
+  const navigate=useNavigate()
   // console.log("ProductId id will be added to database", productId);
   // console.log("User id :-", user ? user._id : null);
+  // console.log('cartitems at product details',cartItems)
+  // console.log('user at product details',user)
+  const notifyAdd = () => toast.success("Added to cart!");
+const notifyRemove = () => toast.info("Removed from cart!");
 
   useEffect(() => {
     const fetchProduct = async (req,res) => {
@@ -40,31 +46,27 @@ const ProductDetails = ({ params }) => {
  
 
     fetchProduct();
-  }, []);
+  }, [productId, cartLoaded]);
 
   if (!product) {
     // Render loading state, or handle differently
     return <Skeleton/>;
   }
 
-  // const handleAddToCart = (product) => {
-  //   addOrRemoveFromCart(dispatch, product, cartItems);
-  //   console.log(product._id)
-  // };
-  const handleAddToCart=(product)=>{
-    // e.preventDefault();
-    // if (items.findIndex((item) => item.product.id === product.id) < 0) {
-      console.log(product._id );
-
+  const handleAddToCart=async(product)=>{
+  
+      console.log('Add',product._id)
+      const isProductInCart = cartItems.some(item => item.product === productId);
+console.log(isProductInCart)
       const newItem = {
         product: product._id,
         quantity: 1,
         user: user ? user._id : null // If user is not logged in,
-      // console.log(newItem)
     }
-    console.log({item:newItem,})
-     //   addOrRemoveFromCart(dispatch, product, cartItems);
-      // dispatch(addToCartAsync({item:newItem,}));
+
+       await dispatch(addToCartAsync({item:newItem,}));
+          notifyAdd()
+
   }
 
   return (
@@ -99,7 +101,8 @@ const ProductDetails = ({ params }) => {
               ₹{product.discount} off
             </span>
           </p>
-          <div className="lg:hidden w-full px-2">
+          
+          {/* <div className="lg:hidden w-full px-2">
             {user ? (
               <button
                 onClick={() => handleAddToCart(product)}
@@ -108,17 +111,16 @@ const ProductDetails = ({ params }) => {
                 {isItemInCart(product._id, cartItems)
                   ? "Remove"
                   : "Add to Cart"}
-                {/* Add */}
               </button>
             ) : (
               <button
-                onClick={() => console.log(product)}
+                onClick={() => console.log('product')}
                 className="w-full px-4 py-2 bg-sky-600 rounded-md"
               >
                 Please Login to Add
               </button>
             )}
-          </div>
+          </div> */}
         </div>
 
         <div className="hidden lg:block lg:w-1/3  h-full lg:px-[4rem] py-[4rem] bg-white">
@@ -148,6 +150,15 @@ const ProductDetails = ({ params }) => {
               <span className="text-sm px-2">Per Kg</span>
             </p>
             <div className="w-full ">
+            {/* <button
+                onClick={() => handleAddToCart(product)}
+                className="w-full px-4 py-2 bg-sky-600 rounded-md"
+              >
+                {isItemInCart(product._id, cartItems)
+                  ? "Remove"
+                  : "Add to Cart"}
+                  Add
+              </button> */}
               {user ? (
                 <button
                   onClick={() => handleAddToCart(product)}
@@ -156,7 +167,7 @@ const ProductDetails = ({ params }) => {
                   Add to Cart
                 </button>
               ) : (
-                <button className="w-full px-4 py-2 bg-sky-600 rounded-md">
+                <button onClick={()=>navigate('/login')} className="w-full px-4 py-2 bg-sky-600 rounded-md">
                   Please Login to Add
                 </button>
               )}
@@ -178,6 +189,7 @@ const ProductDetails = ({ params }) => {
         </div>
       </div>
       <Footer1 />
+      {/* <ToastContainer /> */}
     </>
   );
 };
