@@ -77,7 +77,7 @@ export async function createUser(userData, callback) {
 }
   export async function loginUser(userData) {
     try {
-      const response = await fetch(`${BASE_URL}/${AUTH_URLS.LOGIN_URL}`, {
+      const response = await fetch(`${BASE_URL}/${AUTH_URLS.LOGIN_URL}`,{
         method: "POST",
         body: JSON.stringify(userData),
         headers: { "content-type": "application/json" },
@@ -100,7 +100,7 @@ export async function createUser(userData, callback) {
   
   export async function signOut(userId) {
       try {
-        const response = await fetch('http://localhost:5000/api/authenticate/logout');
+        const response = await fetch(`${BASE_URL}/api/authenticate/logout`);
         if (response.ok) {
           const data = await response.json();
           console.log(data.message)
@@ -122,7 +122,7 @@ export async function createUser(userData, callback) {
   export function checkAuth() {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await fetch('http://localhost:8000/auth/check');
+        const response = await fetch(`${BASE_URL}/auth/check`);
         if (response.ok) {
           const data = await response.json();
           resolve({ data });
@@ -140,7 +140,7 @@ export async function createUser(userData, callback) {
 
   export async function resetPasswordRequest(email) {
       try {
-        const response = await fetch('http://localhost:8000/auth/reset-password-request', {
+        const response = await fetch(`${BASE_URL}/auth/reset-password-request`, {
           method: 'POST',
           body: JSON.stringify(email),
           headers: { 'content-type': 'application/json' },
@@ -161,7 +161,7 @@ export async function createUser(userData, callback) {
   
   export async function resetPassword(data) {
     try {
-      const response = await fetch('http://localhost:8000/auth/reset-password', {
+      const response = await fetch(`${BASE_URL}/auth/reset-password`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'content-type': 'application/json' },

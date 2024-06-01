@@ -18,6 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RouterProvider } from 'react-router-dom';
 import router from './routes/Routes'; 
+import { BASE_URL } from "./constants";
 
 function App() {
   const [data,setData]=useState(null)
@@ -39,7 +40,7 @@ function App() {
   useEffect(() => {
     async function fetchItemByUserID() {
       try {
-        const response = await fetch('http://localhost:8000/cart', {
+        const response = await fetch(`${BASE_URL}/cart`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`

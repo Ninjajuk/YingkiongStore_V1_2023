@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { BASE_URL } from '../constants';
 
 // Create a context for the products
 const ProductsContext = createContext();
@@ -11,7 +12,7 @@ export const ProductsProvider = ({ children }) => {
   // Function to fetch all products
   const getallProducts = async () => {
     try {
-      const resp = await fetch(`http://localhost:8000/products?all=true`);
+      const resp = await fetch(`${BASE_URL}/products?all=true`);
       const data = await resp.json();
       const products=data.products
       // Extract unique categories

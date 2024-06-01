@@ -1,19 +1,10 @@
-// export function addToCart(item) {
-//     return new Promise(async (resolve) => {
-//       const response = await fetch('/cart', {
-//         method: 'POST',
-//         body: JSON.stringify(item),
-//         headers: { 'content-type': 'application/json' },
-//       });
-//       const data = await response.json();
-//       resolve({ data });
-//     });
-//   }
+
 import axios from 'axios';
+import { BASE_URL } from '../constants';
 
   export async function addtoCart(item,user) {
     try {
-      const response=await fetch('http://localhost:8000/cart',{
+      const response=await fetch(`${BASE_URL}/cart`,{
         method:'POST',
         body:JSON.stringify(item),
         headers:{'content-type':'application/json'}
@@ -28,7 +19,7 @@ import axios from 'axios';
 
   export async function deleteItemFromCart(itemId) {
     try {
-      const response = await fetch(`http://localhost:8000/cart/${itemId}`, {
+      const response = await fetch(`${BASE_URL}/cart/${itemId}`, {
         method: 'DELETE',
         headers: { 'content-type': 'application/json' }
       });
@@ -43,7 +34,7 @@ import axios from 'axios';
 
   export function updateCart(update) {
     return new Promise(async (resolve) => {
-      const response = await fetch('http://localhost:8000/cart/' + update._id, {
+      const response = await fetch(`${BASE_URL}/cart/${update._id}`, {
         method: 'PATCH',
         body: JSON.stringify(update),
         headers: { 'content-type': 'application/json' },
@@ -55,7 +46,7 @@ import axios from 'axios';
 
 export const fetchItemByUserID = async () => {
   const token = JSON.parse(localStorage.getItem('userData')).userToken;
-  const response = await axios.get('http://localhost:8000/cart', {
+  const response = await axios.get(`${BASE_URL}/cart`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

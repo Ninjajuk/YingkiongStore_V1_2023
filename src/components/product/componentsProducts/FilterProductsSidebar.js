@@ -48,7 +48,7 @@ const filters = [
   
     ],
   },
-  // {
+  // {s
   //   id: 'size',
   //   name: 'Size',
   //   options: [
@@ -113,7 +113,7 @@ export default function ProductWithFilterCateogrySidebar({children,handleFilterS
                   {/* Filters */}
                   <form className="mt-4 border-t border-gray-200">
                     <h3 className="sr-only">Categories</h3>
-                    <ul role="list" className="px-2 py-3 font-medium text-gray-900">
+                    {/* <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                       {subCategories.map((category) => (
                         <li key={category.name}>
                           <a href={category.href} className="block px-2 py-3">
@@ -121,7 +121,7 @@ export default function ProductWithFilterCateogrySidebar({children,handleFilterS
                           </a>
                         </li>
                       ))}
-                    </ul>
+                    </ul> */}
 
                     {filters.map((section) => (
                       <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">

@@ -58,7 +58,7 @@ const navigate=useNavigate()
       ? product.title.toLowerCase().includes(searchTerm.toLowerCase())
       : true)
   );
-
+  
   const handleEditProductButtonClick = (productId) => {
     setProductIdToEdit(productId);
     setOpenEditProductModal(true);
@@ -158,7 +158,9 @@ const navigate=useNavigate()
                         Product
                       </th>
                       <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
-                        Price
+                        
+                        <span>Price</span>
+                        <span className='pl-2 '> Cutted Price</span>
                       </th>
                       <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
                         Image
@@ -188,8 +190,9 @@ const navigate=useNavigate()
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap">
-                          <div className="text-sm leading-5 text-gray-900">
-                            ₹{product.price}
+                          <div className=" leading-5 text-gray-900">
+                            <span>  ₹{product.price}</span>
+                            <span className='pl-2  line-through text-sm'>  ₹{product.cuttedprice}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap">

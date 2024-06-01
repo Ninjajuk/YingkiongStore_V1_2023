@@ -7,6 +7,7 @@ import {productCategory,unitCategory} from '../../utility/productCategory'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showToast } from '../../utility/toastify';
+import { BASE_URL } from '../../constants';
 // import {addProduct} from '../../API/productAPI'
 const colors = [
     {
@@ -92,7 +93,7 @@ export default function ProductAddForm() {
         console.log({...productInfo,}); // Log the productInfo state along with the file URL to the console
        
         try {
-          const response = await fetch('http://localhost:8000/products/addproduct', {
+          const response = await fetch(`${BASE_URL}/products/addproduct`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

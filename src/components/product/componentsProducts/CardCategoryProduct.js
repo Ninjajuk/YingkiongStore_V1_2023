@@ -20,7 +20,7 @@ const dispatch=useDispatch()
   return (
     <>
        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 my-4">
-      {visibleCards.map(product => 
+      {visibleCards.slice(0,8).map(product => 
               <div
               key={product._id}
               className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"

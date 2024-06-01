@@ -11,6 +11,10 @@ import SkeletonProduct from '../../skeleton/SkeletonProdct';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
 import { selectLoggedInUser } from '../../../redux/authSlice';
+import { getallProducts } from '../../../API/productAPI';
+
+
+
 
 const categoryOptionsMap = {
   vegetables: [1, 2, 3, 5],
@@ -19,16 +23,16 @@ const categoryOptionsMap = {
 
 const ProducList = ({ category }) => {
 
-  const dispatch=useDispatch()
-  const cartItems=useSelector((state)=>state.cart)
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [product, setProduct] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [filtercategory, setFilterCategory] = useState([]);
 
   const user=useSelector(selectLoggedInUser)
   
-  const { items, uniqueCategories, hasMore, fetchData,getallProducts } = useProductData();
+  const { items, hasMore, fetchData, } = useProductData();
 
 
 
@@ -42,33 +46,40 @@ const ProducList = ({ category }) => {
 
 
     // Filter products based on the selected category and search term
-    const filteredProducts = items.filter((product) =>
+    const filteredProducts = product.filter((product) =>
     (selectedCategory ? product.category === selectedCategory : true) 
     &&
     (searchTerm ? product.title.toLowerCase().includes(searchTerm.toLowerCase()) : true)
   );
   
-  const notifyAdd = () => toast.success("Added to cart!");
-const notifyRemove = () => toast.info("Removed from cart!");
+//   const notifyAdd = () => toast.success("Added to cart!");
+// const notifyRemove = () => toast.info("Removed from cart!");
 
 
-    const handleAddToCart = async(product) => {
-      const isProductInCart = cartItems.some(item => item._id === product._id);
-      const newItem = {
-        product: product._id,
-        quantity: 1,
-        user: user ? user._id : null // If user is not logged in,
+    // const handleAddToCart = async(product) => {
+    //   const isProductInCart = cartItems.some(item => item._id === product._id);
+    //   const newItem = {
+    //     product: product._id,
+    //     quantity: 1,
+    //     user: user ? user._id : null 
 
-    }
-          console.log(newItem)
-      // addOrRemoveFromCart(dispatch, product, cartItems);
-      // console.log(product._id)
-      // if (isProductInCart) {
-      //   notifyRemove();
-      // } else {
-      //   notifyAdd();
-      // }
-    };
+    // }
+    //       console.log(newItem)
+
+    // };
+
+    useEffect(()=>{
+const fecthCategory=async()=>{
+
+  const product = await getallProducts();
+  setProduct(product)
+
+  // Extract unique categories
+  const categories = [...new Set(product.map((item) => item.category))];
+  setFilterCategory(categories);
+}
+fecthCategory()
+    },[])
  
   return (
     <>
@@ -89,7 +100,7 @@ const notifyRemove = () => toast.info("Removed from cart!");
               >
                 All
               </li>
-              {uniqueCategories.map((item, index) => (
+              {filtercategory.map((item, index) => (
                 <li
                   key={index}
                   value={sortBy}

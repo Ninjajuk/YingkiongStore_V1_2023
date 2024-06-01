@@ -4,9 +4,15 @@ import React, {lazy ,} from 'react';
 import HeroSection from './componentsProducts/HeroSection';
 import FeaturedCategoryPro from './componentsProducts/FeatureCategory';
 import ShopByCategory from './componentsProducts/ShopCateogory';
-import FruitsVegetables from './componentsProducts/FruitsVegetables';
+
 import ProducList from './componentsProducts/ProducList'
 import PromotionBanner from './componentsProducts/PromotionProduct';
+import Incentive from './componentsProducts/Incentive';
+
+import Fruits from './section/Fruits';
+import Vegetables from './section/Vegetables';
+import Local_Items from './section/Local_item';
+import Foods from './section/Foods';
 
 
 const Product = () => {
@@ -17,9 +23,13 @@ const Product = () => {
     <>
       <HeroSection />
       {/* <FeaturedCategoryPro /> */}
+   
       <PromotionBanner/>
-      <ShopByCategory />
-      <FruitsVegetables />
+      {/* <ShopByCategory /> */}
+      <Vegetables/>
+      <Fruits />
+      <Local_Items/>
+      <Foods/>
 
       <ProducList/>
     </>

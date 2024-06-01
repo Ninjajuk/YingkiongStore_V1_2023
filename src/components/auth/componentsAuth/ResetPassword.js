@@ -7,6 +7,7 @@ import { useState } from 'react';
 // import { resetPasswordAsync, selectError, selectPasswordReset } from '../authSlice';
 import { resetPassword } from '../../../API/authAPI';
 import EmailFailedResetPasswrod from './EmailFailedveri';
+import { toast } from 'react-toastify';
 
 
 export default function ResetPassword() {
@@ -27,8 +28,9 @@ const navigate = useNavigate();
     formState: { errors },
   } = useForm();
 
-  console.log(errors);
-  console.log(email, token)
+  // console.log(errors);
+  // console.log(email, token)
+  const notifyAdd = () => toast.success("Password Reset Successfully!");
   const onSubmit = async (data) => {
     setBtnLoading(true)
     try {
@@ -42,6 +44,7 @@ const navigate = useNavigate();
       
       if (response) {
         console.log(response); // Success message in the console
+        notifyAdd()
       
         navigate('/login');  // Redirect to login page
       } else {

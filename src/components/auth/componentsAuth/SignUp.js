@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UserCreatedSuccessfully from "../../modal/UserCreatedAuccessful";
 import { useDispatch, useSelector } from "react-redux";
 import UserCreatedSuccessfullyPage from "./EmailSuccessUserCreated";
+import { toast } from "react-toastify";
 
 
 const RegistrationForm = () => {
@@ -14,7 +15,7 @@ const RegistrationForm = () => {
  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch=useDispatch()
-
+  const notifyAdd = () => toast.success("User Created Successfully!");
   const {
     register,
     handleSubmit,
@@ -26,6 +27,7 @@ const RegistrationForm = () => {
     // console.log(data)
     try {
       await dispatch(createUserAsync(data));
+      notifyAdd()
       // Reset the form upon successful user creation
       reset();
     } catch (error) {
@@ -35,7 +37,7 @@ const RegistrationForm = () => {
 
   };
 
-  //Show Login Page onlywhen user data and authenticated state is unavailable or false
+
   useEffect(() => {
     // Check if the user is already authenticated (data available in localStorage)
     if (user) {

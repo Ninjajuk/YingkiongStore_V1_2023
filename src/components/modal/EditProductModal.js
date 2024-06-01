@@ -1,6 +1,7 @@
 
 import React, { useState ,} from 'react'
 import {editProduct,getallProducts} from '../../API/productAPI'
+import { toast } from 'react-toastify'
 const EditProductModal = ({closeModal, onEdit,product,refreshProductList}) => {
 
     const [productInfo,setProductInfo]=useState(product)
@@ -13,6 +14,7 @@ const EditProductModal = ({closeModal, onEdit,product,refreshProductList}) => {
             [e.target.name]: e.target.value
         });
     }
+    const notifyAdd = () => toast.success("Product Edited Successfully!");
     const handleSubmit = async(event) => {
         event.preventDefault();
         try {
@@ -20,7 +22,7 @@ const EditProductModal = ({closeModal, onEdit,product,refreshProductList}) => {
           const productId = product._id; // Assuming product has an id property
           const data = await editProduct(productId, updatedData);
           console.log('Product updated successfully:', data);
-         
+          notifyAdd()
            const newRefreshedData = await getallProducts();         // After successful deletion, you may want to refresh the product list
           refreshProductList(newRefreshedData);
 

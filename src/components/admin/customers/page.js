@@ -7,6 +7,7 @@ import {customerData} from './customerdata'
 import { fetchUserProfile } from '../../../API/userAPI';
 import useLoading from '../../../customhooks/Loading';
 import { Circles } from 'react-loader-spinner';
+import { BASE_URL } from '../../../constants';
 
 const CustomersPage = () => {
   const [user, setUser] = useState()
@@ -67,7 +68,7 @@ const CustomersPage = () => {
     useEffect(()=>{
       const fethuser=async()=>{
         try {
-          const resp=await fetch('http://localhost:8000/auth/user')
+          const resp=await fetch(`${BASE_URL}/auth/user`)
           const data=await resp.json()
         
           if (data) {

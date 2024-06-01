@@ -10,6 +10,7 @@ import Navbar1 from '../Navbar.js/NavbarDark';
 import Footer1 from '../footer/Footer1';
 import {addOrRemoveFromCart,isItemInCart} from '../../utility/cartUtils'
 import { ToastContainer, toast } from 'react-toastify';
+import { BASE_URL } from '../../constants';
 
 const ProductDetails = ({ params }) => {
   const [product, setProduct] = useState(null);
@@ -31,7 +32,7 @@ const notifyRemove = () => toast.info("Removed from cart!");
     const fetchProduct = async (req,res) => {
       try {
         // Fetch product details from the API based on the productId
-        const res = await fetch(`http://localhost:8000/products/${productId}`);        
+        const res = await fetch(`${BASE_URL}/products/${productId}`);        
         if (!res.ok) {
           throw new Error(`Failed to fetch product with ID ${productId}`);
         }
@@ -102,25 +103,20 @@ console.log(isProductInCart)
             </span>
           </p>
           
-          {/* <div className="lg:hidden w-full px-2">
-            {user ? (
-              <button
-                onClick={() => handleAddToCart(product)}
-                className="w-full px-4 py-2 bg-sky-600 rounded-md"
-              >
-                {isItemInCart(product._id, cartItems)
-                  ? "Remove"
-                  : "Add to Cart"}
-              </button>
-            ) : (
-              <button
-                onClick={() => console.log('product')}
-                className="w-full px-4 py-2 bg-sky-600 rounded-md"
-              >
-                Please Login to Add
-              </button>
-            )}
-          </div> */}
+          <div className="lg:hidden w-full px-2">
+              {user ? (
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="w-full px-4 py-2 bg-purple-800 text-white rounded-md"
+                >
+                  Add to Cart
+                </button>
+              ) : (
+                <button onClick={()=>navigate('/login')} className="w-full px-4 py-2 bg-purple-800 text-white rounded-md">
+                  Please Login to Add
+                </button>
+              )}
+          </div>
         </div>
 
         <div className="hidden lg:block lg:w-1/3  h-full lg:px-[4rem] py-[4rem] bg-white">
@@ -162,12 +158,12 @@ console.log(isProductInCart)
               {user ? (
                 <button
                   onClick={() => handleAddToCart(product)}
-                  className="w-full px-4 py-2 bg-sky-600 rounded-md"
+                  className="w-full px-4 py-2 bg-purple-800 text-white rounded-md"
                 >
                   Add to Cart
                 </button>
               ) : (
-                <button onClick={()=>navigate('/login')} className="w-full px-4 py-2 bg-sky-600 rounded-md">
+                <button onClick={()=>navigate('/login')} className="w-full px-4 py-2 bg-purple-800 text-white rounded-md">
                   Please Login to Add
                 </button>
               )}

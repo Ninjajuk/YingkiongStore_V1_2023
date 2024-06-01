@@ -1,6 +1,8 @@
+import { BASE_URL } from "../constants";
+
 export const createOrder = async (order) => {
   try {
-    const resp = await fetch("http://localhost:8000/orders",{
+    const resp = await fetch(`${BASE_URL}/orders`,{
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -32,7 +34,7 @@ export const fetchAllOrder= async(page)=>{
     // const response = await fetch(
     //   '/orders?' + queryString
     // );
-    const resp = await fetch(`http://localhost:8000/orders/all?page=${page}&limit=10`);
+    const resp = await fetch(`${BASE_URL}/orders/all?page=${page}&limit=10`);
     const data = await resp.json();
     return data
   } catch (error) {
@@ -42,7 +44,7 @@ export const fetchAllOrder= async(page)=>{
 
 export const updateOrder=async(order)=>{
   return new Promise(async (resolve) => {
-    const resp=await fetch('http://localhost:8000/orders/'+order._id,{
+    const resp=await fetch(`${BASE_URL}/orders/${order._id}`,{
       method: 'PATCH',
       body: JSON.stringify(order),
       headers: { 'content-type': 'application/json' },

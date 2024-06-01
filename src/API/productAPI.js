@@ -1,11 +1,13 @@
 // apiFunctions.js
 
+import { BASE_URL } from "../constants";
+
 const kalingbackstorelatestURL='https://kalingbackstorelatest.onrender.com'
 const yingkiongstoreURLPrevious='https://yingkiongstore.onrender.com'
 
 async function fetchDataFromAPI(category) {
     try {
-      const resp = await fetch(`http://localhost:8000/products/category/${category}`);
+      const resp = await fetch(`${BASE_URL}/products/category/${category}`);
       const data = await resp.json();
       return data;
     } catch (error) {
@@ -18,7 +20,7 @@ async function fetchDataFromAPI(category) {
 
   async function getallProducts(){
     try {
-      const resp=await fetch('http://localhost:8000/products?all=true')
+      const resp=await fetch(`${BASE_URL}/products?all=true`)
 
       const data=await resp.json()
       console.log(data.products)
@@ -50,7 +52,7 @@ async function fetchDataFromAPI(category) {
 //addProduct
 async function addProduct(product) {
   try {
-    const response = await fetch('http://localhost:8000/products/addproduct', {
+    const response = await fetch(`${BASE_URL}/products/addproduct`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +76,7 @@ async function addProduct(product) {
 //Edit Product function here
 async function editProduct(productId, updatedData) {
   try {
-    const resp = await fetch(`http://localhost:8000/products/editproduct/${productId}`, {
+    const resp = await fetch(`${BASE_URL}/products/editproduct/${productId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +96,7 @@ async function editProduct(productId, updatedData) {
 //Delete Product function here
 async function deleteProduct(productId) {
   try {
-    const resp = await fetch(`http://localhost:8000/products/deleteproduct/${productId}`, {
+    const resp = await fetch(`${BASE_URL}/products/deleteproduct/${productId}`, {
       method: 'DELETE',
     });
 

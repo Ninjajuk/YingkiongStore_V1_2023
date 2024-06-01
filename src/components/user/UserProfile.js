@@ -27,19 +27,7 @@ const PersonalInfoCard = () => {
     setIsModalOpen(false);
 
   };
-  const data = {
-    name: "Jane Cooper",
-    jobProfile: "Paradigm Representative",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    email: "Jane@gmail.com",
-    phone: "754206773",
-    call: "Call",
-    gender: "Female",
-    address: "Delhi",
-    memberRole: "User"
-  };
-  const { name, phone, email, gender, address, memberRole, image } = data;
+
 
   useEffect(()=>{
   const fethuser=async()=>{
