@@ -41,9 +41,10 @@ const navigate=useNavigate()
     dispatch(signOutAsync());
     // Redirect to the login page after dispatching the logout action
     navigate('/');
+    // Refresh the page
+    window.location.reload();
   };
-
-
+  
   return (
     <>
 
@@ -359,6 +360,15 @@ const navigate=useNavigate()
                   >
                     Cart
                   </Disclosure.Button>
+                  {user && user.role === "admin" && (
+                  <Disclosure.Button
+                    as="a"
+                    href="/dashboard"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                  >
+                    Dashboard
+                  </Disclosure.Button>
+                  )}
                   {isAuthenticated ? (
                     <button
                       // onClick={() => dispatch(signOutAsync())}

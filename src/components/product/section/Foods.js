@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchDataFromAPI } from "../../../API/productAPI";
 import CategoryCard from "../componentsProducts/CardCategoryProduct";
 import LoaderCircle from "../../common/LoaderCircle";
+import DummySkeletonCategoryCard from "../../skeleton/DummySkeletonCategoryCard";
 
 
 
@@ -12,6 +13,8 @@ import LoaderCircle from "../../common/LoaderCircle";
 const Foods = () => {
 
   const [currentindex,setCurrentindex]=useState(0)
+  const [loading,setLoading]=useState(false)
+  const [error, setError] = useState('');
   const [data,setData]=useState([])
 
   const itemsPerpage=4
@@ -19,17 +22,24 @@ const Foods = () => {
   useEffect(()=>{
     async function getData() {
       try {
-        const vegData = await fetchDataFromAPI('food');
-                // Check if the data length is greater than 8 and slice it accordingly
-                // if (vegData.length > 8) {
-                //   setData(vegData.slice(0, 8));
-                // } else {
-                //   setData(vegData);
-                // }
-        setData(vegData);
+        setLoading(true)
+        const foodData = await fetchDataFromAPI('food');
+        if (!Array.isArray(foodData)) {
+          throw new Error("Invalid data format");
+        }
+
+        if (foodData.length > 8) {
+          setData(foodData.slice(0, 8));
+        } else {
+          setData(foodData);
+        }
       } catch (error) {
-        console.log('Error in fetching data:', error);
+        setError('Error in fetching data');
+        // console.log('Error in fetching data:', error);
      
+      }
+      finally{
+        setLoading(false)
       }
     }
 
@@ -76,10 +86,15 @@ const handlePrev = () => {
         <p>Tasty Foods!</p>
 
         <div className="my-4">
-          {visibleCards?(<CategoryCard visibleCards={visibleCards}/>
-        ):(
-          <LoaderCircle/>
-        )}
+        {loading ? (
+            <DummySkeletonCategoryCard />
+          ) : error ? (
+            <div className="text-red-800 flex items-center justify-center">
+              Server Error: {error}
+            </div>
+          ) : (
+            <CategoryCard visibleCards={visibleCards} />
+          )}
 
         </div>
       </div>

@@ -32,9 +32,9 @@ export const calculateSubtotal = (cartItems) => {
   export const calculateTotal = (cartItems) => {
 
     const subtotal = calculateSubtotal(cartItems);
-    const shipping = subtotal>1000?0:50;
-    const taxes = 0.08 * subtotal;
-    return subtotal + shipping + taxes;
+    const shipping = subtotal>500 ? 0 : 20;
+    // const taxes = 0.08 * subtotal;
+    return subtotal + shipping 
   };
   
 //Save to Local Storage

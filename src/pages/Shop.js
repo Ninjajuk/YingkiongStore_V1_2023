@@ -9,6 +9,7 @@ import ProductWithFilterCateogrySidebar from '../components/product/componentsPr
 import useProductData from '../customhooks/UseProductData';
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoaderCircle from '../components/common/LoaderCircle';
+import DummySkeletonCategoryCard from '../components/skeleton/DummySkeletonCategoryCard';
 
 const Shop = () => {
   const loading = useLoading();
@@ -50,7 +51,7 @@ const Shop = () => {
       <Navbar1 />
       {loading ? (
         <div className="flex items-center justify-center h-screen">
-          {" "}
+
           <Circles
             height="80"
             width="80"
@@ -60,6 +61,7 @@ const Shop = () => {
             wrapperClass=""
             visible={true}
           />
+
         </div>
       ) : (
         <ProductWithFilterCateogrySidebar handleFilterSelect={handleFilterSelect}>
@@ -67,7 +69,7 @@ const Shop = () => {
             dataLength={items.length}
             next={fetchData} // Call fetchData function when reaching bottom
             hasMore={hasMore}
-            loader={<LoaderCircle/>}
+            loader={<DummySkeletonCategoryCard/>}
           >
             <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
             {filteredProducts.map((product) => (

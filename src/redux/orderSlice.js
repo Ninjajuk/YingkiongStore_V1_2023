@@ -12,8 +12,8 @@ export const createOrderAsync = createAsyncThunk(
 );
 export const fetchAllOrdersAsync=createAsyncThunk(
   'order/fetchallorder',
-  async(page)=>{
-    const response=await fetchAllOrder(page)
+  async(page,sort)=>{
+    const response=await fetchAllOrder(page,sort)
     console.log('in async thunk after api call',response)
     return response
   }

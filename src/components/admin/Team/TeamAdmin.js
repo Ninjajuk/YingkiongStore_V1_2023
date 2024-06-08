@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import Lightsidebarwithheader from './AdminDashLayout';
+import Lightsidebarwithheader from '../componentsAdmin/AdminDashLayout';
 
 
 

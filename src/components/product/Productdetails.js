@@ -3,7 +3,7 @@
 import Skeleton from '../skeleton/Skeleton1';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {addToCartAsync,selectCartLoaded,selectItems} from '../../redux/cartSliceasyn'
+import {addToCartAsync,deleteItemFromCartAsync,selectCartLoaded,selectItems} from '../../redux/cartSliceasyn'
 import { useDispatch ,useSelector} from 'react-redux';
 import { selectLoggedInUser } from '../../redux/authSlice';
 import Navbar1 from '../Navbar.js/NavbarDark';
@@ -54,21 +54,32 @@ const notifyRemove = () => toast.info("Removed from cart!");
     return <Skeleton/>;
   }
 
-  const handleAddToCart=async(product)=>{
-  
-      console.log('Add',product._id)
-      const isProductInCart = cartItems.some(item => item.product === productId);
-console.log(isProductInCart)
-      const newItem = {
-        product: product._id,
-        quantity: 1,
-        user: user ? user._id : null // If user is not logged in,
-    }
+  const handleAddToCart = async (product) => {
+    console.log("Add", product._id);
+    // const isItemInCart = cartItems.some(item => item.product === product._id);
 
-       await dispatch(addToCartAsync({item:newItem,}));
-          notifyAdd()
+    // if (isItemInCart) {
+    //   const cartItemToRemove = cartItems.find(item => item.product === product._id);
+    //   await dispatch(deleteItemFromCartAsync(cartItemToRemove._id));
+    //   notifyRemove();
+    // } else {
+    //   const newItem = {
+    //     product: product._id,
+    //     quantity: 1,
+    //     user: user ? user._id : null, // If user is not logged in,
+    //   };
+    //   await dispatch(addToCartAsync({ item: newItem }));
+    //   notifyAdd();
+    // }
+    const newItem = {
+      product: product._id,
+      quantity: 1,
+      user: user ? user._id : null, // If user is not logged in,
+    };
 
-  }
+    await dispatch(addToCartAsync({ item: newItem }));
+    notifyAdd();
+  };
 
   return (
     <>
@@ -110,6 +121,7 @@ console.log(isProductInCart)
                   className="w-full px-4 py-2 bg-purple-800 text-white rounded-md"
                 >
                   Add to Cart
+                  {/* {isItemInCart(product._id, cartItems) ? "Remove from Cart" : "Add to Cart"} */}
                 </button>
               ) : (
                 <button onClick={()=>navigate('/login')} className="w-full px-4 py-2 bg-purple-800 text-white rounded-md">

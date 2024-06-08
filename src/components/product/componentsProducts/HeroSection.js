@@ -33,7 +33,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-        <div className="h-48 w-full md:h-64 lg:absolute lg:top-0 lg:right-0 lg:h-full lg:w-1/2">
+        <div className="h-48 w-full  lg:absolute lg:top-0 lg:right-0 lg:h-[42rem] lg:w-1/2">
           <img
             src="/img/YINGKIONG.jpg"
             alt=""

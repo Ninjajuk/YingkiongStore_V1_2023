@@ -12,6 +12,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
 import { selectLoggedInUser } from '../../../redux/authSlice';
 import { getallProducts } from '../../../API/productAPI';
+import DummySkeletonCategoryCard from '../../skeleton/DummySkeletonCategoryCard';
 
 
 
@@ -29,6 +30,7 @@ const ProducList = ({ category }) => {
   const [sortBy, setSortBy] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filtercategory, setFilterCategory] = useState([]);
+  const [error, setError] = useState('');
 
   const user=useSelector(selectLoggedInUser)
   
@@ -69,25 +71,33 @@ const ProducList = ({ category }) => {
     // };
 
     useEffect(()=>{
-const fecthCategory=async()=>{
-
-  const product = await getallProducts();
-  setProduct(product)
-
-  // Extract unique categories
-  const categories = [...new Set(product.map((item) => item.category))];
-  setFilterCategory(categories);
-}
-fecthCategory()
-    },[])
+      const fetchCategory = async () => {
+        try {
+          const products = await getallProducts();
+          setProduct(products);
+  
+          // Extract unique categories
+          const categories = [...new Set(products.map((item) => item.category))];
+          setFilterCategory(categories);
+        } catch (error) {
+          setError('Failed to fetch products or categories');
+          // console.log('Error fetching products or categories:', error);
+        }
+      };
+  
+      fetchCategory();
+    }, []);
  
   return (
     <>
+          {error ? (
+        <div className="text-red-800 flex items-center justify-center">Error: {error}</div>
+      ) : (
       <InfiniteScroll
         dataLength={items.length}
         next={fetchData} // Call fetchData function when reaching bottom
         hasMore={hasMore}
-        loader={<LoaderCircle />}
+        loader={<DummySkeletonCategoryCard/>}
       >
         <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
           <div className="overflow-x-auto  bg-purple-800 rounded-lg shadow-lg">
@@ -140,7 +150,7 @@ fecthCategory()
                   </div>
 
           <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 ">
-            {filteredProducts.map((product) => (
+            {filteredProducts&&filteredProducts.map((product) => (
               <div
                 key={product._id}
                 className=" group relative px-2 py-2 shadow-md rounded-md flex flex-col justify-between"
@@ -162,14 +172,14 @@ fecthCategory()
                       {product.title}
                     </p>
                   </a>
-                  <p className="text-sm font-medium text-gray-900 flex items-center justify-between px-2">
-                    <span className="font-semibold text-lg">
+                  <p className="text-sm font-medium text-gray-900 flex items-center justify-between lg:px-2">
+                    <span className="font-semibold text-lg sm:text-md">
                       ₹{product.price}
                     </span>
-                    <span className="font-semibold text-sm line-through">
+                    <span className="text-xs lg:text-sm line-through">
                       ₹{product.cuttedprice}
                     </span>
-                    <span className="text-green-500">
+                    <span className="text-green-500 text-xs">
                     ₹{product.discount} Save
                     </span>
                   </p>
@@ -216,6 +226,7 @@ fecthCategory()
           </div>
         </div>
       </InfiniteScroll>
+      )}
     </>
   );
 };

@@ -7,6 +7,9 @@ import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import {FaFolder, FaWrench, FaUserFriends ,FaRegPlusSquare,FaUser } from "react-icons/fa";
 import {  MdOutlineSms,MdShoppingCart,MdDashboard  } from "react-icons/md";
 import { NavLink } from 'react-router-dom';
+import { formattedDate } from '../../../utility/date';
+import { selectLoggedInUser } from '../../../redux/authSlice';
+import { useSelector } from 'react-redux';
 
 const navigation = [
     { name: 'Home', to: "/", icon: HomeIcon,  },
@@ -32,6 +35,7 @@ function classNames(...classes) {
 
 export default function Lightsidebarwithheader({children}) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const userinfo=useSelector(selectLoggedInUser)
 
   return (
     <>
@@ -207,7 +211,7 @@ export default function Lightsidebarwithheader({children}) {
                     />
                   </div>
                 </form> */}
-                <h1 className='flex items-center font-bold text-sky-700'>Welcome Admin</h1>
+                <h1 className='flex items-center font-bold text-gray-700'>Hi {userinfo?`${userinfo.name}`:'Admin'}<span className='pl-4 text-purple-800 '>{formattedDate}</span></h1>
               </div>
               <div className="ml-4 flex items-center md:ml-6">
                 <button

@@ -174,9 +174,7 @@ const subtotal = cartItems.length > 0
                                           <span>
                                             Price ₹{product.price} per{" "}
                                             <sub>
-                                              {product.category === "vegetables"
-                                                ? "kg"
-                                                : "items"}
+                                              {product.unit}
                                             </sub>{" "}
                                           </span>
                                         </p>

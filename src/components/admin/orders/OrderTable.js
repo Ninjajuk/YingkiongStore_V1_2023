@@ -23,8 +23,9 @@ const OrdersTable = ({searchTerm,sortBy,}) => {
   const orders = useSelector(selectOrders);
   const totalOrders = useSelector(selectTotalOrders);
   const totalOrdersPage = useSelector(selectTotalPages);
- 
-  const sort = { sortBy: 'date', order: 'desc' }; 
+  const [sort, setSort] = useState({ sortBy: 'createdAt', order: 'desc' }); // Manage sorting criteria
+
+  // const sort = { sortBy: 'date', order: 'desc' }; 
   const pagination = { limit: 10 }; 
   // console.log('order data length from backend',orders)
   // console.log('currentPage',page)
@@ -38,9 +39,9 @@ const handleEditPaymentStatus = (order) => {
 
 };
 const handleSort = (sortOption) => {
-  const sort = { _sort: sortOption.sort, _order: sortOption.order };
-  // console.log({ sort });
-  // setSort(sort);
+  setSort(sortOption);
+  console.log(sortOption,'by Date')
+
 };
 const handleShow = () => {
   console.log('handleShow');
@@ -75,15 +76,17 @@ const chooseColor = (status) => {
       return 'bg-purple-200 text-purple-600';
   }
 };
+const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
 useEffect(()=>{
-  dispatch(fetchAllOrdersAsync(page))
-}, [dispatch,page,])
+  dispatch(fetchAllOrdersAsync(page,sort))
+}, [dispatch,page,sort])
   return (
     <>
       <div className="flex flex-col w-full h-full">
         <div className="flex-grow overflow-x-auto">
           <table className="w-full border-collapse border border-gray-300">
-            <thead className=" bg-black text-white sticky top-0 z-10">
+            <thead className=" bg-gray-400 text-white sticky top-0 z-10">
               <tr className="">
                 {/* <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
                   <input type="checkbox" />
@@ -107,8 +110,17 @@ useEffect(()=>{
                     </span>
                   )} */}
                 </th>
-                <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
+                <th 
+                 className="border border-gray-300 p-2 text-left whitespace-nowrap"
+                 onClick={() => handleSort({ sortBy: 'createdAt', order: sort.order === 'asc' ? 'desc' : 'asc' })} // Toggle sorting order
+                 >
                   Order Date
+                  {sort.sortBy === "createdAt" && 
+                    (sort.order === "asc" ? (
+                      <ArrowUpIcon className="w-4 h-4 inline text-red-700" />
+                    ) : (
+                      <ArrowDownIcon className="w-4 h-4 inline text-red-700" />
+                    ))}
                 </th>
                 <th
                   className="border border-gray-300 p-2 cursor-pointer text-left whitespace-nowrap"
@@ -274,20 +286,20 @@ useEffect(()=>{
                       //   {order.status}
                       // </span>
                       <div className="flex item-center justify-center">
-                      <span
-                        className={`${chooseColor(
-                          order.status
-                        )} py-1 px-3 rounded-full text-xs`}
-                      >
-                        {order.status}
-                      </span>
-                      <span>
-                        <PencilIcon
-                          className="w-6 h-6 py-1 cursor-pointer hover:text-green-700 hover:scale-120"
-                          onClick={(e) => handleEdit(order)}
-                        ></PencilIcon>
-                      </span>
-                    </div>
+                        <span
+                          className={`${chooseColor(
+                            order.status
+                          )} py-1 px-3 rounded-full text-xs`}
+                        >
+                          {order.status}
+                        </span>
+                        <span>
+                          <PencilIcon
+                            className="w-6 h-6 py-1 cursor-pointer hover:text-green-700 hover:scale-120"
+                            onClick={(e) => handleEdit(order)}
+                          ></PencilIcon>
+                        </span>
+                      </div>
                     )}
                   </td>
                   {/* <td className="border border-gray-300 p-2 whitespace-nowrap">

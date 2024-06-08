@@ -11,7 +11,7 @@ async function fetchDataFromAPI(category) {
       const data = await resp.json();
       return data;
     } catch (error) {
-      console.error('Error fetching data:', error);
+      // console.error('Error fetching data:', error);
       throw error; // Re-throw the error to handle it in the component
     }
   }
@@ -26,7 +26,7 @@ async function fetchDataFromAPI(category) {
       console.log(data.products)
       return data.products
     } catch (error) {
-      console.error('Error fetching data:', error);
+      // console.error('Error fetching data:', error);
       throw error; // Re-throw the error to handle it in the component
     }
   }

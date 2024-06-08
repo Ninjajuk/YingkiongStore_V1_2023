@@ -6,7 +6,7 @@ import ErrorPage from "../pages/404Page";
 
 import OrderSuccessPage from "../pages/OrderSuccessPage";
 import AdminProductList from "../components/admin/ProductsAdmin";
-import TeamPage from "../components/admin/componentsAdmin/TeamAdmin";
+import TeamPage from "../components/admin/Team/TeamAdmin";
 import HomeAdmin from "../components/admin/componentsAdmin/HomeAdmin";
 import PersonalInfoCard from "../components/user/UserProfile";
 import Shop from "../pages/Shop";
@@ -33,6 +33,7 @@ import Customers from "../components/admin/customers/Customers";
 import UserCreatedSuccessfullyPage from "../components/auth/componentsAuth/EmailSuccessUserCreated";
 import ForgotPasswordRequest from "../components/auth/componentsAuth/ForgotPasswordRequest";
 import SettingsPage from "../components/admin/settings/page";
+import DashboardHomeAdmin from "../components/admin/componentsAdmin/Dashboard";
 
 
 
@@ -124,7 +125,7 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <ProtectedAdmin>
-        <HomeAdmin />
+        <DashboardHomeAdmin />
       </ProtectedAdmin>
     ),
   },

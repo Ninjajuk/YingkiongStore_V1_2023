@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { useSelector,useDispatch  } from "react-redux";
@@ -38,26 +38,31 @@ const loadingspinner=useLoading()
   const dispatch = useDispatch();
 const navigate=useNavigate()
 
-const [formData, setFormData] = useState({
+const intialstateForm={
   firstName: '',
   lastName: '',
-  email: '',
+  // email: '',
   phone: '',
-  address: '',
-  city: '',
-  district: '',
-  state: '',
-  pincode: '',
-  country: '',
-});
+  colony:'',
+  landmark:'',
+  // address: '',
+  // city: '',
+  // district: '',
+  // state: '',
+  // pincode: '',
+  // country: '',
+}
 
-const [error, setError] = useState({});
+const [formData, setFormData] = useState(intialstateForm);
+
+const [error, setError] = useState(intialstateForm);
 const handleQuantityDecrease = (item) => {
   console.log(item.quantity)
   if (item.quantity > 1) {
     const updatedItem = { ...item, quantity: item.quantity - 1 };
     dispatch(updateCartAsync(updatedItem));
   }
+  
 };
 
 const handleQuantityIncrease = (item) => {
@@ -76,23 +81,21 @@ const removeFromCart =async(cartItemId) => {
   notifyRemove();
 };
 
-useEffect(() => {
-  if (!cartLoaded) {
-    dispatch(fetchItemsByUserIdAsync());
-  }
-}, [dispatch, cartLoaded]);
+// useEffect(() => {
+//   if (!cartLoaded) {
+//     dispatch(fetchItemsByUserIdAsync());
+//   }
+// }, [dispatch, cartLoaded,]);
+
 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError({ ...error, [name]: "" }); // Clear error for the specific field
   };
 
 
-
-  // const handleDeleteItem = (itemId) => {
-  //   setOrderItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  // };
   const totalItems = cartItems.reduce((total, item) => item.quantity + total, 0);
   // const totalAmount=calculateTotal(cartItems)
 
@@ -103,23 +106,16 @@ useEffect(() => {
     }
     const subTotal= cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
     console.log(subTotal,'subtotal')
-    const shipping = subTotal>1000?0:50;
-    const taxes = 0.08 * subTotal;
-    const totalsum=subTotal + shipping + taxes;
+    const shipping = subTotal>1000?0:20;
+    // const taxes = 0.08 * subTotal;
+    const totalsum=subTotal + shipping 
     // console.log(totalsum)
     return totalsum
   };
   const notifyAdd = () => toast.success("Order Placed Successfully!");
   const handleSubmit = async(e) => {
     e.preventDefault();
-    // const validationErrors = validateFormData(formData);
-    // setError(validationErrors);
 
-  //   if (Object.keys(validationErrors).length === 0) {
-  //     // Proceed with form submission (e.g., call an API or update the Redux store)
-  //     console.log('Form is valid. Submitting data:', formData);
-  //   }
-  // };
 
     const formErrors = validateForm(formData);
     if (Object.keys(formErrors).length > 0) {
@@ -144,12 +140,6 @@ useEffect(() => {
       // alert('order success')
     }
 
-
-
-
-
-
-  
   };
 
   return (
@@ -214,7 +204,7 @@ useEffect(() => {
                       </div>
                     </div>
 
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-600">
                         Email
                       </label>
@@ -226,7 +216,7 @@ useEffect(() => {
                         className="mt-1 p-2 w-full border rounded-md"
                         required
                       />
-                    </div>
+                    </div> */}
 
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-600">
@@ -245,20 +235,34 @@ useEffect(() => {
 
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-gray-600">
-                        Address
+                       Full Address/Colony
                       </label>
                       <input
                         type="text"
-                        name="address"
-                        value={formData.address}
+                        name="colony"
+                        value={formData.colony}
                         onChange={handleChange}
                         className="mt-1 p-2 w-full border rounded-md"
                         required
                       />
-                        {error.address && <p className="text-red-500">{error.address}</p>}
+                        {error.colony && <p className="text-red-500">{error.colony}</p>}
+                    </div>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-600">
+                        LandMark
+                      </label>
+                      <input
+                        type="text"
+                        name="landmark"
+                        value={formData.landmark}
+                        onChange={handleChange}
+                        className="mt-1 p-2 w-full border rounded-md"
+                        required
+                      />
+                        {error.landmark && <p className="text-red-500">{error.landmark}</p>}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-600">
                           City
@@ -332,15 +336,62 @@ useEffect(() => {
                         />
                         {error.country && <p className="text-red-500">{error.country}</p>}
                       </div>
-                    </div>
+                    </div> */}
                   </form>
+
+                  <div className="mt-10 space-y-10">
+                <fieldset>
+                  <legend className="text-sm font-semibold leading-6 text-gray-600">
+                    Payment Methods
+                  </legend>
+                  {/* <p className="mt-1 text-sm leading-6 text-gray-600">
+                    Choose One
+                  </p> */}
+                  <div className="mt-6 space-y-6">
+                    <div className="flex items-center gap-x-3">
+                      <input
+                        id="cash"
+                        name="payments"
+                        // onChange={handlePayment}
+                        value="cash"
+                        type="radio"
+                        // checked={paymentMethod === 'cash'}
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      />
+                      <label
+                        htmlFor="cash"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Cash
+                      </label>
+                    </div>
+                    {/* <div className="flex items-center gap-x-3">
+                      <input
+                        id="card"
+                        onChange={handlePayment}
+                        name="payments"
+                        checked={paymentMethod === 'card'}
+                        value="card"
+                        type="radio"
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      />
+                      <label
+                        htmlFor="card"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Card Payment
+                      </label>
+                    </div> */}
+                  </div>
+                </fieldset>
+              </div>
                 </div>
                 {cartItems.length > 0 && (
                   <div className="w-full lg:w-2/5 p-4 rounded-md shadow-md flex flex-col">
                     <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
                     <div className="w-full flex flex-col">
                       {cartItems.map((item) => (
-                        <>
+     
                           <div
                             key={item._id}
                             className="w-full flex mb-4 px-4 "
@@ -357,7 +408,7 @@ useEffect(() => {
                               <div>
                                 <p className=" whitespace-nowrap">
                                   <span className='font-semibold pr-2'>{item.product.title} </span>
-                                  <span className='font-bold'>Qty {item.quantity}</span>
+                                  {/* <span className='font-bold'>Qty {item.quantity}</span> */}
                                 </p>
                                 <p className="text-gray-600">
                                   <span>
@@ -375,20 +426,23 @@ useEffect(() => {
                                     onClick={() => {
                                       handleQuantityDecrease(item);
                                     }}
-                                    className="w-10 h-10 bg-gradient-to-b from-white to-[#f9f9f9] inline-block border border-gray-300 cursor-pointer text-base rounded-full leading-none"
+                                    disabled={item.quantity === 1}
+                         
+                                    className={`w-10 h-10 bg-gradient-to-b from-white to-[#f9f9f9] inline-block border border-gray-300 ${item.quantity === 1  ? 'cursor-not-allowed' : 'cursor-pointer'} text-base rounded-full leading-none`}
                                   >
                                     –
                                   </button>
                                   <input
                                     type="text"
-                                    className="w-10 text-center"
-                                    value={item.product.quantity} // Display the item quantity
+                                    className="w-10 font-bold text-center text-purple-800"
+                                    value={item.quantity} // Display the item quantity
                                     readOnly
                                   />
                                   <button
                                     onClick={() =>
                                       handleQuantityIncrease(item)
                                     }
+                        
                                     className="w-10 h-10 bg-gradient-to-b from-white to-[#f9f9f9] inline-block border border-gray-300 cursor-pointer text-base rounded-full leading-none"
                                   >
                                     +
@@ -408,7 +462,7 @@ useEffect(() => {
                               </div>
                             </div>
                           </div>
-                        </>
+  
                       ))}
                     </div>
                     <div className="w-full">
@@ -454,4 +508,4 @@ useEffect(() => {
   );
 };
 
-export default CheckoutPage;
+export default memo(CheckoutPage);

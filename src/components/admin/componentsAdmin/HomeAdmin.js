@@ -36,10 +36,10 @@ const xAxisLabels = ["Mon", "Tue", "wed", "Thu", "Fri", "Sat", "Sun"];
 const yAxisInterval = 10;
 const HomeAdmin = () => {
   return (
-    <Lightsidebarwithheader>
+
         <div
-        className=" md:w-full max-h-screen flex-grow   md:px-4 py-2"
-        // style={{ height: "calc(100vh - 4rem)" }}
+        className=" md:w-full h-full flex-grow   md:px-4 py-2"
+
       >
         {/* <div className=' mx-2 p-4 bg-gray-200 rounded-md mb-2 text-lg text-sky-500 font-bold'>
             Welcome Admin
@@ -296,7 +296,6 @@ const HomeAdmin = () => {
         </div>
         </div>
 
-    </Lightsidebarwithheader>
  
   )
 }

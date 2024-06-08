@@ -46,13 +46,13 @@ const Footer1 = () => {
     </h2>
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="border-t border-gray-200">
-        <div className="pt-16 pb-20">
+        {/* <div className="pt-16 pb-20">
           <div className="md:flex md:justify-center">
-            {/* <img
+            <img
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt=""
               className="h-8 w-auto"
-            /> */}
+            />
             <h1 className='text-2xl text-purple-700 font-bold'>Yingkiong Store</h1>
           </div>
           <div className="mx-auto mt-16 max-w-5xl xl:grid xl:grid-cols-2 xl:gap-8">
@@ -111,7 +111,7 @@ const Footer1 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-6 xl:gap-x-8">
           <div className="flex items-center rounded-lg bg-gray-100 p-6 sm:p-10">
