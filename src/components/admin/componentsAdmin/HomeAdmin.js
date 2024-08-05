@@ -34,6 +34,7 @@ const awesomeBackgroundColorsHover = [
 const orderData = [10, 25, 15, 30, 20, 35, 45]; // Replace with your actual order data
 const xAxisLabels = ["Mon", "Tue", "wed", "Thu", "Fri", "Sat", "Sun"];
 const yAxisInterval = 10;
+
 const HomeAdmin = () => {
   return (
 

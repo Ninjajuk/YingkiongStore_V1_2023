@@ -1,6 +1,10 @@
 
 import React, { useState } from "react";
+import {
+  PencilIcon,
 
+} from '@heroicons/react/24/outline';
+import { MdDelete } from "react-icons/md";
 
 const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
   
@@ -16,15 +20,15 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
   
   return (
     <>
-      <section className="antialiased bg-gray-100 text-gray-600  ">
-        <div className="flex flex-col justify-center h-full">
+  
+
           {/* <!-- Table --> */}
-          <div className="w-full max-w-2xl lg:max-w-7xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
-            <div className="w-full h-full p-3">
-              <div className="w-full h-full overflow-x-auto">
+       
+
+              <div className="w-full max-h-full  overflow-x-auto overflow-y-auto">
                 <table className="table-auto w-full">
-                  <thead className="text-xs font-bold uppercase text-purple-700 sticky top-0 ">
-                    <tr>
+                  <thead className="text-xs sticky top-0 z-10 font-bold uppercase bg-purple-800 text-white  ">
+                    <tr className="">
                       <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">Name</div>
                       </th>
@@ -34,7 +38,7 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                       <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">Phone</div>
                       </th>
-                      <th className="p-2 whitespace-nowrap">
+                      {/* <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">Address</div>
                       </th>
                       <th className="p-2 whitespace-nowrap">
@@ -45,16 +49,16 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                       </th>
                       <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">State</div>
-                      </th>
+                      </th> */}
                       <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">Role</div>
                       </th>
                       {/* <th className="p-2 whitespace-nowrap">
                                     <div className="font-semibold text-left">total</div>
                                 </th> */}
-                      {/* <th className="p-2 whitespace-nowrap">
+                      <th className="p-2 whitespace-nowrap">
                         <div className="font-semibold text-left">Actions</div>
-                      </th> */}
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="text-sm divide-y divide-gray-100">
@@ -75,7 +79,7 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                         {/* <td className="p-2 whitespace-nowrap">
                                     <div className="text-lg text-left font-medium text-green-500">₹{item.address}</div>
                                 </td> */}
-                        <td className="p-2 whitespace-nowrap">
+                        {/* <td className="p-2 whitespace-nowrap">
                           <div className="text-sm text-left">
                             {item.address}
                           </div>
@@ -92,41 +96,44 @@ const CustomerTable = ({customerTable,deleteCustomer,editCcustomer}) => {
                         </td>
                         <td className="p-2 whitespace-nowrap">
                           <div className="text-sm text-left">{item.state}</div>
-                        </td>
+                        </td> */}
                         <td className="p-2 whitespace-nowrap">
                           <div className="text-sm text-left">{item.role}</div>
                         </td>
-                        {/* <td className="p-2 whitespace-nowrap">
+                        <td className="p-2 whitespace-nowrap">
                           <div className="text-sm text-left flex gap-2">
                             <span className="px-2 py-1 text-sky-600">
                               <button
                                 type="button"
-                                onClick={() => handleEdit(item, index)}
+                                // onClick={() => handleEdit(item, index)}
                               >
                                 Edit
                               </button>
                             </span>
+                            {/* <span><PencilIcon className="w-4 h-4"/></span> */}
                             <span className="px-2 py-1 text-red-600">
-                              <button onClick={() => handleDelete(index)}>
+                              <button 
+                              // onClick={() => handleDelete(index)}
+                              >
                                 Delete
                               </button>
+                              {/* <span><MdDelete/></span> */}
                             </span>
                           </div>
-                        </td> */}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        </div>
+
+
         {/* {isModalOpen && (
           <CustomerForm
           // closeModal={closeModal}
           />
         )} */}
-      </section>
+
     </>
   );
 };

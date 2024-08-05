@@ -88,7 +88,7 @@ const navigate=useNavigate()
   const loading = useLoading();
   return (
     <Lightsidebarwithheader>
-      <section className="w-full   h-full ">
+      <section className="w-full   h-full " style={{height:'calc(100vh - 4rem)'}}>
         <div className="w-full flex-flex-col h-full">
           <div className="w-full lg:h-1/6 bg-white flex flex-col">
             <h1 className="px-6 py-1 md:text-xl font font-semibold  text-sky-600">
@@ -153,19 +153,19 @@ const navigate=useNavigate()
               <div className="max-h-full">
                 <table className="min-w-full ">
                   <thead className="sticky top-0">
-                    <tr>
-                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    <tr className='bg-purple-800 text-white'>
+                      <th className="px-6 py-3  text-left text-xs leading-4 font-medium  uppercase tracking-wider">
                         Product
                       </th>
-                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-3  text-left text-xs leading-4 font-medium  uppercase tracking-wider">
                         
                         <span>Price</span>
                         <span className='pl-2 '> Cutted Price</span>
                       </th>
-                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-3  text-left text-xs leading-4 font-medium  uppercase tracking-wider">
                         Image
                       </th>
-                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                      <th className="px-6 py-3  text-left text-xs leading-4 font-medium  uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>

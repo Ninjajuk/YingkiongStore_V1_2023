@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {customerData} from './customerdata'
+
 
 const CustomerForm = ({ closeModal, customerTable, updateCustomerTable,editCcustomer ,addCustomer}) => {
 

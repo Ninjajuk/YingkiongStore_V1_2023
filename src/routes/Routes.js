@@ -157,9 +157,9 @@ const router = createBrowserRouter([
   {
     path: "/customers",
     element: (
-      // <ProtectedAdmin>
+      <ProtectedAdmin>
         <Customers />
-      // </ProtectedAdmin>
+     </ProtectedAdmin>
     ),
   },
   {

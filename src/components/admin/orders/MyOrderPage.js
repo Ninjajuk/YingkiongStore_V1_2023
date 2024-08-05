@@ -22,7 +22,7 @@ const MyOrderPage = () => {
   const loading = useLoading();
   return (
     <Lightsidebarwithheader>
-      <section className="w-full   h-full bg-white ">
+      <section className="w-full  bg-white " style={{height:"calc(100vh - 4rem)"}}>
         <div className="w-full flex-flex-col h-full">
           {/* Product Headline */}
           <div className="w-full lg:h-1/6 bg-white flex flex-col">

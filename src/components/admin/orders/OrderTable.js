@@ -11,6 +11,7 @@ import {
 import { fetchAllOrdersAsync, selectOrders, selectTotalOrders, selectTotalPages, updateOrderAsync } from "../../../redux/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getDate } from "../../../utility/orderhelper";
+
 const OrdersTable = ({searchTerm,sortBy,}) => {
 
 
@@ -76,7 +77,7 @@ const chooseColor = (status) => {
       return 'bg-purple-200 text-purple-600';
   }
 };
-const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const sortedOrders = [...orders].sort((a, b) =>  new Date(a.createdAt) - new Date(b.createdAt));
 
 useEffect(()=>{
   dispatch(fetchAllOrdersAsync(page,sort))
@@ -84,12 +85,12 @@ useEffect(()=>{
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        <div className="flex-grow overflow-x-auto">
+        <div className="flex-grow overflow-x-auto overflow-y-auto">
           <table className="w-full border-collapse border border-gray-300">
             <thead className=" bg-gray-400 text-white sticky top-0 z-10">
-              <tr className="">
+              <tr className="sticky top-0 z-20 uppercase text-sm bg-purple-800">
                 {/* <th className="border border-gray-300 p-2 text-left whitespace-nowrap">
-                  <input type="checkbox" />
+                  <input type="checkbox" /> 
                   SL.No
                 </th> */}
                 <th
@@ -191,7 +192,7 @@ useEffect(()=>{
               </tr>
             </thead>
             <tbody className="">
-              {orders.map((order, index) => (
+              {sortedOrders.map((order, index) => (
                 <tr
                   key={order.id}
                   className={
