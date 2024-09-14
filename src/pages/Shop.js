@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import {getallProducts} from '../API/productAPI'
-import Navbar1 from '../components/Navbar.js/NavbarDark';
+import Navbar1 from '../components/Navbar/NavbarDark';
 import { Circles } from "react-loader-spinner";
 import useLoading from '../customhooks/Loading';
 import Footer1 from '../components/footer/Footer1';
@@ -10,6 +10,7 @@ import useProductData from '../customhooks/UseProductData';
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoaderCircle from '../components/common/LoaderCircle';
 import DummySkeletonCategoryCard from '../components/skeleton/DummySkeletonCategoryCard';
+import HeaderScrollingInfinite from '../components/Navbar/HeaderTopInfiniteScroll';
 
 const Shop = () => {
   const loading = useLoading();
@@ -48,6 +49,7 @@ const Shop = () => {
   };
   return (
     <>
+     <HeaderScrollingInfinite/>
       <Navbar1 />
       {loading ? (
         <div className="flex items-center justify-center h-screen">

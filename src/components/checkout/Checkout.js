@@ -8,7 +8,7 @@ import { Circles } from "react-loader-spinner";
 import useLoading from '../../customhooks/Loading';
 
 import TotalPriceSummary from './TotalPriceSummary';
-import Navbar1 from '../Navbar.js/NavbarDark';
+import Navbar1 from '../Navbar/NavbarDark';
 import Footer1 from '../footer/Footer1';
 import { deleteItemFromCartAsync, fetchItemsByUserIdAsync, selectCartLoaded, selectItems, updateCartAsync } from '../../redux/cartSliceasyn';
 import { toast } from 'react-toastify';

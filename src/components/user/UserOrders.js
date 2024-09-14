@@ -4,7 +4,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 import { FaSpinner } from "react-icons/fa";
 import UserDashboard from './usercomponents/UserDashboard'
-import Navbar1 from '../Navbar.js/NavbarDark'
+import Navbar1 from '../Navbar/NavbarDark'
 import { useSelector } from 'react-redux'
 import { chooseColor, chooseStyle, getDate } from '../../utility/orderhelper'
 import { BASE_URL } from '../../constants'

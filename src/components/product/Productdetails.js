@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {addToCartAsync,deleteItemFromCartAsync,selectCartLoaded,selectItems} from '../../redux/cartSliceasyn'
 import { useDispatch ,useSelector} from 'react-redux';
 import { selectLoggedInUser } from '../../redux/authSlice';
-import Navbar1 from '../Navbar.js/NavbarDark';
+import Navbar1 from '../Navbar/NavbarDark';
 import Footer1 from '../footer/Footer1';
 import {addOrRemoveFromCart,isItemInCart} from '../../utility/cartUtils'
 import { ToastContainer, toast } from 'react-toastify';

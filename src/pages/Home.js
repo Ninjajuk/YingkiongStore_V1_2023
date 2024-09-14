@@ -2,11 +2,12 @@
 
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import App from "../App";
-import Navbar1 from "../components/Navbar.js/NavbarDark";
+import Navbar1 from "../components/Navbar/NavbarDark";
 import ShoppingCart from "../components/cart/Cart";
 import Footer1 from "../components/footer/Footer1";
 import Product from "../components/product";
 import Incentive from "../components/product/componentsProducts/Incentive";
+import HeaderScrollingInfinite from "../components/Navbar/HeaderTopInfiniteScroll";
 
 
 
@@ -14,7 +15,7 @@ import Incentive from "../components/product/componentsProducts/Incentive";
 function HomePage() {
     return (
       <>
-
+ <HeaderScrollingInfinite/>
         <Navbar1 />
 
         <Product />

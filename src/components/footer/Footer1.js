@@ -44,8 +44,8 @@ const Footer1 = () => {
     <h2 id="footer-heading" className="sr-only">
       Footer
     </h2>
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="border-t border-gray-200">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2">
+      <div className="">
         {/* <div className="pt-16 pb-20">
           <div className="md:flex md:justify-center">
             <img
@@ -114,7 +114,7 @@ const Footer1 = () => {
         </div> */}
 
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-6 xl:gap-x-8">
-          <div className="flex items-center rounded-lg bg-gray-100 p-6 sm:p-10">
+          <div className="flex items-center rounded-lg bg-gray-50 p-6 sm:p-10">
             <div className="mx-auto max-w-sm">
               <h3 className="font-semibold text-gray-900">Sign up for our newsletter</h3>
               <p className="mt-2 text-sm text-gray-500">
@@ -150,7 +150,7 @@ const Footer1 = () => {
                 alt=""
                 className="h-full w-full object-cover object-center saturate-0 filter"
               /> */}
-              <div className="absolute inset-0 bg-gray-200 " />
+              <div className="absolute inset-0 bg-gray-100 " />
             </div>
             <div className="relative mx-auto max-w-sm text-center">
               <h3 className="text-2xl font-bold tracking-tight text-purple-700">Visit our store</h3>
@@ -191,7 +191,7 @@ const Footer1 = () => {
               </a>
             ))}
           </div> */}
-          <p className="text-sm text-gray-500 font-bold">Designed and Coded by <span className='text-purple-700 font-bold text-md'>Samsuddin Ansari & Yogi</span></p>
+          <p className="text-sm text-gray-500 ">Designed and Coded by <span className='text-purple-800 font-extrabold text-md'>Samsuddin Ansari</span></p>
 
         </div>
       </div>

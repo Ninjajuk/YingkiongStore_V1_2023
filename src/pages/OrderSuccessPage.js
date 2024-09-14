@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { calculateSubtotal, calculateTotal, } from "../utility/cartUtils"; 
-import Navbar1 from "../components/Navbar.js/NavbarDark";
+import Navbar1 from "../components/Navbar/NavbarDark";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";

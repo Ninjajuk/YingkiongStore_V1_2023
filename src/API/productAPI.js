@@ -23,7 +23,8 @@ async function fetchDataFromAPI(category) {
       const resp=await fetch(`${BASE_URL}/products?all=true`)
 
       const data=await resp.json()
-      console.log(data.products)
+      // console.log(data.products)
+
       return data.products
     } catch (error) {
       // console.error('Error fetching data:', error);

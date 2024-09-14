@@ -75,6 +75,9 @@ const ProducList = ({ category }) => {
         try {
           const products = await getallProducts();
           setProduct(products);
+
+          // Store data in local storage
+          localStorage.setItem('products', JSON.stringify(products));
   
           // Extract unique categories
           const categories = [...new Set(products.map((item) => item.category))];

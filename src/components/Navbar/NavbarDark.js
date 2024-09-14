@@ -143,7 +143,7 @@ const navigate=useNavigate()
                     </button>
                   )}
                 </div> */}
-
+                <div className='flex items-center'>
                 <div className="hidden lg:ml-4 lg:block">
                   <div className="flex items-center">
                     
@@ -273,6 +273,9 @@ const navigate=useNavigate()
                   {cartItems.length}
                   {/* 1 */}
                 </span>
+                </div>
+
+
               </div>
             </div>
 

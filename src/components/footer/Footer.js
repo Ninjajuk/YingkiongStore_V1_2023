@@ -128,7 +128,7 @@ const Footer = () => {
             </div>
             <div className='flex flex-col items-center justify-center pt-4'>
               <h1 className=" text-red-700 font-medium py-2"> @ Copyright 2023 Yingkiong Store. All right reserved</h1>
-              <h1 className=" text-red-700 font-medium py-2"> Designed by Samsu & Yogi</h1>
+              <h1 className=" text-red-700 font-medium py-2"> Designed by Samsu</h1>
               </div>
         </div>
       </footer>

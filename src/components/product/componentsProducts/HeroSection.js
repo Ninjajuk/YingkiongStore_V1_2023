@@ -4,11 +4,11 @@ import PromotionBanner from './PromotionProduct';
 const HeroSection = () => {
   return (
     <>
-      <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
-        <div aria-hidden="true" className="bg-gray-100 lg:block" />
-        <div className="relative bg-gray-100 lg:bg-transparent">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
-            <div className="mx-auto max-w-2xl py-16 lg:max-w-none lg:py-48">
+      <div className="w-full">
+   
+        <div className="w-full flex flex-col lg:flex-row  ">
+    
+            <div className="mx-auto w-full lg:w-2/5 py-16  lg:py-36 px-4 lg:px-8">
               <div className="lg:pr-16">
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
                   Discover the <span className="text-purple-800">Art</span> of
@@ -31,9 +31,8 @@ const HeroSection = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="h-48 w-full  lg:absolute lg:top-0 lg:right-0 lg:h-[42rem] lg:w-1/2">
+
+          <div className="h-48 w-full   lg:h-[42rem] lg:w-3/5">
           <img
             src="/img/YINGKIONG.jpg"
             alt=""
@@ -41,6 +40,8 @@ const HeroSection = () => {
           />
           {/* <PromotionBanner/> */}
         </div>
+        </div>
+
       </div>
       {/* <div className="w-full h-[32rem] flex flex-col lg:flex-row">
         <div className="w-full lg:w-1/2 h-full ">

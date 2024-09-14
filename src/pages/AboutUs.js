@@ -1,11 +1,13 @@
 
 import React from 'react';
-import Navbar1 from '../components/Navbar.js/NavbarDark';
+import Navbar1 from '../components/Navbar/NavbarDark';
 import Footer1 from '../components/footer/Footer1';
 import { Circles } from "react-loader-spinner";
 import useLoading from '../customhooks/Loading';
 import { useSelector } from 'react-redux';
 import { selectItems } from '../redux/cartSliceasyn';
+import HeaderScrollingInfinite from '../components/Navbar/HeaderTopInfiniteScroll'
+
 
 const Card = ({ title, content,listItems,bgcolor }) => (
   <div className={` ${bgcolor} p-6 rounded-lg shadow-md mb-6`}>
@@ -31,6 +33,7 @@ const AboutUs = () => {
 
   return (
     <>
+    <HeaderScrollingInfinite/>
     <Navbar1/>
     {loading ? (
        <div className="flex items-center justify-center h-screen">    <Circles
@@ -44,18 +47,18 @@ const AboutUs = () => {
        /></div>
 
     ):(
-    <section className=''>
-          <div className="container mx-auto  p-8  rounded-md">
-      <h1 className="text-4xl font-bold mb-8 text-center text-purple-800">About Us</h1>
+    <section className='mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8'>
+          <div className="  rounded-md">
+      <h1 className="text-4xl font-bold mb-8  text-purple-800">About Us</h1>
    
 
 
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-4">
         <Card
           title="Our Story"
           content="Founded in 2024, Yingkiong Store was born out of a love for our product and a commitment to what makes our brand unique. What started as a small idea has now grown into a  thriving community of our customer base who share our passion."
-          bgcolor='bg-yellow-500'
+          bgcolor='bg-yellow-400'
         />
 
         <Card

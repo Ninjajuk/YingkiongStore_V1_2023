@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserDashboard from "./usercomponents/UserDashboard";
-import Navbar1 from "../Navbar.js/NavbarDark";
+import Navbar1 from "../Navbar/NavbarDark";
 import { fetchUserProfile } from "../../API/userAPI";
 import { selectLoggedInUser } from "../../redux/authSlice";
 import { useSelector } from "react-redux";

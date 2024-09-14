@@ -37,11 +37,15 @@ const navigate=useNavigate()
     async function getData() {
       try {
         const product = await getallProducts();
+
         setData(product);
+
+            
 
             // Extract unique categories
             const categories = [...new Set(product.map(item => item.category))];
             setUniqueCategories(categories);
+        
       } catch (error) {
         console.log('Error in fetching data:', error);
      

@@ -1,0 +1,52 @@
+/* styles.css */
+
+
+
+.scroll-container {
+    overflow: hidden;
+    background-color: white;
+    white-space: nowrap;
+    width: 100%;
+    /* max-width: 800px; */
+    border: 1px solid #ccc;
+    /* background-color: #fff; */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scroll-content {
+    display: inline-block;
+    animation: scroll 20s linear infinite;
+}
+
+.destination {
+    display: inline-block;
+    padding: 0 20px;
+    font-size: 1rem;
+    /* color: #333; */
+}
+
+/* Keyframes for scrolling animation */
+/* @keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+} */
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-40%);
+    }
+}
+
+/* Pause animation on hover */
+.scroll-content:hover {
+    animation-play-state: paused;
+  }
