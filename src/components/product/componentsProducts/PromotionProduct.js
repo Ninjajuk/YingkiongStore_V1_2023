@@ -39,17 +39,17 @@ const PromotionBanner=()=>{
       <>
 
 
-        <section className="w-full bg-white ">
-        <h1 className="text-3xl text-center py-6 font-bold tracking-tight text-gray-900 sm:text-4xl xl:text-5xl">
-                  Rich<span className="text-purple-800"> Cultural Heritage</span> of
-                  YingKiong
-                </h1>
+        <section className="mx-auto max-w-2xl px-4 py-4 sm:px-6  lg:max-w-7xl lg:px-8">
+          <h1 className="text-3xl  py-6 font-bold tracking-tight text-gray-900 sm:text-4xl xl:text-5xl">
+            Rich<span className="text-purple-800"> Cultural Heritage</span> of
+            YingKiong
+          </h1>
           <div className=" py-4 ">
-            <div className="relative w-full h-48 sm:h-64 lg:h-[32rem] overflow-hidden flex justify-center">
+            <div className="relative w-full h-48 sm:h-64 lg:h-[32rem] overflow-hidden flex justify-center rounded-md">
               <img
                 src={images[currentImageIndex]}
-                className="h-full max-w-full object-center  object-fill sm:object-cover "
-                // height="500" width="500"
+                className="h-full w-full object-center  object-fill sm:object-cover "
+              // height="500" width="500"
               />
               {/* Left arrow icon */}
               <div

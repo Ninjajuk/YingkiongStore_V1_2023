@@ -73,7 +73,7 @@ const handlePrev = () => {
 
 
   return (
-    <section className="w-full bg-gray-100">
+    <section className="w-full ">
       <div className="mx-auto max-w-2xl px-4  sm:px-6  lg:max-w-7xl lg:px-8 pb-4">
         <div className="flex justify-between ">
           <h1 className="text-xl lg:text-2xl px-2 font-bold py-4   text-purple-800">

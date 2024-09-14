@@ -48,16 +48,24 @@ const RegistrationForm = () => {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
-        <div className="w-full lg:w-1/2 flex flex-col lg:flex-row rounded-md shadow-md">
+        <div className="w-full lg:w-1/2 flex flex-col lg:flex-row rounded-md shadow-md p-4">
           <div className=" lg:block lg:w-1/2">
             <img
               src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
               alt="Your Image"
               className="w-full h-full object-cover"
             />
+{/* <svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  className="w-full h-full object-cover"
+>
+  <path d="M15 14h-4v-2h4v2zm0-4h-4V8h4v2zm5-4H4v14h16V6l-1-1zm-7 10H7v-1.5l3 2 3-2V16zM20 6v12H5V4h11v2h4l1 1z" />
+</svg> */}
           </div>
           <form
-            className="bg-white p-6 rounded-lg shadow-md w-full lg:w-1/2"
+            className="bg-white p-6  w-full lg:w-1/2"
             noValidate
             onSubmit={handleSubmit(onSubmit)}
           >

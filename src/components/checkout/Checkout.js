@@ -503,7 +503,7 @@ const removeFromCart =async(cartItemId) => {
           )}
         </div>
       )}
-      <Footer1 />
+      {/* <Footer1 /> */}
     </>
   );
 };
