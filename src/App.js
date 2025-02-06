@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 // import ShoppingCart from "./components/cart/Cart";
 // import OrderSuccessPage from "./pages/OrderSuccessPage";
 // import Navbar1 from "./components/Navbar.js/NavbarDark";
-// import Incentive from "./components/product/componentsProducts/Incentive";
+
 // import Footer1 from "./components/footer/Footer1";
 import { useDispatch, useSelector } from "react-redux";
 // import { setUserToken } from "./redux/authSlice";

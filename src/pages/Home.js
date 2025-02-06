@@ -21,7 +21,7 @@ function HomePage() {
         <Product />
         <ShoppingCart />
 
-        <Incentive/>
+        {/* <Incentive/> */}
         <Footer1 />
 
 
