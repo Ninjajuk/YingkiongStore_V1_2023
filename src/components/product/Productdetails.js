@@ -182,20 +182,25 @@ const notifyRemove = () => toast.info("Removed from cart!");
             </div>
           </div>
 
-          {/* <div className="w-full ">
-        {user ? (
-          <button onClick={() => handleAddToCart(product)} className="w-full px-4 py-2 bg-sky-600 rounded-md">
-            Add to Cart
-          </button>
-        ) : (
+        </div>
+        
+      </div>
 
-          <button  className="w-full px-4 py-2 bg-sky-600 rounded-md">
-          Please Login to Add
-        </button>
-        )}
-        </div> */}
+      {/* Related Products Section */}
+      <div className="w-full px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Placeholder for related products */}
+          {[1, 2, 3, 4].map((item) => (
+            <div key={item} className="bg-white p-4 rounded-lg shadow-lg">
+              <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
+              <h3 className="text-lg font-bold text-gray-900">Product {item}</h3>
+              <p className="text-gray-600">₹{item * 100}</p>
+            </div>
+          ))}
         </div>
       </div>
+      
       <Footer1 />
       {/* <ToastContainer /> */}
     </>
