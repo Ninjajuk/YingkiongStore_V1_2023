@@ -6,7 +6,7 @@ import Navbar1 from "../components/Navbar/NavbarDark";
 import ShoppingCart from "../components/cart/Cart";
 import Footer1 from "../components/footer/Footer1";
 import Product from "../components/product";
-import Incentive from "../components/product/componentsProducts/Incentive";
+
 import HeaderScrollingInfinite from "../components/Navbar/HeaderTopInfiniteScroll";
 
 
@@ -20,8 +20,6 @@ function HomePage() {
 
         <Product />
         <ShoppingCart />
-
-        {/* <Incentive/> */}
         <Footer1 />
 
 

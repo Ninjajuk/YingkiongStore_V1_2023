@@ -25,6 +25,7 @@ const Product = () => {
       {/* <FeaturedCategoryPro /> */}
    
       <PromotionBanner/>
+       <Incentive/>
       {/* <ShopByCategory /> */}
       <Vegetables/>
       <Fruits />
